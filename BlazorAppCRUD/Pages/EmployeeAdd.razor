@@ -1,0 +1,54 @@
+﻿@page "/EmployeeAdd"
+@using BlazorAppCRUD.Data
+@inject EmployeeService objEmpService
+
+
+<h3>EmployeeAdd</h3>
+@if (objEmp == null)
+{
+    <p>
+        <em>
+            Loading...
+        </em>
+    </p>
+}
+else
+{
+   <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>City. (C)</th>
+                <th>Country. (F)</th>
+                <th>Gender</th>
+                <th>Village</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in objEmp)
+            {
+                <tr>
+                    <td>@emp.Name</td>
+                    <td>@emp.City</td>
+                    <td>@emp.Country</td>
+                    <td>@emp.Gender</td>
+                    <td>@emp.Village</td>
+                    <td>@emp.Age</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+
+    List<EmployeeInfo> objEmp;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        objEmp = await Task.Run(() => objEmpService.GetEmployee());
+    }
+
+}
