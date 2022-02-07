@@ -1,23 +1,27 @@
-﻿namespace BlazorAppCRUD.Data
+﻿using BlazorAppCRUD.Persistence;
+using Microsoft.EntityFrameworkCore;
+
+namespace BlazorAppCRUD.Data
 {
-    public class EmployeeService
+    public class EmployeeService : IEmployeeService
     {
-        private readonly ApplicationDbContext _db;
-        public EmployeeService(ApplicationDbContext db)
+        private readonly IApplicationDbContext _db;
+
+        public EmployeeService(IApplicationDbContext db)
         {
             _db = db;
         }
 
-        public List<EmployeeInfo> GetEmployee()
+        public async Task<List<EmployeeInfo>> GetEmployee()
         {
-            var empList = _db.Employees.ToList();
-            return empList;
+            return await _db.Employees.ToListAsync();
         }
-        public string Create(EmployeeInfo objEmployee)
+
+        public async Task<bool> Create(EmployeeInfo objEmployee)
         {
             _db.Employees.Add(objEmployee);
-            _db.SaveChanges();
-            return "Saved !";
+            await _db.SaveChangesAsync(CancellationToken.None);
+            return true;
         }
     }
 }

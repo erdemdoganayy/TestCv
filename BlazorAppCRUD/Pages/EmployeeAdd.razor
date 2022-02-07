@@ -1,6 +1,8 @@
 ﻿@page "/EmployeeAdd"
 @using BlazorAppCRUD.Data
-@inject EmployeeService objEmpService
+@using BlazorAppCRUD.Persistence
+@using Microsoft.EntityFrameworkCore
+@inject IEmployeeService _employeeService
 
 
 <h3>EmployeeAdd</h3>
@@ -44,11 +46,11 @@ else
 
 @code {
 
-    List<EmployeeInfo> objEmp;
-    
+    List<EmployeeInfo> objEmp = new List<EmployeeInfo>();
+
     protected override async Task OnInitializedAsync()
     {
-        objEmp = await Task.Run(() => objEmpService.GetEmployee());
+        objEmp = await _employeeService.GetEmployee();
     }
 
 }
