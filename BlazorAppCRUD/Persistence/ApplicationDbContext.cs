@@ -12,6 +12,7 @@ namespace BlazorAppCRUD.Data
         }
 
         public DbSet<EmployeeInfo> Employees { get; set; }
+        public DbSet<Education> Education { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

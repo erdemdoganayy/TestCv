@@ -1,4 +1,6 @@
-﻿namespace BlazorAppCRUD.Data
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BlazorAppCRUD.Data
 {
     public class Education
     {
