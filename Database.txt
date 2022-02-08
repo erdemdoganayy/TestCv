@@ -1,0 +1,5 @@
+﻿
+
+dotnet ef migrations add "CreateDb" --project BlazorAppCRUD --startup-project BlazorAppCRUD
+
+dotnet ef database update --project BlazorAppCRUD --startup-project BlazorAppCRUD

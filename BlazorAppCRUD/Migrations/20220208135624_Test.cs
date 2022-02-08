@@ -4,23 +4,23 @@
 
 namespace BlazorAppCRUD.Migrations
 {
-    public partial class AddAge : Migration
+    public partial class Test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "Age",
-                table: "Employees",
-                type: "int",
+            migrationBuilder.AddColumn<string>(
+                name: "Test",
+                table: "Educations",
+                type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: "");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Age",
-                table: "Employees");
+                name: "Test",
+                table: "Educations");
         }
     }
 }

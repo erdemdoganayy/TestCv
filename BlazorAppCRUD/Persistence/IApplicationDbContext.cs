@@ -5,8 +5,8 @@ namespace BlazorAppCRUD.Persistence
 {
     public interface IApplicationDbContext
     {
-        DbSet<EmployeeInfo> Employees { get; set; }
-        DbSet<Education> Education { get; set; }
+        DbSet<Employee> Employees { get; set; }
+        DbSet<Education> Educations { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

@@ -2,14 +2,14 @@
 
 namespace BlazorAppCRUD.Data
 {
-    public class EmployeeInfo
+    public class Employee
     {
-        public EmployeeInfo()
+        public Employee()
         {
             Educations = new List<Education>();
         }
-        [Key]
-        public int EmployeeId { get; set; }
+
+        public int Id { get; set; }
   
         public string Name { get; set; } = string.Empty;
 

@@ -1,13 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BlazorAppCRUD.Data
+﻿namespace BlazorAppCRUD.Data
 {
     public class Education
     {
-        public int EducationId { get; set; }
+        public int Id { get; set; }
+
         public string School { get; set; }
 
         public int EmployeeId { get; set; }
-        public EmployeeInfo EmployeeInfo { get; set; }
+        public Employee Employee { get; set; }
     }
 }

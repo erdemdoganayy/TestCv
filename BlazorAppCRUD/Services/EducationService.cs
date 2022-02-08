@@ -3,25 +3,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlazorAppCRUD.Data
 {
-    public class EmployeeService : IEmployeeService
+    public class EducationService : IEducationService
     {
         private readonly IApplicationDbContext _db;
 
-        public EmployeeService(IApplicationDbContext db)
+        public EducationService(IApplicationDbContext db)
         {
             _db = db;
         }
 
-        public async Task<List<EmployeeInfo>> GetEmployee()
+        public async Task<List<Education>> GetEducation()
         {
-            return await _db.Employees.ToListAsync();
+            return await _db.Educations.ToListAsync();
         }
 
-        public async Task<bool> Create(EmployeeInfo objEmployee)
+        public async Task<bool> Create(Education education)
         {
-            _db.Employees.Add(objEmployee);
+            _db.Educations.Add(education);
             await _db.SaveChangesAsync(CancellationToken.None);
             return true;
         }
+
+
     }
 }

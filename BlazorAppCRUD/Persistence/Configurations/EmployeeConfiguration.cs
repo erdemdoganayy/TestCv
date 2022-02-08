@@ -5,10 +5,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace BlazorAppCRUD.Persistence.Configurations
 {
     
-        public class EmployeeInfoConfiguration : IEntityTypeConfiguration<EmployeeInfo>
+        public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         {
-            public void Configure(EntityTypeBuilder<EmployeeInfo> builder)
+            public void Configure(EntityTypeBuilder<Employee> builder)
             {
+                builder.HasKey(e => e.Id);
+                
                 builder.Property(t => t.Name)
                     .HasMaxLength(200)
                     .IsRequired();
