@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BlazorAppCRUD.Data
+﻿namespace BlazorAppCRUD.Data
 {
-    public class Employee
+    public class Employee : AuditableEntity
     {
         public Employee()
         {
@@ -11,17 +9,18 @@ namespace BlazorAppCRUD.Data
 
         public int Id { get; set; }
   
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
+        public string Email { get; set; }
 
         public int Age { get; set; } 
 
-        public string City { get; set; } = string.Empty;
+        public string City { get; set; }
 
-        public string Country { get; set; } = string.Empty;
+        public string Country { get; set; }
     
-        public string Gender { get; set; } = string.Empty;
+        public string Gender { get; set; }
      
-        public string Village { get; set; } = string.Empty;
+        public string Village { get; set; }
 
 
         public IList<Education> Educations { get; set; }

@@ -1,0 +1,47 @@
+@using BlazorAppCRUD.Data
+@using BlazorAppCRUD.Persistence
+@using Microsoft.EntityFrameworkCore
+@inject IEmployeeService _employeeService
+@inject IEducationService _educationService
+@inject IApplicationDbContext _context
+
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="School" class="control-label">School</label>
+                <input form="School" class="form-control" @bind="education.School" />
+            </div>
+
+
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@CreateEducation" value="Save" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@code {
+
+    [Parameter] public Employee employeeInfo { get; set; }
+    Education education = new Education();
+
+    protected async void CreateEducation()
+    {
+        var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.Email);
+
+        if (currentEmployee != null)
+        {
+
+            education.EmployeeId = currentEmployee.Id;
+
+            await _educationService.Create(education);
+        }
+    }
+
+}

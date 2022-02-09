@@ -1,5 +1,6 @@
 ﻿using BlazorAppCRUD.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Reflection;
 
 namespace BlazorAppCRUD.Data
@@ -16,6 +17,19 @@ namespace BlazorAppCRUD.Data
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
+            foreach (EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreateDate = DateTime.Now;
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.ModifyDate = DateTime.Now;
+                        break;
+                }
+            }
+
             var result = await base.SaveChangesAsync(cancellationToken);
 
             return result;

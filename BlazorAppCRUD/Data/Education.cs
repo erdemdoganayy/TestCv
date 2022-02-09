@@ -1,6 +1,6 @@
 ﻿namespace BlazorAppCRUD.Data
 {
-    public class Education
+    public class Education : AuditableEntity
     {
         public int Id { get; set; }
 
