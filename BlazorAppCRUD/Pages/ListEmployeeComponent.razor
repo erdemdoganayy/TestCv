@@ -1,0 +1,32 @@
+@using BlazorAppCRUD.Data
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>City. (C)</th>
+            <th>Country. (F)</th>
+            <th>Gender</th>
+            <th>Village</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var emp in employees)
+        {
+            <tr>
+                <td>@emp.Name</td>
+                <td>@emp.City</td>
+                <td>@emp.Country</td>
+                <td>@emp.Gender</td>
+                <td>@emp.Village</td>
+                <td>@emp.Age</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    [Parameter] public List<Employee> employees { get; set; }
+
+}

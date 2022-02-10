@@ -8,7 +8,7 @@
 
 
 <h3>EmployeeAdd</h3>
-@if (objEmp == null)
+@if (employees == null)
 {
     <p>
         <em>
@@ -18,31 +18,7 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>City. (C)</th>
-                <th>Country. (F)</th>
-                <th>Gender</th>
-                <th>Village</th>
-                <th>Age</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var emp in objEmp)
-            {
-                <tr>
-                    <td>@emp.Name</td>
-                    <td>@emp.City</td>
-                    <td>@emp.Country</td>
-                    <td>@emp.Gender</td>
-                    <td>@emp.Village</td>
-                    <td>@emp.Age</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <ListEmployeeComponent employees="@employees" />
 }
 <br />
 <br />
@@ -54,15 +30,15 @@ else
         <div class="col-md-8">
             <div class="form-group">
                 <label for="Name" class="control-label">Name</label>
-                <input form="Name" class="form-control" @bind="employeeInfo.Name" />
+                <input form="Name" class="form-control" @bind="employee.Name" />
             </div>
             <div class="form-group">
                 <label for="Email" class="control-label">Email</label>
-                <input form="Email" class="form-control" @bind="employeeInfo.Email" />
+                <input form="Email" class="form-control" @bind="employee.Email" />
             </div>
             <div class="form-group">
                 <label for="Gender" class="control-label">Gender</label>
-                <select class="form-select" aria-label="Default select example" @bind="employeeInfo.Gender">
+                <select class="form-select" aria-label="Default select example" @bind="employee.Gender">
                     <option value="">-Select Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -70,19 +46,19 @@ else
             </div>
             <div class="form-group">
                 <label for="Age" class="control-label">Age</label>
-                <input form="Age" class="form-control" @bind="employeeInfo.Age" />
+                <input form="Age" class="form-control" @bind="employee.Age" />
             </div>
             <div class="form-group">
                 <label for="City" class="control-label">City</label>
-                <input form="City" class="form-control" @bind="employeeInfo.City" />
+                <input form="City" class="form-control" @bind="employee.City" />
             </div>
             <div class="form-group">
                 <label for="Village" class="control-label">Village</label>
-                <input form="Village" class="form-control" @bind="employeeInfo.Village" />
+                <input form="Village" class="form-control" @bind="employee.Village" />
             </div>
             <div class="form-group">
                 <label for="Country" class="control-label">Country</label>
-                <input form="Country" class="form-control" @bind="employeeInfo.Country" />
+                <input form="Country" class="form-control" @bind="employee.Country" />
             </div>
 
 
@@ -102,36 +78,32 @@ else
 
 @if (employeeSaved)
 {
-    <ShowHideComponent employeeInfo="@employeeInfo" />
+    <ShowHideComponent employeeInfo="@employee" />
 }
-
-
 
 @code {
 
-    List<Employee> objEmp = new List<Employee>();
-    Employee employeeInfo = new Employee();
-
-    //public bool employeeSaved { get; set; } = false;
+    List<Employee> employees = new List<Employee>();
+    Employee employee = new Employee();
 
     bool employeeSaved;
 
-
     protected override async Task OnInitializedAsync()
     {
-
-        objEmp = await _employeeService.GetEmployees();
+        employees = await _employeeService.GetEmployees();
     }
-
-    @*protected override async Task OnAfterRenderAsync(bool employeeSaved)
-        {
-
-        }*@
-
 
     private async void CreateEmployee()
     {
-        employeeSaved = await _employeeService.Create(employeeInfo);
+        employeeSaved = await _employeeService.Create(employee);
+
+        if (employeeSaved)
+            employees = await _employeeService.GetEmployees();
+
+        await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
     }
 
 }
