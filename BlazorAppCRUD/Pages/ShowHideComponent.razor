@@ -10,7 +10,7 @@
         <div class="col-md-8">
             <div class="form-group">
                 <label for="School" class="control-label">School</label>
-                <input form="School" class="form-control" @bind="education.School" />
+                <input form="School" class="form-control" @bind="school" />
             </div>
 
 
@@ -29,18 +29,22 @@
 @code {
 
     [Parameter] public Employee employeeInfo { get; set; }
-    Education education = new Education();
 
-    protected async void CreateEducation()
+    string school = "";
+
+    private async void CreateEducation()
     {
         var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.Email);
 
         if (currentEmployee != null)
         {
+            Education edu = new Education
+                {
+                    EmployeeId = currentEmployee.Id,
+                    School = school
+                };
 
-            education.EmployeeId = currentEmployee.Id;
-
-            await _educationService.Create(education);
+            await _educationService.Create(edu);
         }
     }
 
