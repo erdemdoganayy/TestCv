@@ -5,17 +5,30 @@
 @inject IEducationService _educationService
 @inject IApplicationDbContext _context
 
+
 <form>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="form-group">
-                <label for="School" class="control-label">School</label>
-                <input form="School" class="form-control" @bind="school" />
+    <div class="form-group mt-3">
+        <label for="exampleInputEmail1">Education</label>
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <label for="exampleInputEmail1">School Name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="school" aria-describedby="emailHelp" placeholder="Enter School Name">
             </div>
-
-
+            <div class="col-md-4">
+                <label for="exampleInputEmail1">School Department</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="department" aria-describedby="emailHelp" placeholder="Enter Department Name">
+            </div>
+            <div class="col-md-2">
+                <label for="exampleInputEmail1">Start Date</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="startDate" aria-describedby="emailHelp" placeholder="Enter Start Date">
+            </div>
+            <div class="col-md-2">
+                <label for="exampleInputEmail1">End Date</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="endDate" aria-describedby="emailHelp" placeholder="Enter End Date">
+            </div>
         </div>
     </div>
+
     <br />
     <div class="row">
         <div class="col-md-4">
@@ -26,11 +39,51 @@
     </div>
 </form>
 
+<form>
+      <div class="form-group mt-3">
+        <label for="exampleInputEmail1">Experience</label>
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <label for="exampleInputEmail1">Company Name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Company Name">
+            </div>
+            <div class="col-md-2">
+                <label for="exampleInputEmail1">City</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter City">
+            </div>
+            <div class="col-md-2">
+                <label for="exampleInputEmail1">Position</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Position">
+            </div>
+            <div class="col-md-2">
+                <label for="exampleInputEmail1">Start Date</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Start Date">
+            </div>
+            <div class="col-md-2">
+                <label for="exampleInputEmail1">End Date</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter End Date">
+            </div>
+        </div>
+    </div>
+     <br />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" value="Save" />
+            </div>
+        </div>
+    </div>
+</form>
+
 @code {
 
     [Parameter] public Employee employeeInfo { get; set; }
+    Education education = new Education();
 
     string school = "";
+    string department = "";
+    int startDate = 0;
+    int endDate = 0;
 
     private async void CreateEducation()
     {
@@ -41,11 +94,17 @@
             Education edu = new Education
                 {
                     EmployeeId = currentEmployee.Id,
-                    School = school
+                    School = school,
+                    Department = department,
+                    StartDate = startDate,
+                    EndDate = endDate
                 };
 
             await _educationService.Create(edu);
         }
+
     }
+
+ 
 
 }

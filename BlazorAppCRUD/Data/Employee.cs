@@ -5,6 +5,7 @@
         public Employee()
         {
             Educations = new List<Education>();
+            Experiences = new List<Experience>();
         }
 
         public int Id { get; set; }
@@ -24,6 +25,7 @@
 
 
         public IList<Education> Educations { get; set; }
+        public IList<Experience> Experiences { get; set; }
     }
 
 }
