@@ -2,20 +2,27 @@
 @inject IEducationService _educationService
 @using BlazorAppCRUD.Data
 
+
 @foreach (var edu in EducationsList)
 {
-    <button type="button" class="btn btn-sm btn-outline-success mx-1 mb-3">@edu.School <a @onclick="Delete" href="FirstListEducation/{@edu.Id}">@edu.Id</a></button>
+    <input type="button" class="btn btn-sm btn-outline-success mx-1 mb-3" @onclick="(() => Delete(edu.Id))" value="@edu.School" />
 }
+
 @code {
 
     [Parameter] public List<Education> EducationsList { get; set; }
     [Parameter] public int EducationSchoolId { get; set; }
     [Parameter] public Employee employeeInfo { get; set; }
-    private async void Delete()
+
+
+    public EventCallback<int> BindingValueChanged { get; set; }
+
+
+    private async void Delete(int schoolId)
     {
         bool educationDeleted;
 
-        educationDeleted = await _educationService.DeleteEducation(EducationSchoolId);
+        educationDeleted = await _educationService.DeleteEducation(schoolId);
 
         if (educationDeleted)
             EducationsList = await _educationService.GetEducationSchool(employeeInfo.Id);
@@ -26,4 +33,4 @@
             });
     }
 
-    }
+}

@@ -31,8 +31,14 @@ namespace BlazorAppCRUD.Data
 
         public async Task<bool> DeleteEducation(int Id)
         {
-            _db.Educations.Remove(new Education() { Id = Id });
-            await _db.SaveChangesAsync(CancellationToken.None);
+            var education = await _db.Educations.FirstOrDefaultAsync(x => x.Id == Id);
+
+            if (education != null)
+            {
+                _db.Educations.Remove(education);
+                await _db.SaveChangesAsync(CancellationToken.None);
+            }
+
             return true;
         }
 
