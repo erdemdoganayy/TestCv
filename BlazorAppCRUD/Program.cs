@@ -1,5 +1,6 @@
 using BlazorAppCRUD.Data;
 using BlazorAppCRUD.Persistence;
+using BlazorAppCRUD.Services;
 //using BlazorAppCRUD.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,8 @@ builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetServic
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEducationService, EducationService>();
 builder.Services.AddScoped<IExperienceServices, ExperienceServices>();
+builder.Services.AddScoped<ISkillService, SkillService>();
+builder.Services.AddScoped<ILanguageService, LanguageService>();
 
 var app = builder.Build();
 

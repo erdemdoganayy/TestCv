@@ -1,9 +1,14 @@
+@page "/ShowHideComponent/"
 @using BlazorAppCRUD.Data
 @using BlazorAppCRUD.Dtos
 @using BlazorAppCRUD.Persistence
+@using BlazorAppCRUD.Services
 @using Microsoft.EntityFrameworkCore
 @inject IEmployeeService _employeeService
 @inject IEducationService _educationService
+@inject IExperienceServices _experienceService
+@inject ISkillService _skilService
+@inject ILanguageService _languageService
 @inject IApplicationDbContext _context
 
 
@@ -13,24 +18,24 @@
         <div class="row mt-2">
             <div class="col-md-4">
                 <label for="exampleInputEmail1">School Name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.school" aria-describedby="emailHelp" placeholder="Enter School Name">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.School" aria-describedby="emailHelp" placeholder="Enter School Name">
             </div>
             <div class="col-md-4">
                 <label for="exampleInputEmail1">School Department</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.department" aria-describedby="emailHelp" placeholder="Enter Department Name">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.Department" aria-describedby="emailHelp" placeholder="Enter Department Name">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">Start Date</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.startDate" aria-describedby="emailHelp" placeholder="Enter Start Date">
+                <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.StartDate" aria-describedby="emailHelp" placeholder="Enter Start Date">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">End Date</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.endDate" aria-describedby="emailHelp" placeholder="Enter End Date">
+                <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.EndDate" aria-describedby="emailHelp" placeholder="Enter End Date">
             </div>
         </div>
     </div>
-
     <br />
+    <FirstListEducation EducationsList="@EducationsList" employeeInfo="employeeInfo"/>
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
@@ -41,64 +46,207 @@
 </form>
 
 <form>
-      <div class="form-group mt-3">
+    <div class="form-group mt-3">
         <label for="exampleInputEmail1">Experience</label>
         <div class="row mt-2">
             <div class="col-md-4">
                 <label for="exampleInputEmail1">Company Name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Company Name">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CompanyName" aria-describedby="emailHelp" placeholder="Enter Company Name">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">City</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter City">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.City" aria-describedby="emailHelp" placeholder="Enter City">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">Position</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Position">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.Position" aria-describedby="emailHelp" placeholder="Enter Position">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">Start Date</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Start Date">
+                <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.StartDate" aria-describedby="emailHelp" placeholder="Enter Start Date">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">End Date</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter End Date">
+                <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.EndDate" aria-describedby="emailHelp" placeholder="Enter End Date">
             </div>
         </div>
     </div>
-     <br />
-    <div class="row">
+    
+    <br />
+    <div class="row mb-4">
         <div class="col-md-4">
             <div class="form-group">
-                <input type="button" class="btn btn-primary" value="Save" />
+                <input type="button" class="btn btn-primary" @onclick="@CreateExperience" value="Save" />
             </div>
         </div>
     </div>
 </form>
 
+<form>
+    <div class="form-group mt-3">
+        <label for="exampleInputEmail1">Skills</label>
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <label for="exampleInputEmail1">Skill Name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.SkillName" placeholder="Enter Skill Name">
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Gender" class="control-label">Rating 1-10</label>
+                    <select class="form-select" aria-label="Default select example" @bind="skillDto.SkillRating">
+                        <option value="">-Select Rating</option>
+                        <option value="1">1 <span class="oi oi-star"></span></option>
+                        <option value="2">2 <span class="oi oi-star"></span></option>
+                        <option value="3">3 <span class="oi oi-star"></span></option>
+                        <option value="4">4 <span class="oi oi-star"></span></option>
+                        <option value="5">5 <span class="oi oi-star"></span></option>
+                        <option value="6">6 <span class="oi oi-star"></span></option>
+                        <option value="7">7 <span class="oi oi-star"></span></option>
+                        <option value="8">8 <span class="oi oi-star"></span></option>
+                        <option value="9">9 <span class="oi oi-star"></span></option>
+                        <option value="10">10 <span class="oi oi-star"></span></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Gender" class="control-label">Select Skill Experience</label>
+                    <select class="form-select" aria-label="Default select example" @bind="skillDto.SkillExperience">
+                        <option value="">-Select Skill Experience</option>
+                        <option value="1">+1 Year<span class="oi oi-star"></span></option>
+                        <option value="2">+2 Year<span class="oi oi-star"></span></option>
+                        <option value="3">+3 Year<span class="oi oi-star"></span></option>
+                        <option value="4">+4 Year<span class="oi oi-star"></span></option>
+                        <option value="5">+5 Year<span class="oi oi-star"></span></option>
+                        <option value="6">+6 Year<span class="oi oi-star"></span></option>
+                        <option value="7">+7 Year<span class="oi oi-star"></span></option>
+                        <option value="8">+8 Year<span class="oi oi-star"></span></option>
+                        <option value="9">+9 Year<span class="oi oi-star"></span></option>
+                        <option value="10">+10 Year<span class="oi oi-star"></span></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="button" class="btn btn-primary" @onclick="@CreateSkill" value="Save" />
+</form>
+<form>
+    <div class="form-group mt-3">
+        <label for="exampleInputEmail1">Languages</label>
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <label for="exampleInputEmail1">Language Name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="languageDto.LanguageName" aria-describedby="emailHelp" placeholder="Enter Language Name">
+            </div>
+            <div class="col-md-4">
+                <label for="exampleInputEmail1">Rating 1-10</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="languageDto.LanguageRating" aria-describedby="emailHelp" placeholder="Enter Rating">
+            </div>
+        </div>
+    </div>
+    <input type="button" class="btn btn-primary" @onclick="@CreateLanguage" value="Save" />
+</form>
+
 @code {
 
     [Parameter] public Employee employeeInfo { get; set; }
+    [Parameter] public int EducationSchoolId { get; set; }
+
     Education education = new Education();
+    List<Education> EducationsList = new List<Education>();
+
+    Experience experience = new Experience();
+    Skill skill = new Skill();
+    Language language = new Language();
 
     EducationDto educationDto = new EducationDto();
+    ExperienceDto experienceDto = new ExperienceDto();
+    Skill skillDto = new Skill();
+    Language languageDto = new Language();
+
 
     private async void CreateEducation()
+    {
+        bool educationSaved;
+        var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.Email);
+
+        if (currentEmployee != null)
+        {
+            Education Edu = new Education
+                {
+                    EmployeeId = currentEmployee.Id,
+                    School = educationDto.School,
+                    Department = educationDto.Department,
+                    StartDate = educationDto.StartDate,
+                    EndDate = educationDto.EndDate
+                };
+
+            educationSaved = await _educationService.Create(Edu);
+
+            if (educationSaved)
+                EducationsList = await _educationService.GetEducationSchool(employeeInfo.Id);
+
+            await InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
+        }
+
+    }
+
+    private async void CreateExperience()
     {
         var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.Email);
 
         if (currentEmployee != null)
         {
-            Education edu = new Education
+            Experience Exp = new Experience
                 {
                     EmployeeId = currentEmployee.Id,
-                    School = educationDto.school,
-                    Department = educationDto.department,
-                    StartDate = educationDto.startDate,
-                    EndDate = educationDto.endDate
+                    CompanyName = experienceDto.CompanyName,
+                    Position = experienceDto.Position,
+                    City = experienceDto.City,
+                    StartDate = experienceDto.StartDate,
+                    EndDate = experienceDto.EndDate
                 };
 
-            await _educationService.Create(edu);
+            await _experienceService.Create(Exp);
+        }
+
+    }
+
+    private async void CreateSkill()
+    {
+        var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.Email);
+
+        if (currentEmployee != null)
+        {
+            Skill ski = new Skill
+                {
+                    EmployeeId = currentEmployee.Id,
+                    SkillName = skillDto.SkillName,
+                    SkillExperience = skillDto.SkillExperience,
+                    SkillRating = skillDto.SkillRating
+                };
+
+            await _skilService.Create(ski);
+        }
+
+    }
+    private async void CreateLanguage()
+    {
+        var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.Email);
+
+        if (currentEmployee != null)
+        {
+            Language lan = new Language
+                {
+                    EmployeeId = currentEmployee.Id,
+                    LanguageName = languageDto.LanguageName,
+                    LanguageRating = languageDto.LanguageRating
+                };
+
+            await _languageService.Create(lan);
         }
 
     }

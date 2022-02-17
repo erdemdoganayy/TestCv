@@ -6,6 +6,8 @@
         {
             Educations = new List<Education>();
             Experiences = new List<Experience>();
+            Skills = new List<Skill>();
+            Languages = new List<Language>();
         }
 
         public int Id { get; set; }
@@ -26,6 +28,8 @@
 
         public IList<Education> Educations { get; set; }
         public IList<Experience> Experiences { get; set; }
+        public IList<Skill> Skills { get; set; }
+        public IList<Language> Languages { get; set; }
     }
 
 }

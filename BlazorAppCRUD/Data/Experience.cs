@@ -6,10 +6,10 @@
         public string CompanyName { get; set; }
         public string Position { get; set; }
         public string City { get; set; }
-        public int startDate { get; set; }
-        public int endDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public int EmployeeId { get; set; }
-        public Employee employee { get; set; }
+        public Employee Employee { get; set; }
     }
 }

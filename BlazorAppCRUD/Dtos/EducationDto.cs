@@ -2,9 +2,9 @@
 {
     public class EducationDto
     {
-        public string school { get; set; }
-        public string department { get; set; }
-        public int startDate { get; set; }
-        public int endDate { get; set; }
+        public string School { get; set; }
+        public string Department { get; set; }
+        public DateTime StartDate { get; set; } = DateTime.Now;
+        public DateTime EndDate { get; set; } = DateTime.Now;
     }
 }

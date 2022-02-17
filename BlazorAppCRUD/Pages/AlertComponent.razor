@@ -1,0 +1,17 @@
+﻿<div class="alert alert-success mt-4">
+    <span class="oi oi-check me-2" aria-hidden="true"></span>
+    <strong>@Title</strong>
+    <br />
+    <span class="text-nowrap">
+        @Content
+    </span>
+
+</div>
+
+@code {
+    // Demonstrates how a parent component can supply parameters
+    [Parameter]
+    public string? Title { get; set; }
+    [Parameter]
+    public string? Content { get; set; }
+}

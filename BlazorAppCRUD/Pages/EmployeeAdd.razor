@@ -25,6 +25,11 @@ else
 <br />
 <h1> Add a new employee</h1>
 
+@if (employeeSaved)
+{
+<AlertComponent Content="Personal information saved !" Title="Congratulations !" />
+
+}
 <form>
     <div class="row">
         <div class="col-md-8">
