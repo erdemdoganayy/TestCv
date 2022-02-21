@@ -8,9 +8,9 @@ namespace BlazorAppCRUD.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Language> builder)
         {
-            builder.HasKey(e => e.LanguageId);
+            builder.HasKey(e => e.Id);
 
-            builder.Property(t => t.LanguageName)
+            builder.Property(t => t.Name)
                 .HasMaxLength(200)
                 .IsRequired();
         }

@@ -8,8 +8,9 @@ namespace BlazorAppCRUD.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<District> builder)
         {
-            builder.HasKey(x => x.DistrictId);
-            builder.Property(t => t.DistrictName)
+            builder.HasKey(x => x.Id);
+
+            builder.Property(t => t.Name)
                 .HasMaxLength(200)
                 .IsRequired();
 

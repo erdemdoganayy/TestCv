@@ -4,17 +4,17 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorAppCRUD.Persistence.Configurations
 {
-    
-        public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
+
+    public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
+    {
+        public void Configure(EntityTypeBuilder<Employee> builder)
         {
-            public void Configure(EntityTypeBuilder<Employee> builder)
-            {
-                builder.HasKey(e => e.EmployeeId);
-                
-                builder.Property(t => t.EmployeeName)
-                    .HasMaxLength(200)
-                    .IsRequired();
-            }
+            builder.HasKey(e => e.Id);
+
+            builder.Property(t => t.Name)
+                .HasMaxLength(200)
+                .IsRequired();
         }
-    
+    }
+
 }

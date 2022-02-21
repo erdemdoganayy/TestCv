@@ -2,9 +2,15 @@
 {
     public class City
     {
-        public int CityId { get; set; }
-        public string? CityName { get; set; }
-        public int CityCode { get; set; }
+        public City()
+        {
+            Districts = new List<District>();
+        }
 
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public int Code { get; set; }
+
+        public List<District> Districts { get; set; }
     }
 }

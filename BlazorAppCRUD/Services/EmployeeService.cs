@@ -21,12 +21,13 @@ namespace BlazorAppCRUD.Data
         // Where(x=>x.EmployeeCityId == cityList.)
         public async Task<Employee> GetEmployeeByEmail(string email)
         {
-            return await _db.Employees.FirstOrDefaultAsync(x => x.EmployeeEmail == email);
+            return await _db.Employees.FirstOrDefaultAsync(x => x.Email == email);
         }
 
         public async Task<bool> Create(Employee objEmployee)
         {
-            var employee = _db.Employees.FirstOrDefault(x => x.EmployeeEmail == objEmployee.EmployeeEmail);
+            var employee = _db.Employees.FirstOrDefault(x => x.Email == objEmployee.Email);
+
             if (employee == null)
             {
                 _db.Employees.Add(objEmployee);
@@ -35,12 +36,11 @@ namespace BlazorAppCRUD.Data
             }
             else
             {
-                employee.EmployeeGender = objEmployee.EmployeeGender;
-                employee.EmployeeEmail = objEmployee.EmployeeEmail;
-                employee.EmployeeAge = objEmployee.EmployeeAge;
-                employee.EmployeeVillage = objEmployee.EmployeeVillage;
-                employee.EmployeeCityId = Convert.ToInt32(objEmployee.EmployeeCityId);
-                employee.EmployeeCountry = objEmployee.EmployeeCountry;
+                employee.Gender = objEmployee.Gender;
+                employee.Email = objEmployee.Email;
+                employee.Age = objEmployee.Age;
+                employee.DistrictId = Convert.ToInt32(objEmployee.DistrictId);
+                employee.Country = objEmployee.Country;
 
                 _db.Employees.Update(employee);
                 await _db.SaveChangesAsync(CancellationToken.None);

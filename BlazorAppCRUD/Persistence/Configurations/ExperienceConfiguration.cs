@@ -8,9 +8,9 @@ namespace BlazorAppCRUD.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Experience> builder)
         {
-            builder.HasKey(e => e.ExperienceId);
+            builder.HasKey(e => e.Id);
 
-            builder.Property(t => t.ExperienceCompanyName)
+            builder.Property(t => t.CompanyName)
                 .HasMaxLength(200)
                 .IsRequired();
         }

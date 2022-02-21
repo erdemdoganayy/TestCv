@@ -15,8 +15,7 @@ namespace BlazorAppCRUD.Data
 
         public async Task<List<District>> GetDistricts(int EmployeeCityId)
         {
-            return await _db.Districts.Where(x=>x.CityId == EmployeeCityId).OrderBy(x=>x.DistrictName).ToListAsync();
-            
+            return await _db.Districts.Where(x => x.CityId == EmployeeCityId).OrderBy(x => x.Name).ToListAsync();
         }
     }
 }

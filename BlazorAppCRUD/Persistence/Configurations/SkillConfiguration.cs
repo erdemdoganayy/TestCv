@@ -8,9 +8,9 @@ namespace BlazorAppCRUD.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Skill> builder)
         {
-            builder.HasKey(e => e.SkillId);
+            builder.HasKey(e => e.Id);
 
-            builder.Property(t => t.SkillName)
+            builder.Property(t => t.Name)
                 .HasMaxLength(200)
                 .IsRequired();
         }

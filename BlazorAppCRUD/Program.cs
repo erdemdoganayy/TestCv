@@ -1,7 +1,6 @@
 using BlazorAppCRUD.Data;
 using BlazorAppCRUD.Persistence;
 using BlazorAppCRUD.Services;
-//using BlazorAppCRUD.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CVTest;Trusted_Connection=True;MultipleActiveResultSets=true;"));
 builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
