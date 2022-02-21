@@ -2,9 +2,9 @@
 {
     public class ExperienceDto
     {
-        public string CompanyName { get; set; }
-        public string Position { get; set; }
-        public string City { get; set; }
+        public string ExperienceCompanyName { get; set; }
+        public string ExperiencePosition { get; set; }
+        public int ExperienceCityId { get; set; }
         public DateTime StartDate { get; set; } = DateTime.Now;
         public DateTime EndDate { get; set; } = DateTime.Now;
     }

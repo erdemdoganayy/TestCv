@@ -9,9 +9,9 @@ namespace BlazorAppCRUD.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Education> builder)
         {
-            builder.HasKey(e => e.Id);
+            builder.HasKey(e => e.EducationId);
 
-            builder.Property(t => t.School)
+            builder.Property(t => t.EducationSchool)
                 .HasMaxLength(200)
                 .IsRequired();
         }

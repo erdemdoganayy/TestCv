@@ -11,17 +11,19 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var emp in employees)
-        {
-            <tr>
-                <td>@emp.Name</td>
-                <td>@emp.City</td>
-                <td>@emp.Country</td>
-                <td>@emp.Gender</td>
-                <td>@emp.Village</td>
-                <td>@emp.Age</td>
-            </tr>
-        }
+ 
+             @foreach (var emp in employees)
+            {
+                <tr>
+                    <td>@emp.EmployeeName</td>
+                    <td>@emp.EmployeeCityId</td>
+                    <td>@emp.EmployeeCountry</td>
+                    <td>@emp.EmployeeGender</td>
+                    <td>@emp.EmployeeVillage</td>
+                    <td>@emp.EmployeeAge</td>
+                </tr>
+            }
+
     </tbody>
 </table>
 

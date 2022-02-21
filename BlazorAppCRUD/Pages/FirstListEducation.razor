@@ -2,30 +2,33 @@
 @inject IEducationService _educationService
 @using BlazorAppCRUD.Data
 
+@if (educationDeleted)
+{
+    <AlertComponent Content="School name is deleted!" Title="Congratulations !" Type="danger" />
+}
 
 @foreach (var edu in EducationsList)
 {
-    <input type="button" class="btn btn-sm btn-outline-success mx-1 mb-3" @onclick="(() => Delete(edu.Id))" value="@edu.School" />
+    <input type="button" class="btn btn-sm btn-outline-danger mx-1 mb-3" @onclick="(() => Delete(edu.EducationId))" value="@edu.EducationSchool   X" />
 }
 
 @code {
 
     [Parameter] public List<Education> EducationsList { get; set; }
-    [Parameter] public int EducationSchoolId { get; set; }
     [Parameter] public Employee employeeInfo { get; set; }
 
 
     public EventCallback<int> BindingValueChanged { get; set; }
 
+    bool educationDeleted;
 
     private async void Delete(int schoolId)
     {
-        bool educationDeleted;
 
         educationDeleted = await _educationService.DeleteEducation(schoolId);
 
         if (educationDeleted)
-            EducationsList = await _educationService.GetEducationSchool(employeeInfo.Id);
+            EducationsList = await _educationService.GetEducationSchool(employeeInfo.EmployeeId);
 
         await InvokeAsync(() =>
             {

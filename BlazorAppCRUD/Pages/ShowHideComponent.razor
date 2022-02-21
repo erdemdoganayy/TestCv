@@ -18,11 +18,11 @@
         <div class="row mt-2">
             <div class="col-md-4">
                 <label for="exampleInputEmail1">School Name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.School" aria-describedby="emailHelp" placeholder="Enter School Name">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.EducationSchool" aria-describedby="emailHelp" placeholder="Enter School Name">
             </div>
             <div class="col-md-4">
                 <label for="exampleInputEmail1">School Department</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.Department" aria-describedby="emailHelp" placeholder="Enter Department Name">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.EducationDepartment" aria-describedby="emailHelp" placeholder="Enter Department Name">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">Start Date</label>
@@ -51,15 +51,15 @@
         <div class="row mt-2">
             <div class="col-md-4">
                 <label for="exampleInputEmail1">Company Name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CompanyName" aria-describedby="emailHelp" placeholder="Enter Company Name">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.ExperienceCompanyName" aria-describedby="emailHelp" placeholder="Enter Company Name">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">City</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.City" aria-describedby="emailHelp" placeholder="Enter City">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.ExperienceCityId" aria-describedby="emailHelp" placeholder="Enter City">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">Position</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.Position" aria-describedby="emailHelp" placeholder="Enter Position">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.ExperiencePosition" aria-describedby="emailHelp" placeholder="Enter Position">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">Start Date</label>
@@ -168,15 +168,15 @@
     private async void CreateEducation()
     {
         bool educationSaved;
-        var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.Email);
+        var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.EmployeeEmail);
 
         if (currentEmployee != null)
         {
             Education Edu = new Education
                 {
-                    EmployeeId = currentEmployee.Id,
-                    School = educationDto.School,
-                    Department = educationDto.Department,
+                    EmployeeId = currentEmployee.EmployeeId,
+                    EducationSchool = educationDto. EducationSchool,
+                    EducationDepartment = educationDto. EducationDepartment,
                     StartDate = educationDto.StartDate,
                     EndDate = educationDto.EndDate
                 };
@@ -184,7 +184,7 @@
             educationSaved = await _educationService.Create(Edu);
 
             if (educationSaved)
-                EducationsList = await _educationService.GetEducationSchool(employeeInfo.Id);
+                EducationsList = await _educationService.GetEducationSchool(employeeInfo.EmployeeId);
 
             await InvokeAsync(() =>
                 {
@@ -196,16 +196,16 @@
 
     private async void CreateExperience()
     {
-        var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.Email);
+        var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.EmployeeEmail);
 
         if (currentEmployee != null)
         {
             Experience Exp = new Experience
                 {
-                    EmployeeId = currentEmployee.Id,
-                    CompanyName = experienceDto.CompanyName,
-                    Position = experienceDto.Position,
-                    City = experienceDto.City,
+                    EmployeeId = currentEmployee.EmployeeId,
+                    ExperienceCompanyName = experienceDto.ExperienceCompanyName,
+                    ExperiencePosition = experienceDto.ExperiencePosition,
+                    ExperienceCityId = Convert.ToInt32(experienceDto.ExperienceCityId),
                     StartDate = experienceDto.StartDate,
                     EndDate = experienceDto.EndDate
                 };
@@ -217,13 +217,13 @@
 
     private async void CreateSkill()
     {
-        var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.Email);
+        var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.EmployeeEmail);
 
         if (currentEmployee != null)
         {
             Skill ski = new Skill
                 {
-                    EmployeeId = currentEmployee.Id,
+                    EmployeeId = currentEmployee.EmployeeId,
                     SkillName = skillDto.SkillName,
                     SkillExperience = skillDto.SkillExperience,
                     SkillRating = skillDto.SkillRating
@@ -235,13 +235,13 @@
     }
     private async void CreateLanguage()
     {
-        var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.Email);
+        var currentEmployee = await _employeeService.GetEmployeeByEmail(employeeInfo.EmployeeEmail);
 
         if (currentEmployee != null)
         {
             Language lan = new Language
                 {
-                    EmployeeId = currentEmployee.Id,
+                    EmployeeId = currentEmployee.EmployeeId,
                     LanguageName = languageDto.LanguageName,
                     LanguageRating = languageDto.LanguageRating
                 };

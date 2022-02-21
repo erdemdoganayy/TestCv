@@ -2,10 +2,10 @@
 {
     public class Education : AuditableEntity
     {
-        public int Id { get; set; }
+        public int EducationId { get; set; }
 
-        public string School { get; set; }
-        public string Department { get; set; }
+        public string EducationSchool { get; set; }
+        public string EducationDepartment { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 

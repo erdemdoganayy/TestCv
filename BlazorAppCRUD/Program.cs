@@ -18,6 +18,8 @@ builder.Services.AddScoped<IEducationService, EducationService>();
 builder.Services.AddScoped<IExperienceServices, ExperienceServices>();
 builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<ILanguageService, LanguageService>();
+builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<IDistrictService, DistrictService>();
 
 var app = builder.Build();
 

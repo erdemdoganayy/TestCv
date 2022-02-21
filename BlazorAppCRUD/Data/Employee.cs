@@ -8,28 +8,30 @@
             Experiences = new List<Experience>();
             Skills = new List<Skill>();
             Languages = new List<Language>();
-        }
+     }
 
-        public int Id { get; set; }
-  
-        public string Name { get; set; }
-        public string Email { get; set; }
+        public int EmployeeId { get; set; }
 
-        public int Age { get; set; } 
+        public string EmployeeName { get; set; }
+        public string EmployeeEmail { get; set; }
 
-        public string City { get; set; }
+        public int EmployeeAge { get; set; }
 
-        public string Country { get; set; }
-    
-        public string Gender { get; set; }
-     
-        public string Village { get; set; }
+        public int EmployeeCityId { get; set; }
+
+        public string EmployeeCountry { get; set; }
+
+        public string EmployeeGender { get; set; }
+
+        public string EmployeeVillage { get; set; }
+
 
 
         public IList<Education> Educations { get; set; }
         public IList<Experience> Experiences { get; set; }
         public IList<Skill> Skills { get; set; }
         public IList<Language> Languages { get; set; }
+  
     }
 
 }

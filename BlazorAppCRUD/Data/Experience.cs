@@ -2,10 +2,10 @@
 {
     public class Experience : AuditableEntity
     {
-        public int Id { get; set; }
-        public string CompanyName { get; set; }
-        public string Position { get; set; }
-        public string City { get; set; }
+        public int ExperienceId { get; set; }
+        public string ExperienceCompanyName { get; set; }
+        public string ExperiencePosition { get; set; }
+        public int ExperienceCityId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 

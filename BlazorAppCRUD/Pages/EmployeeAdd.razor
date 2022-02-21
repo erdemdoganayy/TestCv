@@ -1,9 +1,12 @@
 ﻿@page "/EmployeeAdd"
 @using BlazorAppCRUD.Data
 @using BlazorAppCRUD.Persistence
+@using BlazorAppCRUD.Services
 @using Microsoft.EntityFrameworkCore
 @inject IEmployeeService _employeeService
 @inject IEducationService _educationService
+@inject ICityService _cityService
+@inject IDistrictService _districtService
 @inject IApplicationDbContext _context
 
 
@@ -27,23 +30,24 @@ else
 
 @if (employeeSaved)
 {
-<AlertComponent Content="Personal information saved !" Title="Congratulations !" />
+    <AlertComponent Content="Personal information saved !" Title="Congratulations !" Type="success" />
 
 }
+
 <form>
     <div class="row">
         <div class="col-md-8">
             <div class="form-group">
                 <label for="Name" class="control-label">Name</label>
-                <input form="Name" class="form-control" @bind="employee.Name" />
+                <input form="Name" class="form-control" @bind="employee.EmployeeName" />
             </div>
             <div class="form-group">
                 <label for="Email" class="control-label">Email</label>
-                <input form="Email" class="form-control" @bind="employee.Email" />
+                <input form="Email" class="form-control" @bind="employee.EmployeeEmail" />
             </div>
             <div class="form-group">
                 <label for="Gender" class="control-label">Gender</label>
-                <select class="form-select" aria-label="Default select example" @bind="employee.Gender">
+                <select class="form-select" aria-label="Default select example" @bind="employee.EmployeeGender">
                     <option value="">-Select Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -51,19 +55,43 @@ else
             </div>
             <div class="form-group">
                 <label for="Age" class="control-label">Age</label>
-                <input form="Age" class="form-control" @bind="employee.Age" />
+                <input form="Age" class="form-control" @bind="employee.EmployeeAge" />
             </div>
-            <div class="form-group">
-                <label for="City" class="control-label">City</label>
-                <input form="City" class="form-control" @bind="employee.City" />
-            </div>
+
+            <label for="City" class="control-label">City</label>
+            <select class="form-select" aria-label="Default select example" @onchange="DoStuff" @bind="employee.EmployeeCityId">
+                
+                <option value="">-Select City</option>
+
+                @if (@cities != null)
+                {
+                    @foreach (var city in cities)
+                    {
+                        <option value="@city.CityCode">@city.CityName</option>
+                    }
+
+                }
+            </select>
+            <label for="District" class="control-label">District</label>
+            <select class="form-select" aria-label="Default select example">
+                @if (districts != null)
+                {
+                    @foreach (var district in districts)
+                    {
+                        <option value=@district.DistrictId>@district.DistrictName</option>
+                    }
+                }
+
+
+            </select>
+
             <div class="form-group">
                 <label for="Village" class="control-label">Village</label>
-                <input form="Village" class="form-control" @bind="employee.Village" />
+                <input form="Village" class="form-control" @bind="employee.EmployeeVillage" />
             </div>
             <div class="form-group">
                 <label for="Country" class="control-label">Country</label>
-                <input form="Country" class="form-control" @bind="employee.Country" />
+                <input form="Country" class="form-control" @bind="employee.EmployeeCountry" />
             </div>
 
 
@@ -90,12 +118,21 @@ else
 
     List<Employee> employees = new List<Employee>();
     Employee employee = new Employee();
-
+    List<City> cities = new List<City>();
+    List<District> districts = new List<District>();
     bool employeeSaved;
+ 
+
+    async void DoStuff(ChangeEventArgs e)
+    {
+ 
+        districts = await _districtService.GetDistricts(employee.EmployeeCityId);
+    }
 
     protected override async Task OnInitializedAsync()
     {
         employees = await _employeeService.GetEmployees();
+        cities = await _cityService.GetCities();
     }
 
     private async void CreateEmployee()

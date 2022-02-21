@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorAppCRUD.Persistence.Configurations
 {
-    public class ExperienceConfiguration : IEntityTypeConfiguration<Experience>
+    public class CityConfiguration : IEntityTypeConfiguration<City>
     {
-        public void Configure(EntityTypeBuilder<Experience> builder)
+        public void Configure(EntityTypeBuilder<City> builder)
         {
-            builder.HasKey(e => e.ExperienceId);
-
-            builder.Property(t => t.ExperienceCompanyName)
+            builder.HasKey(x => x.CityId);
+            builder.Property(t => t.CityName)
                 .HasMaxLength(200)
                 .IsRequired();
+               
         }
     }
 }
