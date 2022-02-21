@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorAppCRUD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220221141123_CreateDb")]
+    [Migration("20220221155151_CreateDb")]
     partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -307,7 +307,7 @@ namespace BlazorAppCRUD.Migrations
                     b.HasOne("BlazorAppCRUD.Data.Employee", "Employee")
                         .WithMany("Experiences")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("City");

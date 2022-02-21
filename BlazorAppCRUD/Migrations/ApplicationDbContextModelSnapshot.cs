@@ -305,7 +305,7 @@ namespace BlazorAppCRUD.Migrations
                     b.HasOne("BlazorAppCRUD.Data.Employee", "Employee")
                         .WithMany("Experiences")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("City");
