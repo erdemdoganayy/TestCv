@@ -11,11 +11,14 @@ namespace BlazorAppCRUD.Data
         {
             _db = db;
         }
-  
+
         public async Task<List<Employee>> GetEmployees()
         {
-            List<City> cityList = new List<City>();
-            return await _db.Employees.ToListAsync();
+            return await _db.Employees
+                .Include(x => x.Country)
+                .Include(x => x.District)
+                .ThenInclude(x => x.City)
+                .ToListAsync();
         }
         //.Include(e => e.City)
         // Where(x=>x.EmployeeCityId == cityList.)

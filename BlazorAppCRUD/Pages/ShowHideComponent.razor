@@ -9,6 +9,7 @@
 @inject IExperienceServices _experienceService
 @inject ISkillService _skilService
 @inject ILanguageService _languageService
+@inject ISchoolService _schoolService
 @inject IApplicationDbContext _context
 
 
@@ -178,6 +179,11 @@
     ExperienceDto experienceDto = new ExperienceDto();
     Skill skillDto = new Skill();
     Language languageDto = new Language();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Schools = await _schoolService.GetSchools();
+    }
 
 
     private async void CreateEducation()

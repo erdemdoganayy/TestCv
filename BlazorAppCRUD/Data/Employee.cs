@@ -8,7 +8,6 @@
             Experiences = new List<Experience>();
             Skills = new List<Skill>();
             Languages = new List<Language>();
-   
         }
 
         public int Id { get; set; }
@@ -21,7 +20,9 @@
         public string Email { get; set; }
         public int Age { get; set; }
         public string Gender { get; set; }
-        public string Country { get; set; }
+
+        public int CountryId { get; set; }
+        public Country Country { get; set; }
 
         public int DistrictId { get; set; }
         public District District { get; set; }

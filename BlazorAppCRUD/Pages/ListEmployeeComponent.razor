@@ -1,4 +1,7 @@
 @using BlazorAppCRUD.Data
+@using BlazorAppCRUD.Persistence
+@inject IApplicationDbContext _context
+
 <table class="table">
     <thead>
         <tr>
@@ -10,17 +13,17 @@
         </tr>
     </thead>
     <tbody>
- 
-             @foreach (var emp in employees)
-            {
-                <tr>
-                    <td>@emp.Name</td>
-                    <td>@emp.DistrictId</td>
-                    <td>@emp.Country</td>
-                    <td>@emp.Gender</td>
-                    <td>@emp.Age</td>
-                </tr>
-            }
+
+        @foreach (var emp in employees)
+        {
+            <tr>
+                <td>@emp.Name</td>
+                <td>@emp.District.City.Name</td>
+                <td>@emp.Country.Name</td>
+                <td>@emp.Gender</td>
+                <td>@emp.Age</td>
+            </tr>
+        }
 
     </tbody>
 </table>
