@@ -16,13 +16,26 @@
     <div class="form-group mt-3">
         <label for="exampleInputEmail1">Education</label>
         <div class="row mt-2">
-            <div class="col-md-4">
-                <label for="exampleInputEmail1">School Name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.EducationSchool" aria-describedby="emailHelp" placeholder="Enter School Name">
+            <div class="col-md-3">
+
+                <label for="Country" class="control-label">School Name</label>
+                <select class="form-select" aria-label="Default select example" @bind="educationDto.School">
+
+                    <option value="">-Select University</option>
+
+                    @if (Schools != null)
+                    {
+                        @foreach (var school in Schools)
+                        {
+                            <option value=@school.Id>@school.Name</option>
+                        }
+                    }
+                </select>
+
             </div>
             <div class="col-md-4">
                 <label for="exampleInputEmail1">School Department</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.EducationDepartment" aria-describedby="emailHelp" placeholder="Enter Department Name">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.Department" aria-describedby="emailHelp" placeholder="Enter Department Name">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">Start Date</label>
@@ -32,17 +45,18 @@
                 <label for="exampleInputEmail1">End Date</label>
                 <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.EndDate" aria-describedby="emailHelp" placeholder="Enter End Date">
             </div>
-        </div>
-    </div>
-    <br />
-    <FirstListEducation EducationsList="@EducationsList" employeeInfo="employee"/>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <input type="button" class="btn btn-primary" @onclick="@CreateEducation" value="Save" />
+            <div class="col-md-1">
+                <label for="exampleInputEmail1"></label>
+                <div class="form-group">
+                    <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateEducation" value="Add" />
+                </div>
             </div>
         </div>
+
+        <br />
+
     </div>
+    <FirstListEducation EducationsList="@EducationsList" employee="employee" />
 </form>
 
 <form>
@@ -51,15 +65,15 @@
         <div class="row mt-2">
             <div class="col-md-4">
                 <label for="exampleInputEmail1">Company Name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.ExperienceCompanyName" aria-describedby="emailHelp" placeholder="Enter Company Name">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CompanyName" aria-describedby="emailHelp" placeholder="Enter Company Name">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">City</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.ExperienceCityId" aria-describedby="emailHelp" placeholder="Enter City">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CityId" aria-describedby="emailHelp" placeholder="Enter City">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">Position</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.ExperiencePosition" aria-describedby="emailHelp" placeholder="Enter Position">
+                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.Position" aria-describedby="emailHelp" placeholder="Enter Position">
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">Start Date</label>
@@ -71,7 +85,7 @@
             </div>
         </div>
     </div>
-    
+
     <br />
     <div class="row mb-4">
         <div class="col-md-4">
@@ -154,6 +168,7 @@
 
     Education education = new Education();
     List<Education> EducationsList = new List<Education>();
+    List<School> Schools = new List<School>();
 
     Experience experience = new Experience();
     Skill skill = new Skill();
@@ -175,8 +190,8 @@
             Education Edu = new Education
                 {
                     EmployeeId = currentEmployee.Id,
-                    School = educationDto. EducationSchool,
-                    Department = educationDto. EducationDepartment,
+                    School = educationDto.School,
+                    Department = educationDto.Department,
                     StartDate = educationDto.StartDate,
                     EndDate = educationDto.EndDate
                 };
@@ -184,7 +199,7 @@
             educationSaved = await _educationService.Create(Edu);
 
             if (educationSaved)
-                EducationsList = await _educationService.GetEducationSchool(employee.Id);
+                EducationsList = await _educationService.GetEducationSchool(Edu.EmployeeId);
 
             await InvokeAsync(() =>
                 {
@@ -203,9 +218,9 @@
             Experience Exp = new Experience
                 {
                     EmployeeId = currentEmployee.Id,
-                    CompanyName = experienceDto.ExperienceCompanyName,
-                    Position = experienceDto.ExperiencePosition,
-                    CityId = Convert.ToInt32(experienceDto.ExperienceCityId),
+                    CompanyName = experienceDto.CompanyName,
+                    Position = experienceDto.Position,
+                    CityId = Convert.ToInt32(experienceDto.CityId),
                     StartDate = experienceDto.StartDate,
                     EndDate = experienceDto.EndDate
                 };
@@ -242,8 +257,8 @@
             Language lan = new Language
                 {
                     EmployeeId = currentEmployee.Id,
-                   Name = languageDto.Name,
-                   Rating = languageDto.Rating
+                    Name = languageDto.Name,
+                    Rating = languageDto.Rating
                 };
 
             await _languageService.Create(lan);

@@ -11,7 +11,7 @@ namespace BlazorAppCRUD.Data
         {
             _db = db;
         }
-
+  
         public async Task<List<Employee>> GetEmployees()
         {
             List<City> cityList = new List<City>();
@@ -41,6 +41,9 @@ namespace BlazorAppCRUD.Data
                 employee.Age = objEmployee.Age;
                 employee.DistrictId = Convert.ToInt32(objEmployee.DistrictId);
                 employee.Country = objEmployee.Country;
+                employee.Phone = objEmployee.Phone;
+                employee.Website = objEmployee.Website;
+                employee.Linkedin = objEmployee.Linkedin;
 
                 _db.Employees.Update(employee);
                 await _db.SaveChangesAsync(CancellationToken.None);

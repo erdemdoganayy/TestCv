@@ -19,8 +19,8 @@ namespace BlazorAppCRUD.Data
         public DbSet<Language> Languages { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<District> Districts { get; set; }
-
-
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<School> Schools { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())

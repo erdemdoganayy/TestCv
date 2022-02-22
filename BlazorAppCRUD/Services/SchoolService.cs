@@ -3,18 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlazorAppCRUD.Data
 {
-    public class CityService : ICityService
+    public class SchoolService : ISchoolService
     {
         private readonly IApplicationDbContext _db;
 
-        public CityService(IApplicationDbContext db)
+        public SchoolService(IApplicationDbContext db)
         {
             _db = db;
         }
 
-        public async Task<List<City>> GetCities()
+        public async Task<List<School>> GetSchools()
         {
-            return await _db.Cities.OrderBy(x=>x.Name).ToListAsync();
+            return await _db.Schools.OrderBy(x => x.Name).ToListAsync();
         }
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BlazorAppCRUD.Migrations
 {
-    public partial class CreateDb : Migration
+    public partial class CreatedDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

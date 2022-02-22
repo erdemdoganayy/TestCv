@@ -2,10 +2,10 @@
 @inject IEducationService _educationService
 @using BlazorAppCRUD.Data
 
-@if (educationDeleted)
+<!-- @if (educationDeleted)
 {
     <AlertComponent Content="School name is deleted!" Title="Congratulations !" Type="danger" />
-}
+} -->
 
 @foreach (var edu in EducationsList)
 {
@@ -15,20 +15,20 @@
 @code {
 
     [Parameter] public List<Education> EducationsList { get; set; }
-    [Parameter] public Employee employeeInfo { get; set; }
+    [Parameter] public Employee employee { get; set; }
 
 
     public EventCallback<int> BindingValueChanged { get; set; }
 
     bool educationDeleted;
-
+    
     private async void Delete(int schoolId)
     {
 
         educationDeleted = await _educationService.DeleteEducation(schoolId);
 
         if (educationDeleted)
-            EducationsList = await _educationService.GetEducationSchool(employeeInfo.Id);
+            EducationsList = await _educationService.GetEducationSchool(employee.Id);
 
         await InvokeAsync(() =>
             {

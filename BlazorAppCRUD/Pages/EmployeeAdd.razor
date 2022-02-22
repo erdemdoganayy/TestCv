@@ -7,6 +7,7 @@
 @inject IEducationService _educationService
 @inject ICityService _cityService
 @inject IDistrictService _districtService
+@inject ICountryService _countryService
 @inject IApplicationDbContext _context
 
 
@@ -35,77 +36,128 @@ else
 }
 
 <form>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="form-group">
-                <label for="Name" class="control-label">Name</label>
-                <input form="Name" class="form-control" @bind="employee.Name" />
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-2">
+                <label for="exampleInputEmail1">Name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Name" @bind="employee.Name">
+                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
             </div>
-            <div class="form-group">
-                <label for="Email" class="control-label">Email</label>
-                <input form="Email" class="form-control" @bind="employee.Email" />
+            <div class="col-md-3">
+                <label for="exampleInputEmail1">Surname</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Surname" @bind="employee.Surname">
             </div>
-            <div class="form-group">
-                <label for="Gender" class="control-label">Gender</label>
-                <select class="form-select" aria-label="Default select example" @bind="employee.Gender">
-                    <option value="">-Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
+            <div class="col-md-3">
+                <label for="exampleInputEmail1">E-Mail Address</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter E-Mail Address" @bind="employee.Email">
             </div>
-            <div class="form-group">
+            <div class="col-md-3">
+                <label for="exampleInputEmail1">Phone</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Phone" @bind="employee.Phone">
+            </div>
+
+
+            <div class="col-md-1">
                 <label for="Age" class="control-label">Age</label>
                 <input form="Age" class="form-control" @bind="employee.Age" />
             </div>
 
-            <label for="City" class="control-label">City</label>
-            <select class="form-select" aria-label="Default select example" @onchange="DoStuff">
-
-                <option value="">-Select City</option>
-
-                @if (@cities != null)
-                {
-                    @foreach (var city in cities)
-                    {
-                        <option value="@city.Code">@city.Name</option>
-                    }
-
-                }
-            </select>
-            <label for="District" class="control-label">District</label>
-            <select class="form-select" aria-label="Default select example">
-                @if (districts != null)
-                {
-                    @foreach (var district in districts)
-                    {
-                        <option value=@district.Id>@district.Name</option>
-                    }
-                }
+        </div>
 
 
-            </select>
 
-            <div class="form-group">
+
+        <div class="row mt-2">
+
+            <div class="col-md-3">
                 <label for="Country" class="control-label">Country</label>
-                <input form="Country" class="form-control" @bind="employee.Country" />
+                <select class="form-select" aria-label="Default select example" @bind="employee.Country">
+
+                      <option value="">-Select Country</option>
+
+                    @if (countries != null)
+                    {
+                        @foreach (var country in countries)
+                        {
+                            <option value=@country.Id>@country.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="City" class="control-label">City</label>
+                <select class="form-select" aria-label="Default select example" @onchange="DoStuff">
+
+                    <option value="">-Select City</option>
+
+                    @if (@cities != null)
+                    {
+                        @foreach (var city in cities)
+                        {
+                            <option value="@city.Code">@city.Name</option>
+                        }
+
+                    }
+                </select>
             </div>
 
+            <div class="col-md-2">
+                <label for="District" class="control-label">District</label>
+                <select class="form-select" aria-label="Default select example" @bind="employee.DistrictId">
+                      <option value="">-Select District</option>
+                    @if (districts != null)
+                    {
+                        @foreach (var district in districts)
+                        {
+                            <option value=@district.Id>@district.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+
+            <div class="col-md-5">
+                <label for="exampleInputEmail1">Address</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Address" @bind="employee.Address">
+            </div>
         </div>
+
+        <div class="row mt-2">
+            <div class="col-md-3">
+                <label for="exampleInputEmail1">Gender</label>
+                <select class="form-select" @bind="employee.Gender">
+                    <option selected>Select a gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="exampleInputEmail1">Your Web Site</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Your Web Site" @bind="employee.Website">
+            </div>
+            <div class="col-md-5">
+                <label for="exampleInputEmail1">LinkedIn Address</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter LinkedIn Address" @bind="employee.Linkedin">
+            </div>
+        </div>
+
+
     </div>
-    <br />
-    <div class="row">
-        <div class="col-md-4">
+
+      <div class="row mt-2">
+        <div class="col-md-12 d-flex justify-content-end">
             <div class="form-group">
-                <input type="button" class="btn btn-primary" @onclick="@CreateEmployee" value="Save" />
-                <input type="button" class="btn btn-primary" value="Cancel" />
+                <input type="button" class="btn btn-success" @onclick="@CreateEmployee" value="Save" />
             </div>
         </div>
     </div>
+
+
 </form>
 
 @if (employeeSaved)
 {
-    <ShowHideComponent employeeInfo="@employee" />
+    <ShowHideComponent employee="@employee" />
 }
 
 @code {
@@ -114,6 +166,7 @@ else
     Employee employee = new Employee();
     List<City> cities = new List<City>();
     List<District> districts = new List<District>();
+    List<Country> countries = new List<Country>();
     bool employeeSaved;
 
 
@@ -132,6 +185,7 @@ else
     {
         employees = await _employeeService.GetEmployees();
         cities = await _cityService.GetCities();
+        countries = await _countryService.GetCountries();
     }
 
     private async void CreateEmployee()
