@@ -2,6 +2,8 @@
 @using BlazorAppCRUD.Data
 @using BlazorAppCRUD.Persistence
 @using BlazorAppCRUD.Services
+@using BlazorAppCRUD.Utilities.Enums
+@using EnumsNET
 @using Microsoft.EntityFrameworkCore
 @inject IEmployeeService _employeeService
 @inject IEducationService _educationService
@@ -73,7 +75,7 @@ else
                 <label for="Country" class="control-label">Country</label>
                 <select class="form-select" aria-label="Default select example" @bind="employee.CountryId">
 
-                      <option value="">-Select Country</option>
+                    <option value="">-Select Country</option>
 
                     @if (countries != null)
                     {
@@ -102,9 +104,26 @@ else
             </div>
 
             <div class="col-md-2">
+                <label for="City" class="control-label">City</label>
+                <select class="form-select" aria-label="Default select example" @bind="employee.DistrictId">
+
+                    <option value="">-Select Position</option>
+
+                    @if (@positionTypes != null)
+                    {
+                        @foreach (var item in positionTypes)
+                        {
+                            <option value="@item">@item.AsString(EnumFormat.Description)</option>
+                        }
+
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-2">
                 <label for="District" class="control-label">District</label>
                 <select class="form-select" aria-label="Default select example" @bind="employee.DistrictId">
-                      <option value="">-Select District</option>
+                    <option value="">-Select District</option>
                     @if (districts != null)
                     {
                         @foreach (var district in districts)
@@ -144,7 +163,7 @@ else
 
     </div>
 
-      <div class="row mt-2">
+    <div class="row mt-2">
         <div class="col-md-12 d-flex justify-content-end">
             <div class="form-group">
                 <input type="button" class="btn btn-success" @onclick="@CreateEmployee" value="Save" />
@@ -169,6 +188,8 @@ else
     List<Country> countries = new List<Country>();
     bool employeeSaved;
 
+    List<PositionType> positionTypes = new List<PositionType>();
+
 
     async void DoStuff(ChangeEventArgs e)
     {
@@ -183,6 +204,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
+
         employees = await _employeeService.GetEmployees();
         cities = await _cityService.GetCities();
         countries = await _countryService.GetCountries();
