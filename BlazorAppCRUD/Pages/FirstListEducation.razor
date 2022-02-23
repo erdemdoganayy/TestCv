@@ -5,7 +5,7 @@
 
 @foreach (var edu in EducationsList)
 {
-    <input type="button" class="btn btn-sm btn-outline-danger mx-1 mb-3" @onclick="(() => Delete(edu.Id))" value="@edu.School   X" />
+    <input type="button" class="btn btn-sm btn-outline-danger mx-1 mb-3" @onclick="(() => Delete(edu.Id))" value="@edu.School.Name   X" />
 }
 
 @code {

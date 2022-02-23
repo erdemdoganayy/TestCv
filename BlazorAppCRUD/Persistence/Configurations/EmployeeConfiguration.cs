@@ -11,8 +11,6 @@ namespace BlazorAppCRUD.Persistence.Configurations
         {
             builder.HasKey(e => e.Id);
 
-            //builder.HasOne(e => e.Country).WithMany(e => e.Employees).OnDelete(DeleteBehavior.Restrict);
-
             builder.Property(t => t.Name)
                 .HasMaxLength(200)
                 .IsRequired();

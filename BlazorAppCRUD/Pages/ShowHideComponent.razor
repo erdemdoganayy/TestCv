@@ -24,7 +24,7 @@
             <div class="col-md-3">
 
                 <label for="Country" class="control-label">School Name</label>
-                <select class="form-select" aria-label="Default select example" @bind="educationDto.School">
+                <select class="form-select" aria-label="Default select example" @bind="educationDto.SchoolId">
 
                     <option value="">-Select University</option>
 
@@ -278,7 +278,7 @@
             Education Edu = new Education
                 {
                     EmployeeId = currentEmployee.Id,
-                    School = educationDto.School,
+                    SchoolId = educationDto.SchoolId,
                     Department = educationDto.Department,
                     StartDate = educationDto.StartDate,
                     EndDate = educationDto.EndDate
@@ -368,11 +368,9 @@
                     Rating = languageDto.Rating
                 };
 
-            await _languageService.Create(lan);
-
             languageSaved = await _languageService.Create(lan);
-            if (languageSaved)
 
+            if (languageSaved)
                 LanguagesList = await _languageService.GetLanguageName(lan.EmployeeId);
 
             await InvokeAsync(() =>
