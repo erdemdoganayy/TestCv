@@ -1,6 +1,5 @@
 using BlazorAppCRUD.Data;
 using BlazorAppCRUD.Persistence;
-using BlazorAppCRUD.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +19,7 @@ builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IDistrictService, DistrictService>();
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<ISchoolService, SchoolService>();
+builder.Services.AddScoped<ISchoolDepartmentService, SchoolDepartmentService>();
 
 
 var app = builder.Build();

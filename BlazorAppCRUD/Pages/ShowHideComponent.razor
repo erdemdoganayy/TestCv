@@ -2,7 +2,8 @@
 @using BlazorAppCRUD.Data
 @using BlazorAppCRUD.Dtos
 @using BlazorAppCRUD.Persistence
-@using BlazorAppCRUD.Services
+@using BlazorAppCRUD.Utilities.Enums
+@using EnumsNET
 @using Microsoft.EntityFrameworkCore
 @inject IEmployeeService _employeeService
 @inject IEducationService _educationService
@@ -10,6 +11,9 @@
 @inject ISkillService _skilService
 @inject ILanguageService _languageService
 @inject ISchoolService _schoolService
+@inject ISchoolDepartmentService _schoolDepartmentService
+@inject ICityService _cityService
+@inject ICountryService _countryService
 @inject IApplicationDbContext _context
 
 
@@ -35,8 +39,20 @@
 
             </div>
             <div class="col-md-4">
-                <label for="exampleInputEmail1">School Department</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="educationDto.Department" aria-describedby="emailHelp" placeholder="Enter Department Name">
+
+                <label for="Country" class="control-label">School Department</label>
+                <select class="form-select" aria-label="Default select example" @bind="educationDto.Department">
+
+                    <option value="">-Select Department</option>
+                    @if (SchoolDepartments != null)
+                    {
+                        @foreach (var department in SchoolDepartments)
+                        {
+                            <option value=@department.Id>@department.Name</option>
+                        }
+                    }
+
+                </select>
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">Start Date</label>
@@ -64,17 +80,44 @@
     <div class="form-group mt-3">
         <label for="exampleInputEmail1">Experience</label>
         <div class="row mt-2">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="exampleInputEmail1">Company Name</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CompanyName" aria-describedby="emailHelp" placeholder="Enter Company Name">
             </div>
+            <!--   <div class="col-md-2">
+                     <label for="exampleInputEmail1">Other Position</label>
+                     <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.Position" aria-describedby="emailHelp" placeholder="Enter Position">
+                 </div> -->
             <div class="col-md-2">
-                <label for="exampleInputEmail1">City</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CityId" aria-describedby="emailHelp" placeholder="Enter City">
+                <label for="City" class="control-label">Position</label>
+                <select class="form-select" aria-label="Default select example" @bind="experienceDto.Position">
+
+                    <option value="">-Select Position</option>
+
+                    @if (@positionTypes != null)
+                    {
+                        @foreach (var item in positionTypes)
+                        {
+                            <option value="@item">@item.AsString(EnumFormat.Description)</option>
+                        }
+
+                    }
+                </select>
             </div>
             <div class="col-md-2">
-                <label for="exampleInputEmail1">Position</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.Position" aria-describedby="emailHelp" placeholder="Enter Position">
+                <label for="Country" class="control-label">City</label>
+                <select class="form-select" aria-label="Default select example" @bind="experienceDto.CityId">
+
+                    <option value="">-Select City</option>
+
+                    @if (cities != null)
+                    {
+                        @foreach (var city in cities)
+                        {
+                            <option value=@city.Id>@city.Name</option>
+                        }
+                    }
+                </select>
             </div>
             <div class="col-md-2">
                 <label for="exampleInputEmail1">Start Date</label>
@@ -84,17 +127,17 @@
                 <label for="exampleInputEmail1">End Date</label>
                 <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.EndDate" aria-describedby="emailHelp" placeholder="Enter End Date">
             </div>
-        </div>
-    </div>
-
-    <br />
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="form-group">
-                <input type="button" class="btn btn-primary" @onclick="@CreateExperience" value="Save" />
+            <div class="col-md-1">
+                <label for="exampleInputEmail1">&nbsp</label>
+                <div class="form-group">
+                    <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateExperience" value="Add" />
+                </div>
             </div>
+
         </div>
     </div>
+    <br />
+    <FirstListExperience ExperiencesList="@ExperiencesList" employee="employee" />
 </form>
 
 <form>
@@ -105,12 +148,12 @@
                 <label for="exampleInputEmail1">Skill Name</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.Name" placeholder="Enter Skill Name">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="Gender" class="control-label">Rating 1-10</label>
                     <select class="form-select" aria-label="Default select example" @bind="skillDto.Rating">
                         <option value="">-Select Rating</option>
-                        <option value="1">1 <span class="oi oi-star"></span></option>
+                        <option value="1">1 <span class="oi oi-home"></span></option>
                         <option value="2">2 <span class="oi oi-star"></span></option>
                         <option value="3">3 <span class="oi oi-star"></span></option>
                         <option value="4">4 <span class="oi oi-star"></span></option>
@@ -123,7 +166,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="Gender" class="control-label">Select Skill Experience</label>
                     <select class="form-select" aria-label="Default select example" @bind="skillDto.Experience">
@@ -141,9 +184,16 @@
                     </select>
                 </div>
             </div>
+            <div class="col-md-1">
+                <label for="exampleInputEmail1">&nbsp</label>
+                <div class="form-group">
+                    <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateSkill" value="Add" />
+                </div>
+            </div>
         </div>
     </div>
-    <input type="button" class="btn btn-primary" @onclick="@CreateSkill" value="Save" />
+    <br />
+    <FirstListSkill SkillsList="@SkillsList" employee="employee" />
 </form>
 <form>
     <div class="form-group mt-3">
@@ -153,13 +203,34 @@
                 <label for="exampleInputEmail1">Language Name</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" @bind="languageDto.Name" aria-describedby="emailHelp" placeholder="Enter Language Name">
             </div>
-            <div class="col-md-4">
-                <label for="exampleInputEmail1">Rating 1-10</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="languageDto.Rating" aria-describedby="emailHelp" placeholder="Enter Rating">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Gender" class="control-label">Rating 1-10</label>
+                    <select class="form-select" aria-label="Default select example" @bind="languageDto.Rating">
+                        <option value="">-Select Rating</option>
+                        <option value="1">1 <span class="oi oi-flag"></span></option>
+                        <option value="2">2 <span class="oi oi-star"></span></option>
+                        <option value="3">3 <span class="oi oi-star"></span></option>
+                        <option value="4">4 <span class="oi oi-star"></span></option>
+                        <option value="5">5 <span class="oi oi-star"></span></option>
+                        <option value="6">6 <span class="oi oi-star"></span></option>
+                        <option value="7">7 <span class="oi oi-star"></span></option>
+                        <option value="8">8 <span class="oi oi-star"></span></option>
+                        <option value="9">9 <span class="oi oi-star"></span></option>
+                        <option value="10">10 <span class="oi oi-star"></span></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="exampleInputEmail1">&nbsp</label>
+                <div class="form-group">
+                    <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateLanguage" value="Add" />
+                </div>
             </div>
         </div>
     </div>
-    <input type="button" class="btn btn-primary" @onclick="@CreateLanguage" value="Save" />
+    <br />
+    <FirstListLanguage LanguagesList="@LanguagesList" employee="employee" />
 </form>
 
 @code {
@@ -167,10 +238,17 @@
     [Parameter] public Employee employee { get; set; }
     [Parameter] public int EducationSchoolId { get; set; }
 
-    Education education = new Education();
     List<Education> EducationsList = new List<Education>();
+    List<Experience> ExperiencesList = new List<Experience>();
+    List<Language> LanguagesList = new List<Language>();
+    List<Skill> SkillsList = new List<Skill>();
     List<School> Schools = new List<School>();
+    List<SchoolDepartment> SchoolDepartments = new List<SchoolDepartment>();
+    List<Country> countries = new List<Country>();
+    List<City> cities = new List<City>();
+    List<PositionType> positionTypes = new List<PositionType>();
 
+    Education education = new Education();
     Experience experience = new Experience();
     Skill skill = new Skill();
     Language language = new Language();
@@ -182,7 +260,11 @@
 
     protected override async Task OnInitializedAsync()
     {
+        positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
         Schools = await _schoolService.GetSchools();
+        SchoolDepartments = await _schoolDepartmentService.GetDepartments();
+        countries = await _countryService.GetCountries();
+        cities = await _cityService.GetCities();
     }
 
 
@@ -217,6 +299,7 @@
 
     private async void CreateExperience()
     {
+        bool experienceSaved;
         var currentEmployee = await _employeeService.GetEmployeeByEmail(employee.Email);
 
         if (currentEmployee != null)
@@ -231,13 +314,21 @@
                     EndDate = experienceDto.EndDate
                 };
 
-            await _experienceService.Create(Exp);
+            experienceSaved = await _experienceService.Create(Exp);
+            if (experienceSaved)
+                ExperiencesList = await _experienceService.GetExperienceCompanyName(Exp.EmployeeId);
+
+            await InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
         }
 
     }
 
     private async void CreateSkill()
     {
+        bool skillSaved;
         var currentEmployee = await _employeeService.GetEmployeeByEmail(employee.Email);
 
         if (currentEmployee != null)
@@ -250,12 +341,22 @@
                     Rating = skillDto.Rating
                 };
 
-            await _skilService.Create(ski);
+
+            skillSaved = await _skilService.Create(ski);
+            if (skillSaved)
+
+                SkillsList = await _skilService.GetSkillName(ski.EmployeeId);
+
+            await InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
         }
 
     }
     private async void CreateLanguage()
     {
+        bool languageSaved;
         var currentEmployee = await _employeeService.GetEmployeeByEmail(employee.Email);
 
         if (currentEmployee != null)
@@ -268,6 +369,16 @@
                 };
 
             await _languageService.Create(lan);
+
+            languageSaved = await _languageService.Create(lan);
+            if (languageSaved)
+
+                LanguagesList = await _languageService.GetLanguageName(lan.EmployeeId);
+
+            await InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
         }
 
     }

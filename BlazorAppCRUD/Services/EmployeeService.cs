@@ -20,8 +20,6 @@ namespace BlazorAppCRUD.Data
                 .ThenInclude(x => x.City)
                 .ToListAsync();
         }
-        //.Include(e => e.City)
-        // Where(x=>x.EmployeeCityId == cityList.)
         public async Task<Employee> GetEmployeeByEmail(string email)
         {
             return await _db.Employees.FirstOrDefaultAsync(x => x.Email == email);
@@ -43,7 +41,7 @@ namespace BlazorAppCRUD.Data
                 employee.Email = objEmployee.Email;
                 employee.Age = objEmployee.Age;
                 employee.DistrictId = Convert.ToInt32(objEmployee.DistrictId);
-                employee.Country = objEmployee.Country;
+                employee.CountryId = objEmployee.CountryId;
                 employee.Phone = objEmployee.Phone;
                 employee.Website = objEmployee.Website;
                 employee.Linkedin = objEmployee.Linkedin;

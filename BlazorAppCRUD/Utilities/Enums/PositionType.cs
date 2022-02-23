@@ -9,7 +9,49 @@ namespace BlazorAppCRUD.Utilities.Enums
         SoftwareDeveloper,
 
         [Description("Senior Software Developer")]
-        SeniorSoftwareDeveloper
+        SeniorSoftwareDeveloper,
+
+        [Description("QA Engineer")]
+        QAEngineer,
+
+        [Description("Senior QA Engineer")]
+        SeniorQAEngineer,
+
+        [Description("Senior / Product Manager")]
+        SeniorProductManager,
+
+        [Description("Senior / Project Manager")]
+        SeniorProjectManager,
+
+        [Description("Cyber Security Specialist")]
+        CyberSecuritySpecialist,
+
+        [Description("Cyber Security Engineer")]
+        CyberSecurityEngineer,
+
+        [Description("Design Engineering")]
+        DesignEngineering,
+
+        [Description("Senior Engineering")]
+        SeniorEngineering,
+
+        [Description("Network Engineer")]
+        NetworkEngineer,
+
+        [Description("Data Engineer")]
+        DataEngineer,
+
+         [Description("DevOps Engineer ")]
+        DevOpsEngineer,
+
+        [Description("Security Engineer")]
+        SecurityEngineer,
+
+        [Description("Computer Engineer")]
+        ComputerEngineer,
+
+        [Description("Computer Hardware Engineer")]
+        ComputerHardwareEngineer,
     }
 
     public static class PositionTypeExtentions

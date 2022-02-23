@@ -1,0 +1,34 @@
+﻿@page "/FirstListSkill/"
+@inject ISkillService _skillService
+@using BlazorAppCRUD.Data
+
+@foreach (var ski in SkillsList)
+{
+    <input type="button" class="btn btn-sm btn-outline-danger mx-1 mb-3" @onclick="(() => Delete(ski.Id))" value="@ski.Name   X" />
+}
+
+@code {
+
+    [Parameter] public List<Skill> SkillsList { get; set; }
+    [Parameter] public Employee employee { get; set; }
+
+
+    public EventCallback<int> BindingValueChanged { get; set; }
+
+    bool skillDeleted;
+    
+    private async void Delete(int ExperienceId)
+    {
+
+        skillDeleted = await _skillService.DeleteSkill(ExperienceId);
+
+        if (skillDeleted)
+            SkillsList = await _skillService.GetSkillName(employee.Id);
+
+        await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+    }
+
+}

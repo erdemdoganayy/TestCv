@@ -14,6 +14,7 @@ namespace BlazorAppCRUD.Persistence
         DbSet<District> Districts { get; set; }
         DbSet<Country> Countries { get; set; }
         DbSet<School> Schools { get; set; }
+        DbSet<SchoolDepartment> SchoolDepartments { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

@@ -1,7 +1,6 @@
 ﻿@page "/EmployeeAdd"
 @using BlazorAppCRUD.Data
 @using BlazorAppCRUD.Persistence
-@using BlazorAppCRUD.Services
 @using BlazorAppCRUD.Utilities.Enums
 @using EnumsNET
 @using Microsoft.EntityFrameworkCore
@@ -103,7 +102,7 @@ else
                 </select>
             </div>
 
-            <div class="col-md-2">
+           <!--<div class="col-md-2">
                 <label for="City" class="control-label">City</label>
                 <select class="form-select" aria-label="Default select example" @bind="employee.DistrictId">
 
@@ -118,7 +117,7 @@ else
 
                     }
                 </select>
-            </div>
+            </div>--> 
 
             <div class="col-md-2">
                 <label for="District" class="control-label">District</label>
@@ -204,7 +203,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
+  
 
         employees = await _employeeService.GetEmployees();
         cities = await _cityService.GetCities();
@@ -213,6 +212,7 @@ else
 
     private async void CreateEmployee()
     {
+         positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
         employeeSaved = await _employeeService.Create(employee);
 
         if (employeeSaved)
