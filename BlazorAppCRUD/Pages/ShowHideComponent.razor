@@ -5,6 +5,7 @@
 @using BlazorAppCRUD.Utilities.Enums
 @using EnumsNET
 @using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Logging
 @inject IEmployeeService _employeeService
 @inject IEducationService _educationService
 @inject IExperienceServices _experienceService
@@ -104,7 +105,7 @@
 
                     <div class="col-md-2">
                         <label for="City" class="control-label">Position</label>
-                        <select class="form-select" aria-label="Default select example" @onchange="DoStuff" value="@experienceDto.Position">
+                        <select class="form-select" aria-label="Default select example" @onchange="DoStuff" text="@experienceDto.Position">
 
                             <option value="">-Select Position</option>
 
@@ -121,10 +122,10 @@
 
                     <div class="col-md-2">
                         <label hidden="@ShowMyDiv" for="exampleInputEmail1">Other Position</label>
-                        <input type="text" hidden="@ShowMyDiv" class="form-control" id="exampleInputEmail1" value="@PositionValue" aria-describedby="emailHelp" placeholder="">
+                        <input type="text" hidden="@ShowMyDiv" class="form-control" id="exampleInputEmail1" @bind="@PositionValue" aria-describedby="emailHelp" placeholder="">
                     </div>
 
-                   
+
 
                     <div class="col-md-2">
                         <label for="Country" class="control-label">City</label>
@@ -279,7 +280,7 @@
 
 @code {
     private bool ShowMyDiv { get; set; } = true;
-    string? PositionValue = "";
+    public string PositionValue { get; set; }
 
     [Parameter] public Employee employee { get; set; }
     [Parameter] public int EducationSchoolId { get; set; }
@@ -306,18 +307,12 @@
 
     async void DoStuff(ChangeEventArgs e)
     {
-        var Other = "Other";
+        experienceDto.Position = e.Value.ToString();
 
-        if (e.Value.ToString() == Other)
-        {
+        if (e.Value.ToString() == "Other")
             ShowMyDiv = false;
-            PositionValue = experienceDto.Position;
-        }
         else
-        {
             ShowMyDiv = true;
-            PositionValue = null;
-        }
 
         await InvokeAsync(() =>
                 {
@@ -334,6 +329,11 @@
         cities = await _cityService.GetCities();
     }
 
+    protected override async Task OnParametersSetAsync()
+    {
+        var currentEmployee = await _employeeService.GetEmployeeByEmail(employee.Email);
+        ExperiencesList = await _experienceService.GetExperienceCompanyName(currentEmployee.Id);
+    }
 
     private async void CreateEducation()
     {
@@ -371,11 +371,15 @@
 
         if (currentEmployee != null)
         {
+            Enum.TryParse(experienceDto.Position, out PositionType positionType);
+
+            var positionTypeDescription = positionType.AsString(EnumFormat.Description);
+
             Experience Exp = new Experience
                 {
                     EmployeeId = currentEmployee.Id,
                     CompanyName = experienceDto.CompanyName,
-                    Position = experienceDto.Position,
+                    Position = positionType == PositionType.Other ? PositionValue : positionTypeDescription,
                     CityId = Convert.ToInt32(experienceDto.CityId),
                     StartDate = experienceDto.StartDate,
                     EndDate = experienceDto.EndDate
