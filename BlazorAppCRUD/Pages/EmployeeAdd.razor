@@ -27,151 +27,150 @@ else
 }
 <br />
 <br />
-<br />
-<h1> Add a new employee</h1>
+ 
 
 @if (employeeSaved)
 {
-    <AlertComponent Content="Personal information saved !" Title="Congratulations !" Type="success" />
+    <AlertComponent Content="Personal information saved !" Description="Please fill in the fields below" Title="Congratulations !" Type="success" />
 
 }
 
-<form>
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-2">
-                <label for="exampleInputEmail1">Name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Name" @bind="employee.Name">
-                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
-            </div>
-            <div class="col-md-3">
-                <label for="exampleInputEmail1">Surname</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Surname" @bind="employee.Surname">
-            </div>
-            <div class="col-md-3">
-                <label for="exampleInputEmail1">E-Mail Address</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter E-Mail Address" @bind="employee.Email">
-            </div>
-            <div class="col-md-3">
-                <label for="exampleInputEmail1">Phone</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Phone" @bind="employee.Phone">
-            </div>
-
-
-            <div class="col-md-1">
-                <label for="Age" class="control-label">Age</label>
-                <input form="Age" class="form-control" @bind="employee.Age" />
-            </div>
-
-        </div>
-
-
-
-
-        <div class="row mt-2">
-
-            <div class="col-md-3">
-                <label for="Country" class="control-label">Country</label>
-                <select class="form-select" aria-label="Default select example" @bind="employee.CountryId">
-
-                    <option value="">-Select Country</option>
-
-                    @if (countries != null)
-                    {
-                        @foreach (var country in countries)
-                        {
-                            <option value=@country.Id>@country.Name</option>
-                        }
-                    }
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label for="City" class="control-label">City</label>
-                <select class="form-select" aria-label="Default select example" @onchange="DoStuff">
-
-                    <option value="">-Select City</option>
-
-                    @if (@cities != null)
-                    {
-                        @foreach (var city in cities)
-                        {
-                            <option value="@city.Code">@city.Name</option>
-                        }
-
-                    }
-                </select>
-            </div>
-
-           <!--<div class="col-md-2">
-                <label for="City" class="control-label">City</label>
-                <select class="form-select" aria-label="Default select example" @bind="employee.DistrictId">
-
-                    <option value="">-Select Position</option>
-
-                    @if (@positionTypes != null)
-                    {
-                        @foreach (var item in positionTypes)
-                        {
-                            <option value="@item">@item.AsString(EnumFormat.Description)</option>
-                        }
-
-                    }
-                </select>
-            </div>--> 
-
-            <div class="col-md-2">
-                <label for="District" class="control-label">District</label>
-                <select class="form-select" aria-label="Default select example" @bind="employee.DistrictId">
-                    <option value="">-Select District</option>
-                    @if (districts != null)
-                    {
-                        @foreach (var district in districts)
-                        {
-                            <option value=@district.Id>@district.Name</option>
-                        }
-                    }
-                </select>
-            </div>
-
-
-            <div class="col-md-5">
-                <label for="exampleInputEmail1">Address</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Address" @bind="employee.Address">
-            </div>
-        </div>
-
-        <div class="row mt-2">
-            <div class="col-md-3">
-                <label for="exampleInputEmail1">Gender</label>
-                <select class="form-select" @bind="employee.Gender">
-                    <option selected>Select a gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label for="exampleInputEmail1">Your Web Site</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Your Web Site" @bind="employee.Website">
-            </div>
-            <div class="col-md-5">
-                <label for="exampleInputEmail1">LinkedIn Address</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter LinkedIn Address" @bind="employee.Linkedin">
-            </div>
-        </div>
-
-
+<div class="card shadow  mb-5 bg-white rounded">
+    <div class="card-header" style="background-color:white !important; font-size:20px">
+        <i class="oi oi-info"></i> Personal Info
     </div>
+    <div class="card-body">
 
-    <div class="row mt-2">
-        <div class="col-md-12 d-flex justify-content-end">
+
+        <form>
             <div class="form-group">
-                <input type="button" class="btn btn-success" @onclick="@CreateEmployee" value="Save" />
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Name" @bind="employee.Name">
+                        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputEmail1">Surname</label>
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Surname" @bind="employee.Surname">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="exampleInputEmail1">E-Mail Address</label>
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter E-Mail Address" @bind="employee.Email">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputEmail1">Phone</label>
+                        <input type="text" required maxlength="11" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Phone" @bind="employee.Phone">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="Age" class="control-label">Age</label>
+                        <input form="Age" required maxlength="2" class="form-control" @bind="employee.Age" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="Country" class="control-label">Country</label>
+                        <select class="form-select" required aria-label="Default select example" @bind="employee.CountryId">
+
+                            <option value="">-Select Country</option>
+
+                            @if (countries != null)
+                            {
+                                @foreach (var country in countries)
+                                {
+                                    <option value=@country.Id>@country.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label for="City" class="control-label">City</label>
+                        <select class="form-select" required aria-label="Default select example" @onchange="DoStuff">
+
+                            <option value="">-Select City</option>
+
+                            @if (@cities != null)
+                            {
+                                @foreach (var city in cities)
+                                {
+                                    <option value="@city.Code">@city.Name</option>
+                                }
+
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="District" class="control-label">District</label>
+                        <select class="form-select" required aria-label="Default select example" @bind="employee.DistrictId">
+                            <option value="">-Select District</option>
+                            @if (@districts != null)
+                            {
+                                @foreach (var district in districts)
+                                {
+                                    <option value=@district.Id>@district.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label for="exampleInputEmail1">Address</label>
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Address" @bind="employee.Address">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputEmail1">Gender</label>
+                        <select class="form-select" required @bind="employee.Gender">
+                            <option selected>Select a gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+                <div class="row mt-2">
+
+                    <div class="col-md-6">
+                        <label for="exampleInputEmail1">Your Web Site</label>
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Your Web Site" @bind="employee.Website">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputEmail1">LinkedIn Address</label>
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter LinkedIn Address" @bind="employee.Linkedin">
+                    </div>
+                </div>
+
+
+
+
+                <div class="row mt-2">
+                    <div class="col-md-12 d-flex justify-content-end">
+                        <div class="form-group">
+                            <input type="button" class="btn btn-success" @onclick="@CreateEmployee" value="Save" />
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+
+        </form>
+
+
+
     </div>
+</div>
 
 
-</form>
 
 @if (employeeSaved)
 {
@@ -196,14 +195,14 @@ else
         districts = await _districtService.GetDistricts(int.Parse(e.Value.ToString()));
 
         await InvokeAsync(() =>
-                    {
-                        StateHasChanged();
-                    });
+        {
+            StateHasChanged();
+        });
     }
 
     protected override async Task OnInitializedAsync()
     {
-  
+
 
         employees = await _employeeService.GetEmployees();
         cities = await _cityService.GetCities();
@@ -212,16 +211,16 @@ else
 
     private async void CreateEmployee()
     {
-         positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
+        positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
         employeeSaved = await _employeeService.Create(employee);
 
         if (employeeSaved)
             employees = await _employeeService.GetEmployees();
 
         await InvokeAsync(() =>
-            {
-                StateHasChanged();
-            });
+        {
+            StateHasChanged();
+        });
     }
 
-}
+    }

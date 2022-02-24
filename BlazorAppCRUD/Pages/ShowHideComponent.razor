@@ -17,223 +17,269 @@
 @inject IApplicationDbContext _context
 
 
-<form>
-    <div class="form-group mt-3">
-        <label for="exampleInputEmail1">Education</label>
-        <div class="row mt-2">
-            <div class="col-md-3">
 
-                <label for="Country" class="control-label">School Name</label>
-                <select class="form-select" aria-label="Default select example" @bind="educationDto.SchoolId">
+<div class="card shadow  mb-5 bg-white rounded">
+    <div class="card-header" style="background-color:white !important; font-size:20px">
+        <i class="oi oi-pencil"></i> Education Info
+    </div>
+    <div class="card-body">
 
-                    <option value="">-Select University</option>
+        <form>
+            <div class="form-group mt-3">
+                <div class="row mt-2">
+                    <div class="col-md-3">
 
-                    @if (Schools != null)
-                    {
-                        @foreach (var school in Schools)
-                        {
-                            <option value=@school.Id>@school.Name</option>
-                        }
-                    }
-                </select>
+                        <label for="Country" class="control-label">School Name</label>
+                        <select class="form-select" aria-label="Default select example" @bind="educationDto.SchoolId">
 
-            </div>
-            <div class="col-md-4">
+                            <option value="">-Select University</option>
 
-                <label for="Country" class="control-label">School Department</label>
-                <select class="form-select" aria-label="Default select example" @bind="educationDto.Department">
+                            @if (Schools != null)
+                            {
+                                @foreach (var school in Schools)
+                                {
+                                    <option value=@school.Id>@school.Name</option>
+                                }
+                            }
+                        </select>
 
-                    <option value="">-Select Department</option>
-                    @if (SchoolDepartments != null)
-                    {
-                        @foreach (var department in SchoolDepartments)
-                        {
-                            <option value=@department.Id>@department.Name</option>
-                        }
-                    }
+                    </div>
+                    <div class="col-md-4">
 
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label for="exampleInputEmail1">Start Date</label>
-                <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.StartDate" aria-describedby="emailHelp" placeholder="Enter Start Date">
-            </div>
-            <div class="col-md-2">
-                <label for="exampleInputEmail1">End Date</label>
-                <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.EndDate" aria-describedby="emailHelp" placeholder="Enter End Date">
-            </div>
-            <div class="col-md-1">
-                <label for="exampleInputEmail1"></label>
-                <div class="form-group">
-                    <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateEducation" value="Add" />
+                        <label for="Country" class="control-label">School Department</label>
+                        <select class="form-select" aria-label="Default select example" @bind="educationDto.Department">
+
+                            <option value="">-Select Department</option>
+                            @if (SchoolDepartments != null)
+                            {
+                                @foreach (var department in SchoolDepartments)
+                                {
+                                    <option value=@department.Id>@department.Name</option>
+                                }
+                            }
+
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="exampleInputEmail1">Start Date</label>
+                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.StartDate" aria-describedby="emailHelp" placeholder="Enter Start Date">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="exampleInputEmail1">End Date</label>
+                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.EndDate" aria-describedby="emailHelp" placeholder="Enter End Date">
+                    </div>
+                    <div class="col-md-1">
+                        <label for="exampleInputEmail1"></label>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateEducation" value="Add" />
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <br />
+                <br />
+
+            </div>
+            <FirstListEducation EducationsList="@EducationsList" employee="employee" />
+        </form>
+
 
     </div>
-    <FirstListEducation EducationsList="@EducationsList" employee="employee" />
-</form>
+</div>
 
-<form>
-    <div class="form-group mt-3">
-        <label for="exampleInputEmail1">Experience</label>
-        <div class="row mt-2">
-            <div class="col-md-3">
-                <label for="exampleInputEmail1">Company Name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CompanyName" aria-describedby="emailHelp" placeholder="Enter Company Name">
-            </div>
-            <!--   <div class="col-md-2">
-                     <label for="exampleInputEmail1">Other Position</label>
-                     <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.Position" aria-describedby="emailHelp" placeholder="Enter Position">
-                 </div> -->
-            <div class="col-md-2">
-                <label for="City" class="control-label">Position</label>
-                <select class="form-select" aria-label="Default select example" @bind="experienceDto.Position">
 
-                    <option value="">-Select Position</option>
 
-                    @if (@positionTypes != null)
-                    {
-                        @foreach (var item in positionTypes)
-                        {
-                            <option value="@item">@item.AsString(EnumFormat.Description)</option>
-                        }
-
-                    }
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label for="Country" class="control-label">City</label>
-                <select class="form-select" aria-label="Default select example" @bind="experienceDto.CityId">
-
-                    <option value="">-Select City</option>
-
-                    @if (cities != null)
-                    {
-                        @foreach (var city in cities)
-                        {
-                            <option value=@city.Id>@city.Name</option>
-                        }
-                    }
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label for="exampleInputEmail1">Start Date</label>
-                <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.StartDate" aria-describedby="emailHelp" placeholder="Enter Start Date">
-            </div>
-            <div class="col-md-2">
-                <label for="exampleInputEmail1">End Date</label>
-                <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.EndDate" aria-describedby="emailHelp" placeholder="Enter End Date">
-            </div>
-            <div class="col-md-1">
-                <label for="exampleInputEmail1">&nbsp</label>
-                <div class="form-group">
-                    <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateExperience" value="Add" />
-                </div>
-            </div>
-
-        </div>
+<div class="card shadow  mb-5 bg-white rounded">
+    <div class="card-header" style="background-color:white !important; font-size:20px">
+        <i class="oi oi-badge" style="font-size:25px"></i> Experience Info
     </div>
-    <br />
-    <FirstListExperience ExperiencesList="@ExperiencesList" employee="employee" />
-</form>
+    <div class="card-body">
 
-<form>
-    <div class="form-group mt-3">
-        <label for="exampleInputEmail1">Skills</label>
-        <div class="row mt-2">
-            <div class="col-md-4">
-                <label for="exampleInputEmail1">Skill Name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.Name" placeholder="Enter Skill Name">
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="Gender" class="control-label">Rating 1-10</label>
-                    <select class="form-select" aria-label="Default select example" @bind="skillDto.Rating">
-                        <option value="">-Select Rating</option>
-                        <option value="1">1 <span class="oi oi-home"></span></option>
-                        <option value="2">2 <span class="oi oi-star"></span></option>
-                        <option value="3">3 <span class="oi oi-star"></span></option>
-                        <option value="4">4 <span class="oi oi-star"></span></option>
-                        <option value="5">5 <span class="oi oi-star"></span></option>
-                        <option value="6">6 <span class="oi oi-star"></span></option>
-                        <option value="7">7 <span class="oi oi-star"></span></option>
-                        <option value="8">8 <span class="oi oi-star"></span></option>
-                        <option value="9">9 <span class="oi oi-star"></span></option>
-                        <option value="10">10 <span class="oi oi-star"></span></option>
-                    </select>
+        <form>
+            <div class="form-group mt-3">
+                <div class="row mt-2">
+                    <div class="col-md-3">
+                        <label for="exampleInputEmail1">Company Name</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CompanyName" aria-describedby="emailHelp" placeholder="Enter Company Name">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="City" class="control-label">Position</label>
+                        <select class="form-select" aria-label="Default select example" @onchange="DoStuff" value="@experienceDto.Position">
+
+                            <option value="">-Select Position</option>
+
+                            @if (@positionTypes != null)
+                            {
+                                @foreach (var item in positionTypes)
+                                {
+                                    <option value="@item">@item.AsString(EnumFormat.Description)</option>
+                                }
+
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label hidden="@ShowMyDiv" for="exampleInputEmail1">Other Position</label>
+                        <input type="text" hidden="@ShowMyDiv" class="form-control" id="exampleInputEmail1" value="@PositionValue" aria-describedby="emailHelp" placeholder="">
+                    </div>
+
+                   
+
+                    <div class="col-md-2">
+                        <label for="Country" class="control-label">City</label>
+                        <select class="form-select" aria-label="Default select example" @bind="experienceDto.CityId">
+
+                            <option value="">-Select City</option>
+
+                            @if (cities != null)
+                            {
+                                @foreach (var city in cities)
+                                {
+                                    <option value=@city.Id>@city.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="exampleInputEmail1">Start Date</label>
+                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.StartDate" aria-describedby="emailHelp" placeholder="Enter Start Date">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="exampleInputEmail1">End Date</label>
+                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.EndDate" aria-describedby="emailHelp" placeholder="Enter End Date">
+                    </div>
+                    <div class="col-md-1">
+                        <label for="exampleInputEmail1">&nbsp</label>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateExperience" value="Add" />
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="Gender" class="control-label">Select Skill Experience</label>
-                    <select class="form-select" aria-label="Default select example" @bind="skillDto.Experience">
-                        <option value="">-Select Skill Experience</option>
-                        <option value="1">+1 Year<span class="oi oi-star"></span></option>
-                        <option value="2">+2 Year<span class="oi oi-star"></span></option>
-                        <option value="3">+3 Year<span class="oi oi-star"></span></option>
-                        <option value="4">+4 Year<span class="oi oi-star"></span></option>
-                        <option value="5">+5 Year<span class="oi oi-star"></span></option>
-                        <option value="6">+6 Year<span class="oi oi-star"></span></option>
-                        <option value="7">+7 Year<span class="oi oi-star"></span></option>
-                        <option value="8">+8 Year<span class="oi oi-star"></span></option>
-                        <option value="9">+9 Year<span class="oi oi-star"></span></option>
-                        <option value="10">+10 Year<span class="oi oi-star"></span></option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-1">
-                <label for="exampleInputEmail1">&nbsp</label>
-                <div class="form-group">
-                    <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateSkill" value="Add" />
-                </div>
-            </div>
-        </div>
+            <br />
+            <FirstListExperience ExperiencesList="@ExperiencesList" employee="employee" />
+        </form>
+
     </div>
-    <br />
-    <FirstListSkill SkillsList="@SkillsList" employee="employee" />
-</form>
-<form>
-    <div class="form-group mt-3">
-        <label for="exampleInputEmail1">Languages</label>
-        <div class="row mt-2">
-            <div class="col-md-4">
-                <label for="exampleInputEmail1">Language Name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" @bind="languageDto.Name" aria-describedby="emailHelp" placeholder="Enter Language Name">
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="Gender" class="control-label">Rating 1-10</label>
-                    <select class="form-select" aria-label="Default select example" @bind="languageDto.Rating">
-                        <option value="">-Select Rating</option>
-                        <option value="1">1 <span class="oi oi-flag"></span></option>
-                        <option value="2">2 <span class="oi oi-star"></span></option>
-                        <option value="3">3 <span class="oi oi-star"></span></option>
-                        <option value="4">4 <span class="oi oi-star"></span></option>
-                        <option value="5">5 <span class="oi oi-star"></span></option>
-                        <option value="6">6 <span class="oi oi-star"></span></option>
-                        <option value="7">7 <span class="oi oi-star"></span></option>
-                        <option value="8">8 <span class="oi oi-star"></span></option>
-                        <option value="9">9 <span class="oi oi-star"></span></option>
-                        <option value="10">10 <span class="oi oi-star"></span></option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-1">
-                <label for="exampleInputEmail1">&nbsp</label>
-                <div class="form-group">
-                    <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateLanguage" value="Add" />
-                </div>
-            </div>
-        </div>
+</div>
+
+
+<div class="card shadow  mb-5 bg-white rounded">
+    <div class="card-header" style="background-color:white !important; font-size:20px">
+        <i class="oi oi-graph" style="font-size:25px"></i> Skill Info
     </div>
-    <br />
-    <FirstListLanguage LanguagesList="@LanguagesList" employee="employee" />
-</form>
+    <div class="card-body">
+        <form>
+            <div class="form-group mt-3">
+                <div class="row mt-2">
+                    <div class="col-md-4">
+                        <label for="exampleInputEmail1">Skill Name</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.Name" placeholder="Enter Skill Name">
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="Gender" class="control-label">Rating 1-10</label>
+                            <select class="form-select" aria-label="Default select example" @bind="skillDto.Rating">
+                                <option value="">-Select Rating</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="SkillExperience" class="control-label">Select Skill Experience</label>
+                            <select class="form-select" aria-label="Default select example" @bind="skillDto.Experience">
+                                <option value="">-Select Skill Experience</option>
+                                <option value="1">+1 Year<span class="oi oi-star"></span></option>
+                                <option value="2">+2 Year<span class="oi oi-star"></span></option>
+                                <option value="3">+3 Year<span class="oi oi-star"></span></option>
+                                <option value="4">+4 Year<span class="oi oi-star"></span></option>
+                                <option value="5">+5 Year<span class="oi oi-star"></span></option>
+                                <option value="6">+6 Year<span class="oi oi-star"></span></option>
+                                <option value="7">+7 Year<span class="oi oi-star"></span></option>
+                                <option value="8">+8 Year<span class="oi oi-star"></span></option>
+                                <option value="9">+9 Year<span class="oi oi-star"></span></option>
+                                <option value="10">+10 Year<span class="oi oi-star"></span></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="exampleInputEmail1">&nbsp</label>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateSkill" value="Add" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <FirstListSkill SkillsList="@SkillsList" employee="employee" />
+        </form>
+    </div>
+</div>
+
+<div class="card shadow  mb-5 bg-white rounded">
+    <div class="card-header" style="background-color:white !important; font-size:20px">
+        <i class="oi oi-book" style="font-size:25px"></i> Language Info
+    </div>
+    <div class="card-body">
+
+        <form>
+            <div class="form-group mt-3">
+                <div class="row mt-2">
+                    <div class="col-md-4">
+                        <label for="exampleInputEmail1">Language Name</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" @bind="languageDto.Name" aria-describedby="emailHelp" placeholder="Enter Language Name">
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="Language" class="control-label">Rating 1-10</label>
+                            <select class="form-select" aria-label="Default select example" @bind="languageDto.Rating">
+                                <option value="">-Select Rating</option>
+                                <option value="1">1 <span class="oi oi-flag"></span></option>
+                                <option value="2">2 <span class="oi oi-star"></span></option>
+                                <option value="3">3 <span class="oi oi-star"></span></option>
+                                <option value="4">4 <span class="oi oi-star"></span></option>
+                                <option value="5">5 <span class="oi oi-star"></span></option>
+                                <option value="6">6 <span class="oi oi-star"></span></option>
+                                <option value="7">7 <span class="oi oi-star"></span></option>
+                                <option value="8">8 <span class="oi oi-star"></span></option>
+                                <option value="9">9 <span class="oi oi-star"></span></option>
+                                <option value="10">10 <span class="oi oi-star"></span></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="exampleInputEmail1">&nbsp</label>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateLanguage" value="Add" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <FirstListLanguage LanguagesList="@LanguagesList" employee="employee" />
+        </form>
+
+    </div>
+</div>
+
+
+
 
 @code {
+    private bool ShowMyDiv { get; set; } = true;
+    string? PositionValue = "";
 
     [Parameter] public Employee employee { get; set; }
     [Parameter] public int EducationSchoolId { get; set; }
@@ -257,6 +303,27 @@
     ExperienceDto experienceDto = new ExperienceDto();
     Skill skillDto = new Skill();
     Language languageDto = new Language();
+
+    async void DoStuff(ChangeEventArgs e)
+    {
+        var Other = "Other";
+
+        if (e.Value.ToString() == Other)
+        {
+            ShowMyDiv = false;
+            PositionValue = experienceDto.Position;
+        }
+        else
+        {
+            ShowMyDiv = true;
+            PositionValue = null;
+        }
+
+        await InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
+    }
 
     protected override async Task OnInitializedAsync()
     {

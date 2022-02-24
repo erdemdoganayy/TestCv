@@ -10,6 +10,7 @@ namespace BlazorAppCRUD.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Education> builder)
         {
             builder.HasKey(e => e.Id);
+            
         }
     }
 

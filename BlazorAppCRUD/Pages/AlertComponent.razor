@@ -5,6 +5,10 @@
     <span class="text-nowrap">
         @Content
     </span>
+    <br />
+    <span class="text-nowrap">
+        @Description
+    </span>
 </div>
 
 @code {
@@ -13,6 +17,8 @@
     public string? Title { get; set; }
     [Parameter]
     public string? Content { get; set; }
+    [Parameter]
+    public string? Description { get; set; }
     [Parameter]
     public string? Type { get; set; }
 }

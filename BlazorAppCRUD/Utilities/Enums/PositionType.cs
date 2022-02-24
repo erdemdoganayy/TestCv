@@ -5,6 +5,9 @@ namespace BlazorAppCRUD.Utilities.Enums
 {
     public enum PositionType
     {
+        [Description("Other")]
+        Other,
+
         [Description("Software Developer")]
         SoftwareDeveloper,
 
