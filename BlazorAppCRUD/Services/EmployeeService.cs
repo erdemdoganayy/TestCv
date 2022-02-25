@@ -22,7 +22,7 @@ namespace BlazorAppCRUD.Data
                 .ToListAsync();
         }
 
-        public async Task<Employee> GetLastEmployees(int Id)
+        public async Task<Employee> GetLastEmployee(int Id)
         {
             return await _db.Employees.FirstOrDefaultAsync(x => x.Id == Id);
         }

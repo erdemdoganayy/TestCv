@@ -7,6 +7,7 @@
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Logging
 @using IronPdf;
+@using System.Text
 
 @inject IEmployeeService _employeeService
 @inject IEducationService _educationService
@@ -462,20 +463,21 @@
     }
     private async void CreatePdf()
     {
-
-        var employees = await _employeeService.GetLastEmployees(6);
+        var employees = await _employeeService.GetLastEmployee(6);
         var Renderer = new ChromePdfRenderer();
-        Renderer.RenderHtmlAsPdf(
-            "<h1>" + employees.Name.ToUpper() + ' ' + employees.Surname.ToUpper() + "<h1>" +
-            "<br/>" +
-            "<h2 style='color:#218EBF;'>Experience</h2>" +
-            "<br/>" +
-            "<h2>" 
-            foreach (var emp in employees.Experiences) 
+
+        var sb = new StringBuilder();
+        sb.Append("<h1>" + employees.Name.ToUpper() + ' ' + employees.Surname.ToUpper() + "<h1>");
+        sb.Append("<br/>");
+        sb.Append("<br/><h2 style='color:#218EBF;'>Experience</h2>");
+        sb.Append("<br/>");
+        sb.Append("<h2>");
+        foreach (var emp in employees.Experiences) 
         {
-            emp.CompanyName
+            sb.Append(emp.CompanyName);
         }
-              "</h2>" 
-        ).SaveAs("PdfDocument/html-string.pdf");
+        sb.Append("</h2>");
+
+        Renderer.RenderHtmlAsPdf(sb.ToString()).SaveAs("PdfDocument/html-string.pdf");
     }
 }
