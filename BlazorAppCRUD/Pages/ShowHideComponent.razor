@@ -6,6 +6,8 @@
 @using EnumsNET
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Logging
+@using IronPdf;
+
 @inject IEmployeeService _employeeService
 @inject IEducationService _educationService
 @inject IExperienceServices _experienceService
@@ -39,7 +41,7 @@
                             {
                                 @foreach (var school in Schools)
                                 {
-                                    <option value=@school.Id>@school.Name</option>
+                                    <option value=@school.Id>@school.Name.ToUpper()</option>
                                 }
                             }
                         </select>
@@ -55,7 +57,7 @@
                             {
                                 @foreach (var department in SchoolDepartments)
                                 {
-                                    <option value=@department.Id>@department.Name</option>
+                                    <option value=@department.Id>@department.Name.ToUpper()</option>
                                 }
                             }
 
@@ -98,34 +100,10 @@
         <form>
             <div class="form-group mt-3">
                 <div class="row mt-2">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="exampleInputEmail1">Company Name</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CompanyName" aria-describedby="emailHelp" placeholder="Enter Company Name">
                     </div>
-
-                    <div class="col-md-2">
-                        <label for="City" class="control-label">Position</label>
-                        <select class="form-select" aria-label="Default select example" @onchange="DoStuff" text="@experienceDto.Position">
-
-                            <option value="">-Select Position</option>
-
-                            @if (@positionTypes != null)
-                            {
-                                @foreach (var item in positionTypes)
-                                {
-                                    <option value="@item">@item.AsString(EnumFormat.Description)</option>
-                                }
-
-                            }
-                        </select>
-                    </div>
-
-                    <div class="col-md-2">
-                        <label hidden="@ShowMyDiv" for="exampleInputEmail1">Other Position</label>
-                        <input type="text" hidden="@ShowMyDiv" class="form-control" id="exampleInputEmail1" @bind="@PositionValue" aria-describedby="emailHelp" placeholder="">
-                    </div>
-
-
 
                     <div class="col-md-2">
                         <label for="Country" class="control-label">City</label>
@@ -150,12 +128,39 @@
                         <label for="exampleInputEmail1">End Date</label>
                         <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.EndDate" aria-describedby="emailHelp" placeholder="Enter End Date">
                     </div>
+                    <div class="col-md-2">
+                        <label for="City" class="control-label">Position</label>
+                        <select class="form-select" aria-label="Default select example" @onchange="DoStuff" text="@experienceDto.Position">
+
+                            <option value="">-Select Position</option>
+
+                            @if (@positionTypes != null)
+                            {
+                                @foreach (var item in positionTypes)
+                                {
+                                    <option value="@item">@item.AsString(EnumFormat.Description)</option>
+                                }
+
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label hidden="@ShowMyDiv" for="exampleInputEmail1">Other Position</label>
+                        <input type="text" hidden="@ShowMyDiv" class="form-control" id="exampleInputEmail1" @bind="@PositionValue" aria-describedby="emailHelp" placeholder="">
+                    </div>
+
+
+
                     <div class="col-md-1">
                         <label for="exampleInputEmail1">&nbsp</label>
                         <div class="form-group">
                             <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateExperience" value="Add" />
                         </div>
                     </div>
+
+
+
 
                 </div>
             </div>
@@ -183,7 +188,7 @@
                         <div class="form-group">
                             <label for="Gender" class="control-label">Rating 1-10</label>
                             <select class="form-select" aria-label="Default select example" @bind="skillDto.Rating">
-                                <option value="">-Select Rating</option>
+                                <option value=" ">-Select Rating</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -201,7 +206,7 @@
                         <div class="form-group">
                             <label for="SkillExperience" class="control-label">Select Skill Experience</label>
                             <select class="form-select" aria-label="Default select example" @bind="skillDto.Experience">
-                                <option value="">-Select Skill Experience</option>
+                                <option value=" ">-Select Skill Experience</option>
                                 <option value="1">+1 Year<span class="oi oi-star"></span></option>
                                 <option value="2">+2 Year<span class="oi oi-star"></span></option>
                                 <option value="3">+3 Year<span class="oi oi-star"></span></option>
@@ -273,6 +278,10 @@
         </form>
 
     </div>
+
+
+
+    <button class="btn btn-info btn-lg" @onclick="CreatePdf">Download</button>
 </div>
 
 
@@ -451,5 +460,22 @@
         }
 
     }
+    private async void CreatePdf()
+    {
 
+        var employees = await _employeeService.GetLastEmployees(6);
+        var Renderer = new ChromePdfRenderer();
+        Renderer.RenderHtmlAsPdf(
+            "<h1>" + employees.Name.ToUpper() + ' ' + employees.Surname.ToUpper() + "<h1>" +
+            "<br/>" +
+            "<h2 style='color:#218EBF;'>Experience</h2>" +
+            "<br/>" +
+            "<h2>" 
+            foreach (var emp in employees.Experiences) 
+        {
+            emp.CompanyName
+        }
+              "</h2>" 
+        ).SaveAs("PdfDocument/html-string.pdf");
+    }
 }

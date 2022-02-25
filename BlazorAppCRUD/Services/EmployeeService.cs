@@ -16,9 +16,15 @@ namespace BlazorAppCRUD.Data
         {
             return await _db.Employees
                 .Include(x => x.Country)
+                .Include(x => x.Experiences)
                 .Include(x => x.District)
                 .ThenInclude(x => x.City)
                 .ToListAsync();
+        }
+
+        public async Task<Employee> GetLastEmployees(int Id)
+        {
+            return await _db.Employees.FirstOrDefaultAsync(x => x.Id == Id);
         }
         public async Task<Employee> GetEmployeeByEmail(string email)
         {
