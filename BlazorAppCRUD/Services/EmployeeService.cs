@@ -17,6 +17,9 @@ namespace BlazorAppCRUD.Data
             return await _db.Employees
                 .Include(x => x.Country)
                 .Include(x => x.Experiences)
+                .Include(x => x.Educations)
+                .Include(x => x.Languages)
+                .Include(x => x.Skills)
                 .Include(x => x.District)
                 .ThenInclude(x => x.City)
                 .ToListAsync();

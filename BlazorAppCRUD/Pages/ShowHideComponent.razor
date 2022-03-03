@@ -1,4 +1,4 @@
-@page "/ShowHideComponent/"
+﻿@page "/ShowHideComponent/"
 @using BlazorAppCRUD.Data
 @using BlazorAppCRUD.Dtos
 @using BlazorAppCRUD.Persistence
@@ -91,7 +91,6 @@
 </div>
 
 
-
 <div class="card shadow  mb-5 bg-white rounded">
     <div class="card-header" style="background-color:white !important; font-size:20px">
         <i class="oi oi-badge" style="font-size:25px"></i> Experience Info
@@ -103,7 +102,7 @@
                 <div class="row mt-2">
                     <div class="col-md-2">
                         <label for="exampleInputEmail1">Company Name</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CompanyName" aria-describedby="emailHelp" placeholder="Enter Company Name">
+                        <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CompanyName" aria-describedby="emailHelp" placeholder="Hepapi Technology">
                     </div>
 
                     <div class="col-md-2">
@@ -151,7 +150,14 @@
                         <input type="text" hidden="@ShowMyDiv" class="form-control" id="exampleInputEmail1" @bind="@PositionValue" aria-describedby="emailHelp" placeholder="">
                     </div>
 
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <label for="exampleInputEmail1">Brief Information About The Experience</label>
+                            <textarea type="text" required class="form-control" id="biography" aria-describedby="emailHelp" placeholder="I developed projects with .NET for 3 years at Hepapi Teknoloji company..." @bind="@experienceDto.BriefInformation">
 
+                        </textarea>
+                        </div>
+                    </div>
 
                     <div class="col-md-1">
                         <label for="exampleInputEmail1">&nbsp</label>
@@ -183,42 +189,25 @@
                 <div class="row mt-2">
                     <div class="col-md-4">
                         <label for="exampleInputEmail1">Skill Name</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.Name" placeholder="Enter Skill Name">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.Name" placeholder=".NET">
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="Gender" class="control-label">Rating 1-10</label>
+                            <label for="Gender" class="control-label">Skill Rating</label>
                             <select class="form-select" aria-label="Default select example" @bind="skillDto.Rating">
                                 <option value=" ">-Select Rating</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
+                                <option value="Expert">Expert</option>
+                                <option value="Experienced">Experienced</option>
+                                <option value="Talented">Talented</option>
+                                <option value="Beginning">Beginning</option>
+                                <option value="Beginner">Beginner</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-5">
                         <div class="form-group">
-                            <label for="SkillExperience" class="control-label">Select Skill Experience</label>
-                            <select class="form-select" aria-label="Default select example" @bind="skillDto.Experience">
-                                <option value=" ">-Select Skill Experience</option>
-                                <option value="1">+1 Year<span class="oi oi-star"></span></option>
-                                <option value="2">+2 Year<span class="oi oi-star"></span></option>
-                                <option value="3">+3 Year<span class="oi oi-star"></span></option>
-                                <option value="4">+4 Year<span class="oi oi-star"></span></option>
-                                <option value="5">+5 Year<span class="oi oi-star"></span></option>
-                                <option value="6">+6 Year<span class="oi oi-star"></span></option>
-                                <option value="7">+7 Year<span class="oi oi-star"></span></option>
-                                <option value="8">+8 Year<span class="oi oi-star"></span></option>
-                                <option value="9">+9 Year<span class="oi oi-star"></span></option>
-                                <option value="10">+10 Year<span class="oi oi-star"></span></option>
-                            </select>
+                            <label for="Gender" class="control-label">Skill Short Info</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.ShortInfo" placeholder="I made a cv generator project with .NET">
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -235,6 +224,7 @@
     </div>
 </div>
 
+
 <div class="card shadow  mb-5 bg-white rounded">
     <div class="card-header" style="background-color:white !important; font-size:20px">
         <i class="oi oi-book" style="font-size:25px"></i> Language Info
@@ -246,23 +236,20 @@
                 <div class="row mt-2">
                     <div class="col-md-4">
                         <label for="exampleInputEmail1">Language Name</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" @bind="languageDto.Name" aria-describedby="emailHelp" placeholder="Enter Language Name">
+                        <input type="text" class="form-control" id="exampleInputEmail1" @bind="languageDto.Name" aria-describedby="emailHelp" placeholder="English">
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="Language" class="control-label">Rating 1-10</label>
+                            <label for="Language" class="control-label">Language Rating</label>
                             <select class="form-select" aria-label="Default select example" @bind="languageDto.Rating">
                                 <option value="">-Select Rating</option>
-                                <option value="1">1 <span class="oi oi-flag"></span></option>
-                                <option value="2">2 <span class="oi oi-star"></span></option>
-                                <option value="3">3 <span class="oi oi-star"></span></option>
-                                <option value="4">4 <span class="oi oi-star"></span></option>
-                                <option value="5">5 <span class="oi oi-star"></span></option>
-                                <option value="6">6 <span class="oi oi-star"></span></option>
-                                <option value="7">7 <span class="oi oi-star"></span></option>
-                                <option value="8">8 <span class="oi oi-star"></span></option>
-                                <option value="9">9 <span class="oi oi-star"></span></option>
-                                <option value="10">10 <span class="oi oi-star"></span></option>
+                                <option value="A1">A1</option>
+                                <option value="A2">A2</option>
+                                <option value="B1">B1</option>
+                                <option value="B2">B2</option>
+                                <option value="C1">C1</option>
+                                <option value="C2">C2</option>
+
                             </select>
                         </div>
                     </div>
@@ -280,9 +267,13 @@
 
     </div>
 
+    @if (languageSaved)
+    {
+        <div class='col-md-12 text-center my-1'>
+            <button style="color:white; text-align:center" class="btn btn-info w-25" @onclick="CreatePdf">Cv Download</button>
+        </div>
+    }
 
-
-    <button class="btn btn-info btn-lg" @onclick="CreatePdf">Download</button>
 </div>
 
 
@@ -291,6 +282,7 @@
 @code {
     private bool ShowMyDiv { get; set; } = true;
     public string PositionValue { get; set; }
+    bool languageSaved;
 
     [Parameter] public Employee employee { get; set; }
     [Parameter] public int EducationSchoolId { get; set; }
@@ -390,6 +382,7 @@
                     EmployeeId = currentEmployee.Id,
                     CompanyName = experienceDto.CompanyName,
                     Position = positionType == PositionType.Other ? PositionValue : positionTypeDescription,
+                    BriefInformation = experienceDto.BriefInformation,
                     CityId = Convert.ToInt32(experienceDto.CityId),
                     StartDate = experienceDto.StartDate,
                     EndDate = experienceDto.EndDate
@@ -418,7 +411,7 @@
                 {
                     EmployeeId = currentEmployee.Id,
                     Name = skillDto.Name,
-                    Experience = skillDto.Experience,
+                    ShortInfo = skillDto.ShortInfo,
                     Rating = skillDto.Rating
                 };
 
@@ -437,7 +430,6 @@
     }
     private async void CreateLanguage()
     {
-        bool languageSaved;
         var currentEmployee = await _employeeService.GetEmployeeByEmail(employee.Email);
 
         if (currentEmployee != null)
@@ -463,21 +455,84 @@
     }
     private async void CreatePdf()
     {
-        var employees = await _employeeService.GetLastEmployee(6);
+        var currentEmployee = await _employeeService.GetEmployeeByEmail(employee.Email);
+        var employees = await _employeeService.GetLastEmployee(currentEmployee.Id);
         var Renderer = new ChromePdfRenderer();
 
         var sb = new StringBuilder();
-        sb.Append("<h1>" + employees.Name.ToUpper() + ' ' + employees.Surname.ToUpper() + "<h1>");
-        sb.Append("<br/>");
-        sb.Append("<br/><h2 style='color:#218EBF;'>Experience</h2>");
-        sb.Append("<br/>");
-        sb.Append("<h2>");
-        foreach (var emp in employees.Experiences) 
+        sb.Append("<html><head></head><body>");
+        sb.Append("<div style='width: 100%; height: 10%;  class='header'>");
+        sb.Append("<div style='width: 50%; height: 100%; float: left;class='left'>");
+        sb.Append("<div style='font-size: 28px;'>" + employees.Name + "" + employees.Surname + "</div>");
+        sb.Append("<h6 style='color: #208FBF; font-size:14px;'>" + employees.JobDescription + "</h6>");
+        sb.Append("</div>");
+        sb.Append("<div style='width: 50%; height: 100%; float: left;' class='right'>");
+        sb.Append("<div style='float:right;'><img width=90 height=70 src='./PdfDocument/hepapilogo.png' /> </div>");
+        sb.Append("</div>");
+        sb.Append("</div>");
+        sb.Append("<div style='width:100%; height:50px;'></div>");
+        sb.Append("<div style='width: 100%; height: 100%;' class='contaniner'>");
+        sb.Append("<div style='float:left; width: 50%; height: 100%;' class='left'>");
+        sb.Append("<div class='experience'>");
+        sb.Append("<u style='color: #218EBF;'>EXPERİENCE</u>");
+        foreach (var emp in employees.Experiences)
         {
-            sb.Append(emp.CompanyName);
+            sb.Append("<div style='margin-top:3px; color: #262627; margin-top:15px;' class='companyname'>" + emp.CompanyName + "</div>");
+            sb.Append("<div style='margin-top:3px; color: #2E95C3'>" + emp.City.Name + ", Turkey" + "</div>");
+            sb.Append("<div style='color: #6F6F6F;  width:95%'>" + emp.BriefInformation + "</div>");
+            sb.Append("<div style='margin-top:3px; font-size:12px; color: #6F6F6F;'>" + emp.StartDate.Date.ToShortDateString() + " - " + emp.EndDate.Date.ToShortDateString() + "</div>");
         }
-        sb.Append("</h2>");
 
-        Renderer.RenderHtmlAsPdf(sb.ToString()).SaveAs("PdfDocument/html-string.pdf");
+        sb.Append("</div>");
+        sb.Append("<div  style='margin-top:15px;' class='skills'>");
+        sb.Append("<u style='margin-top:15px; color: #218EBF;'>SKİLLS</u>");
+        foreach (var emp in employees.Skills)
+        {
+            sb.Append("<div style='color: #6F6F6F; margin-top:15px;'><b>" + emp.Name + " : " + emp.Rating + "</b></div>");
+            sb.Append("<div style='color: #6F6F6F; margin-top:3px; font-size:16px; width:95%'>" + emp.ShortInfo + "</div>");
+        }
+
+        sb.Append("</div>");
+        sb.Append("</div>");
+        sb.Append("<div style='float: left; width: 50%; height: 100%; ' class='right'>");
+        sb.Append("<div class='educations'>");
+        sb.Append("<u style='color: #218EBF;'>SHORT INFO</u>");
+        sb.Append("<div style='color: #6F6F6F; margin-top:15px'>" + employees.ShortInfo + "</div>");
+        sb.Append("</div>");
+        sb.Append("<div style='margin-top:15px' class='career'>");
+        sb.Append("<u style='color: #218EBF;'>CAREER OBJECTİVE</u>");
+        sb.Append("<div style='color: #6F6F6F; margin-top:15px'>" + employees.CareerObjective + "</div>");
+        sb.Append("</div>");
+        sb.Append("<div style='margin-top:15px' class='educations'>");
+        sb.Append("<u style='color: #218EBF;'>EDUCATİONS</u>");
+        foreach (var emp in employees.Educations)
+        {
+            if (!string.IsNullOrEmpty(emp.Department))
+            {
+                var department = _context.SchoolDepartments.FirstOrDefault(x => x.Id == int.Parse(emp.Department));
+                if (department != null)
+                {
+                    sb.Append("<div style='margin-top:3px; color: #262627; margin-top:15px;' class='companyname'>" + department.Name + "</div>");
+                }
+            }
+            sb.Append("<div style='margin-top:3px; color: #208FBF; margin-top:15px;'>" + emp.School.Name + ", Turkey" + "</div>");
+            sb.Append("<div style='margin-top:3px; font-size:12px; color: #6F6F6F;'>" + emp.StartDate.Date.ToShortDateString() + " - " + emp.EndDate.Date.ToShortDateString() + "</div>");
+        }
+        sb.Append("</div>");
+        sb.Append("<div style='margin-top:15px' class='languages'>");
+        sb.Append("<u style='color: #218EBF;'>LANGUAGES </u>");
+        foreach (var emp in employees.Languages)
+        {
+            sb.Append("<div style='margin-top:15px; color: #6F6F6F;' class='language'>" + emp.Name + " : " + emp.Rating + "</div>");
+        }
+
+        sb.Append("</div>");
+        sb.Append("</div>");
+        sb.Append("</div>");
+
+
+
+        sb.Append("</body></html>");
+        Renderer.RenderHtmlAsPdf(sb.ToString()).SaveAs(employees.Name+employees.Surname+".pdf");
     }
 }

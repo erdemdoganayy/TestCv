@@ -20,6 +20,9 @@
         public string Email { get; set; }
         public int Age { get; set; }
         public string Gender { get; set; }
+        public string CareerObjective { get; set; }
+        public string ShortInfo { get; set; }
+        public string JobDescription { get; set; }
 
         public int CountryId { get; set; }
         public Country Country { get; set; }
