@@ -7,8 +7,8 @@
         public string Position { get; set; }
         public string BriefInformation { get; set; }
 
-        public int CityId { get; set; }
-        public City City { get; set; }
+        public int CountryId { get; set; }
+        public Country Country { get; set; }
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

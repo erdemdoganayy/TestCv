@@ -34,36 +34,13 @@
                 <div class="row mt-2">
                     <div class="col-md-3">
 
-                        <label for="Country" class="control-label"><b>School Name</b></label>
-                        <select class="form-select" aria-label="Default select example" @bind="educationDto.SchoolId">
+                        @*  <label for="exampleInputEmail1"><b>School Name</b></label>
+                            <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ericson" @bind="employee.School">*@
 
-                            <option value="">-Select University</option>
 
-                            @if (Schools != null)
-                            {
-                                @foreach (var school in Schools)
-                                {
-                                    <option value=@school.Id>@school.Name.ToUpper()</option>
-                                }
-                            }
-                        </select>
 
                     </div>
                     <div class="col-md-4">
-
-                        <label for="Country" class="control-label"><b>School Department</b></label>
-                        <select class="form-select" aria-label="Default select example" @bind="educationDto.Department">
-
-                            <option value="">-Select Department</option>
-                            @if (SchoolDepartments != null)
-                            {
-                                @foreach (var department in SchoolDepartments)
-                                {
-                                    <option value=@department.Id>@department.Name.ToUpper()</option>
-                                }
-                            }
-
-                        </select>
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>Start Date</b></label>
@@ -348,7 +325,6 @@
             Education Edu = new Education
                 {
                     EmployeeId = currentEmployee.Id,
-                    SchoolId = educationDto.SchoolId,
                     Department = educationDto.Department,
                     StartDate = educationDto.StartDate,
                     EndDate = educationDto.EndDate
@@ -516,7 +492,7 @@
                     sb.Append("<div style='margin-top:3px; color: #262627; margin-top:15px;' class='companyname'>" + department.Name + "</div>");
                 }
             }
-            sb.Append("<div style='margin-top:3px; color: #208FBF; margin-top:15px;'>" + emp.School.Name + ", Turkey" + "</div>");
+            //sb.Append("<div style='margin-top:3px; color: #208FBF; margin-top:15px;'>" + emp.SchoolName + ", Turkey" + "</div>");
             sb.Append("<div style='margin-top:3px; font-size:12px; color: #6F6F6F;'>" + emp.StartDate.Date.ToShortDateString() + " - " + emp.EndDate.Date.ToShortDateString() + "</div>");
         }
         sb.Append("</div>");
