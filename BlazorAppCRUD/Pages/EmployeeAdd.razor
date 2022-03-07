@@ -13,21 +13,21 @@
 
 
 @*<h3>EmployeeAdd</h3>
-//@if (employees == null)
-{
+    //@if (employees == null)
+    {
     <p>
-        <em>
-            Loading...
-        </em>
+    <em>
+    Loading...
+    </em>
     </p>
-}
-else
-{
+    }
+    else
+    {
     <ListEmployeeComponent employees="@employees" />
-}
-<br />
-<br />*@
- 
+    }
+    <br />
+    <br />*@
+
 
 @if (employeeSaved)
 {
@@ -46,35 +46,35 @@ else
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="exampleInputEmail1">Name</label>
+                        <label for="exampleInputEmail1"><b>Name</b></label>
                         <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Marshall" @bind="employee.Name">
                         <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
                     </div>
                     <div class="col-md-6">
-                        <label for="exampleInputEmail1">Surname</label>
+                        <label for="exampleInputEmail1"><b>Surname</b></label>
                         <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ericson" @bind="employee.Surname">
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mt-4">
                     <div class="col-md-6">
-                        <label for="exampleInputEmail1">E-Mail Address</label>
+                        <label for="exampleInputEmail1"><b>E-Mail Address</b></label>
                         <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="marshallericson@xxx.com" @bind="employee.Email">
                     </div>
                     <div class="col-md-6">
-                        <label for="exampleInputEmail1">Phone</label>
+                        <label for="exampleInputEmail1"><b>Phone</b></label>
                         <input type="number" required maxlength="11" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="59814236547" @bind="employee.Phone">
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mt-4">
                     <div class="col-md-6">
-                        <label for="Age" class="control-label">Age</label>
+                        <label for="Age" class="control-label"><b>Age</b></label>
                         <input form="number" required maxlength="2" class="form-control" @bind="employee.Age" />
                     </div>
 
                     <div class="col-md-6">
-                        <label for="Country" class="control-label">Country</label>
+                        <label for="Country" class="control-label"><b>Country</b></label>
                         <select class="form-select" required aria-label="Default select example" @bind="employee.CountryId">
 
                             <option value="">-Select Country</option>
@@ -90,9 +90,9 @@ else
                     </div>
                 </div>
 
-                <div class="row mt-2">
+                <div class="row mt-4">
                     <div class="col-md-6">
-                        <label for="City" class="control-label">City</label>
+                        <label for="City" class="control-label"><b>City</b></label>
                         <select class="form-select" required aria-label="Default select example" @onchange="DoStuff">
 
                             <option value="">-Select City</option>
@@ -108,7 +108,7 @@ else
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="District" class="control-label">District</label>
+                        <label for="District" class="control-label"><b>District</b></label>
                         <select class="form-select" required aria-label="Default select example" @bind="employee.DistrictId">
                             <option value="">-Select District</option>
                             @if (@districts != null)
@@ -122,13 +122,13 @@ else
                     </div>
                 </div>
 
-                <div class="row mt-2">
+                <div class="row mt-4">
                     <div class="col-md-6">
-                        <label for="exampleInputEmail1">Address</label>
+                        <label for="exampleInputEmail1"><b>Address</b></label>
                         <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="200 Maryland Avenue NE Washington, D.C. 20002" @bind="employee.Address">
                     </div>
                     <div class="col-md-6">
-                        <label for="exampleInputEmail1">Gender</label>
+                        <label for="exampleInputEmail1"><b>Gender</b></label>
                         <select class="form-select" required @bind="employee.Gender">
                             <option selected>Select a gender</option>
                             <option value="Male">Male</option>
@@ -139,40 +139,40 @@ else
 
 
 
-                <div class="row mt-2">
+                <div class="row mt-4">
 
                     <div class="col-md-6">
-                        <label for="exampleInputEmail1">Your Web Site</label>
+                        <label for="exampleInputEmail1"><b>Your Web Site</b></label>
                         <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="www.marshallericsonblog.com" @bind="employee.Website">
                     </div>
                     <div class="col-md-6">
-                        <label for="exampleInputEmail1">LinkedIn Address</label>
+                        <label for="exampleInputEmail1"><b>LinkedIn Address</b></label>
                         <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="www.linkedin.com/marshalldev" @bind="employee.Linkedin">
                     </div>
                 </div>
-                   <div class="row mt-2">
-                     <div class="col-md-12">
-                        <label for="exampleInputEmail1">Job Description</label>
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <label for="exampleInputEmail1"><b>Job Description</b></label>
                         <input type="text" required class="form-control" id="most" aria-describedby="emailHelp" placeholder="Jr. Full Stack Web Developer" @bind="employee.JobDescription">
                     </div>
                 </div>
-                 <div class="row mt-2">
-                     <div class="col-md-12">
-                        <label for="exampleInputEmail1">Career Objective</label>
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <label for="exampleInputEmail1"><b>Career Objective</b></label>
                         <input type="text" required class="form-control" id="most" aria-describedby="emailHelp" placeholder="To become a good full stack web developer as soon as possible" @bind="employee.CareerObjective">
                     </div>
                 </div>
-                  <div class="row mt-2">
-                     <div class="col-md-12">
-                        <label for="exampleInputEmail1">Short Biography</label>
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <label for="exampleInputEmail1"><b>Short Biography</b></label>
                         <textarea type="text" required class="form-control" id="biography" aria-describedby="emailHelp" placeholder="I worked in hepapi technology for 2 years.." @bind="employee.ShortInfo">
-                            
+
                         </textarea>
                     </div>
                 </div>
 
 
-                <div class="row mt-2">
+                <div class="row mt-4">
                     <div class="col-md-12 d-flex justify-content-end">
                         <div class="form-group">
                             <input type="button" class="btn btn-success" @onclick="@CreateEmployee" value="Save" />
@@ -190,7 +190,6 @@ else
 </div>
 
 
-
 @if (employeeSaved)
 {
     <ShowHideComponent employee="@employee" />
@@ -204,6 +203,7 @@ else
     List<District> districts = new List<District>();
     List<Country> countries = new List<Country>();
     bool employeeSaved;
+    bool Alert;
 
     List<PositionType> positionTypes = new List<PositionType>();
 
@@ -230,6 +230,7 @@ else
 
     private async void CreateEmployee()
     {
+
         positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
         employeeSaved = await _employeeService.Create(employee);
 
