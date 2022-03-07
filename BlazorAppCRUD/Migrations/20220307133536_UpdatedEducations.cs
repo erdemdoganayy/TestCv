@@ -26,7 +26,7 @@ namespace BlazorAppCRUD.Migrations
                 column: "CountryId",
                 principalTable: "Countries",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

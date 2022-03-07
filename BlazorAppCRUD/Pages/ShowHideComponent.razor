@@ -360,7 +360,7 @@
                     CompanyName = experienceDto.CompanyName,
                     Position = positionType == PositionType.Other ? PositionValue : positionTypeDescription,
                     BriefInformation = experienceDto.BriefInformation,
-                    CityId = Convert.ToInt32(experienceDto.CityId),
+                    CountryId = Convert.ToInt32(experienceDto.CityId),
                     StartDate = experienceDto.StartDate,
                     EndDate = experienceDto.EndDate
                 };
@@ -455,7 +455,7 @@
         foreach (var emp in employees.Experiences)
         {
             sb.Append("<div style='margin-top:3px; color: #262627; margin-top:15px;' class='companyname'>" + emp.CompanyName + "</div>");
-            sb.Append("<div style='margin-top:3px; color: #2E95C3'>" + emp.City.Name + ", Turkey" + "</div>");
+            sb.Append("<div style='margin-top:3px; color: #2E95C3'>" + emp.Country.Name + ", Turkey" + "</div>");
             sb.Append("<div style='color: #6F6F6F;  width:95%'>" + emp.BriefInformation + "</div>");
             sb.Append("<div style='margin-top:3px; font-size:12px; color: #6F6F6F;'>" + emp.StartDate.Date.ToShortDateString() + " - " + emp.EndDate.Date.ToShortDateString() + "</div>");
         }
