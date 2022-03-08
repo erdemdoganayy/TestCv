@@ -33,12 +33,27 @@
             <div class="form-group mt-3">
                 <div class="row mt-2">
                     <div class="col-md-3">
+                        <label for="exampleInputEmail1"><b>School Name</b></label>
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ericson" @bind="educationDto.SchoolName">
+                    </div>
+                     <div class="col-md-3">
+                        <label for="exampleInputEmail1"><b>Department</b></label>
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ericson" @bind="educationDto.Department">
+                    </div>
+                      <div class="col-md-2">
+                        <label for="Country" class="control-label"><b>City</b></label>
+                        <select class="form-select" aria-label="Default select example" @bind="educationDto.CountryId">
 
-                        @*  <label for="exampleInputEmail1"><b>School Name</b></label>
-                            <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ericson" @bind="employee.School">*@
+                            <option value="">-Select Country</option>
 
-
-
+                            @if (countries != null)
+                            {
+                                @foreach (var country in countries)
+                                {
+                                    <option value=@country.Id>@country.Name</option>
+                                }
+                            }
+                        </select>
                     </div>
                     <div class="col-md-4">
                     </div>
@@ -85,15 +100,15 @@
 
                     <div class="col-md-2">
                         <label for="Country" class="control-label"><b>City</b></label>
-                        <select class="form-select" aria-label="Default select example" @bind="experienceDto.CityId">
+                        <select class="form-select" aria-label="Default select example" @bind="experienceDto.CountryId">
 
-                            <option value="">-Select City</option>
+                            <option value="">-Select Country</option>
 
-                            @if (cities != null)
+                            @if (countries != null)
                             {
-                                @foreach (var city in cities)
+                                @foreach (var country in countries)
                                 {
-                                    <option value=@city.Id>@city.Name</option>
+                                    <option value=@country.Id>@country.Name</option>
                                 }
                             }
                         </select>
@@ -360,7 +375,7 @@
                     CompanyName = experienceDto.CompanyName,
                     Position = positionType == PositionType.Other ? PositionValue : positionTypeDescription,
                     BriefInformation = experienceDto.BriefInformation,
-                    CountryId = Convert.ToInt32(experienceDto.CityId),
+                    CountryId = Convert.ToInt32(experienceDto.CountryId),
                     StartDate = experienceDto.StartDate,
                     EndDate = experienceDto.EndDate
                 };

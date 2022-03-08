@@ -12,8 +12,8 @@
 @inject IApplicationDbContext _context
 
 
-@*<h3>EmployeeAdd</h3>
-    //@if (employees == null)
+<h3>EmployeeAdd</h3>
+    @if (employees == null)
     {
     <p>
     <em>
@@ -26,7 +26,7 @@
     <ListEmployeeComponent employees="@employees" />
     }
     <br />
-    <br />*@
+    <br />
 
 
 @if (employeeSaved)
@@ -75,7 +75,7 @@
 
                     <div class="col-md-6">
                         <label for="Country" class="control-label"><b>Country</b></label>
-                        <select class="form-select" required aria-label="Default select example" @bind="employee.CountryId">
+                        <select class="form-select" required aria-label="Default select example" @onchange="CountryChanges" value="@employee.CountryId">
 
                             <option value="">-Select Country</option>
 
@@ -83,17 +83,18 @@
                             {
                                 @foreach (var country in countries)
                                 {
-                                    <option value=@country.Id>@country.Name</option>
+                                    <option value=@country.CountryId>@country.Name</option>
                                 }
                             }
                         </select>
+                        @CountryValue
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="col-md-6">
                         <label for="City" class="control-label"><b>City</b></label>
-                        <select class="form-select" required aria-label="Default select example" @onchange="DoStuff">
+                        <select class="form-select" required aria-label="Default select example" @onchange="CitiesChanges">
 
                             <option value="">-Select City</option>
 
@@ -101,7 +102,7 @@
                             {
                                 @foreach (var city in cities)
                                 {
-                                    <option value="@city.Code">@city.Name</option>
+                                    <option value="@city.Id">@city.Name</option>
                                 }
 
                             }
@@ -202,12 +203,26 @@
     List<City> cities = new List<City>();
     List<District> districts = new List<District>();
     List<Country> countries = new List<Country>();
-    bool employeeSaved;
-
     List<PositionType> positionTypes = new List<PositionType>();
 
+    bool employeeSaved;
 
-    async void DoStuff(ChangeEventArgs e)
+    //CountryValue adında bir prop tanımlıyorum.İçerisine onchange olduğunda e.value değerini atamak için.
+    public int CountryValue { get; set; }
+
+
+    async void CountryChanges(ChangeEventArgs e)
+    {
+        //Country Onchange olduğunda gelen değeri CountryValue'ya attım.
+        CountryValue = int.Parse(e.Value.ToString());
+        cities = await _cityService.GetSelectedCities(int.Parse(e.Value.ToString()));
+
+        await InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
+    async void CitiesChanges(ChangeEventArgs e)
     {
 
         districts = await _districtService.GetDistricts(int.Parse(e.Value.ToString()));
@@ -220,7 +235,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-
 
         employees = await _employeeService.GetEmployees();
         cities = await _cityService.GetCities();

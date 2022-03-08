@@ -30,7 +30,10 @@ namespace BlazorAppCRUD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Code")
+                    b.Property<int>("CitiesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -39,6 +42,8 @@ namespace BlazorAppCRUD.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
 
                     b.ToTable("Cities");
                 });
@@ -51,10 +56,17 @@ namespace BlazorAppCRUD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("PhoneCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -70,6 +82,9 @@ namespace BlazorAppCRUD.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DistrictId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -216,13 +231,13 @@ namespace BlazorAppCRUD.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -245,7 +260,7 @@ namespace BlazorAppCRUD.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("EmployeeId");
 
@@ -358,6 +373,17 @@ namespace BlazorAppCRUD.Migrations
                     b.ToTable("Skills");
                 });
 
+            modelBuilder.Entity("BlazorAppCRUD.Data.City", b =>
+                {
+                    b.HasOne("BlazorAppCRUD.Data.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
             modelBuilder.Entity("BlazorAppCRUD.Data.District", b =>
                 {
                     b.HasOne("BlazorAppCRUD.Data.City", "City")
@@ -409,9 +435,9 @@ namespace BlazorAppCRUD.Migrations
 
             modelBuilder.Entity("BlazorAppCRUD.Data.Experience", b =>
                 {
-                    b.HasOne("BlazorAppCRUD.Data.City", "City")
+                    b.HasOne("BlazorAppCRUD.Data.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CityId")
+                        .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -421,7 +447,7 @@ namespace BlazorAppCRUD.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("City");
+                    b.Navigation("Country");
 
                     b.Navigation("Employee");
                 });

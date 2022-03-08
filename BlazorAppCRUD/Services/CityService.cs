@@ -16,5 +16,10 @@ namespace BlazorAppCRUD.Data
         {
             return await _db.Cities.OrderBy(x=>x.Name).ToListAsync();
         }
+
+        public async Task<List<City>> GetSelectedCities(int EmployeeCountryId)
+        {
+            return await _db.Cities.Where(x => x.CountryId == EmployeeCountryId).OrderBy(x => x.Name).ToListAsync();
+        }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorAppCRUD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220222180724_CreatedSchoolDeparment")]
-    partial class CreatedSchoolDeparment
+    [Migration("20220308131304_UpdatedDb")]
+    partial class UpdatedDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,7 +32,10 @@ namespace BlazorAppCRUD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Code")
+                    b.Property<int>("CitiesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -41,6 +44,8 @@ namespace BlazorAppCRUD.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
 
                     b.ToTable("Cities");
                 });
@@ -53,10 +58,17 @@ namespace BlazorAppCRUD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("PhoneCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -72,6 +84,9 @@ namespace BlazorAppCRUD.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DistrictId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -94,6 +109,9 @@ namespace BlazorAppCRUD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -110,15 +128,16 @@ namespace BlazorAppCRUD.Migrations
                     b.Property<DateTime?>("ModifyDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("School")
+                    b.Property<string>("SchoolName")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("EmployeeId");
 
@@ -140,6 +159,10 @@ namespace BlazorAppCRUD.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<string>("CareerObjective")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CountryId")
                         .HasColumnType("int");
 
@@ -157,6 +180,10 @@ namespace BlazorAppCRUD.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("JobDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Linkedin")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -170,6 +197,10 @@ namespace BlazorAppCRUD.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortInfo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -198,13 +229,17 @@ namespace BlazorAppCRUD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
+                    b.Property<string>("BriefInformation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -227,7 +262,7 @@ namespace BlazorAppCRUD.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("EmployeeId");
 
@@ -317,9 +352,6 @@ namespace BlazorAppCRUD.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Experience")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("ModifyDate")
                         .HasColumnType("datetime2");
 
@@ -328,14 +360,30 @@ namespace BlazorAppCRUD.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
+                    b.Property<string>("Rating")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortInfo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("Skills");
+                });
+
+            modelBuilder.Entity("BlazorAppCRUD.Data.City", b =>
+                {
+                    b.HasOne("BlazorAppCRUD.Data.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("BlazorAppCRUD.Data.District", b =>
@@ -351,11 +399,19 @@ namespace BlazorAppCRUD.Migrations
 
             modelBuilder.Entity("BlazorAppCRUD.Data.Education", b =>
                 {
+                    b.HasOne("BlazorAppCRUD.Data.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BlazorAppCRUD.Data.Employee", "Employee")
                         .WithMany("Educations")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Country");
 
                     b.Navigation("Employee");
                 });
@@ -381,9 +437,9 @@ namespace BlazorAppCRUD.Migrations
 
             modelBuilder.Entity("BlazorAppCRUD.Data.Experience", b =>
                 {
-                    b.HasOne("BlazorAppCRUD.Data.City", "City")
+                    b.HasOne("BlazorAppCRUD.Data.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CityId")
+                        .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -393,7 +449,7 @@ namespace BlazorAppCRUD.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("City");
+                    b.Navigation("Country");
 
                     b.Navigation("Employee");
                 });
