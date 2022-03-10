@@ -75,7 +75,7 @@
 
                     <div class="col-md-6">
                         <label for="Country" class="control-label"><b>Country</b></label>
-                        <select class="form-select" required aria-label="Default select example" @onchange="CountryChanges" value="@employee.CountryId">
+                        <select class="form-select" required aria-label="Default select example" @onchange="CountryChanges">
 
                             <option value="">-Select Country</option>
 
@@ -87,7 +87,6 @@
                                 }
                             }
                         </select>
-                        @CountryValue
                     </div>
                 </div>
 
@@ -215,6 +214,7 @@
     {
         //Country Onchange olduğunda gelen değeri CountryValue'ya attım.
         CountryValue = int.Parse(e.Value.ToString());
+        employee.CountryId = CountryValue;
         cities = await _cityService.GetSelectedCities(int.Parse(e.Value.ToString()));
 
         await InvokeAsync(() =>

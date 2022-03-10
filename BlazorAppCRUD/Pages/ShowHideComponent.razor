@@ -10,6 +10,7 @@
 @using System.Text
 @inject IJSRuntime jsRuntime
 
+
 @inject IEmployeeService _employeeService
 @inject IEducationService _educationService
 @inject IExperienceServices _experienceService
@@ -34,15 +35,15 @@
                 <div class="row mt-2">
                     <div class="col-md-3">
                         <label for="exampleInputEmail1"><b>School Name</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ericson" @bind="educationDto.SchoolName">
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Oxford University" @bind="educationDto.SchoolName">
                     </div>
-                     <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>Department</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ericson" @bind="educationDto.Department">
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Software Engineer" @bind="educationDto.Department">
                     </div>
-                      <div class="col-md-2">
-                        <label for="Country" class="control-label"><b>City</b></label>
-                        <select class="form-select" aria-label="Default select example" @bind="educationDto.CountryId">
+                    <div class="col-md-2">
+                        <label for="Country" class="control-label"><b>Country</b></label>
+                        <select class="js-example-basic-single" name="state" @bind="educationDto.CountryId">
 
                             <option value="">-Select Country</option>
 
@@ -54,8 +55,7 @@
                                 }
                             }
                         </select>
-                    </div>
-                    <div class="col-md-4">
+                     
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>Start Date</b></label>
@@ -271,8 +271,20 @@
 
 
 
-
+@functions {
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await jsRuntime.InvokeVoidAsync("DropDownSearch");
+            firstRender = false;
+        }
+    }
+}
 @code {
+
+
+
     private bool ShowMyDiv { get; set; } = true;
     public string PositionValue { get; set; }
     bool languageSaved;
@@ -340,7 +352,9 @@
             Education Edu = new Education
                 {
                     EmployeeId = currentEmployee.Id,
+                    SchoolName = educationDto.SchoolName,
                     Department = educationDto.Department,
+                    CountryId = educationDto.CountryId,
                     StartDate = educationDto.StartDate,
                     EndDate = educationDto.EndDate
                 };
