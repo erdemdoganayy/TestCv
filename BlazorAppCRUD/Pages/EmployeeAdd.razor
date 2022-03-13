@@ -10,24 +10,24 @@
 @inject IDistrictService _districtService
 @inject ICountryService _countryService
 @inject IApplicationDbContext _context
+@inject IJSRuntime jsRuntime
 
-
-<h3>EmployeeAdd</h3>
+@*<h3>EmployeeAdd</h3>
     @if (employees == null)
-    {
+{
     <p>
-    <em>
-    Loading...
-    </em>
+        <em>
+            Loading...
+        </em>
     </p>
-    }
-    else
-    {
+}
+else
+{
     <ListEmployeeComponent employees="@employees" />
-    }
-    <br />
-    <br />
-
+}
+<br />
+<br />
+*@
 
 @if (employeeSaved)
 {
@@ -36,8 +36,8 @@
 }
 
 <div class="card shadow  mb-5 bg-white rounded">
-    <div class="card-header" style="background-color:white !important; font-size:20px">
-        <i class="oi oi-info"></i> Personal Info
+    <div class="card-header" style="background-color:#843e4c !important; font-size:20px">
+       <b style="color:#FFF"><i class="oi oi-info"></i> Personal Info</b>
     </div>
     <div class="card-body">
 
@@ -47,23 +47,23 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>Name</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Marshall" @bind="employee.Name">
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="employee.Name">
                         <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
                     </div>
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>Surname</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ericson" @bind="employee.Surname">
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="employee.Surname">
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>E-Mail Address</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="marshallericson@xxx.com" @bind="employee.Email">
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="employee.Email">
                     </div>
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>Phone</b></label>
-                        <input type="number" required maxlength="11" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="59814236547" @bind="employee.Phone">
+                        <input type="number" required maxlength="11" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="employee.Phone">
                     </div>
                 </div>
 
@@ -75,7 +75,7 @@
 
                     <div class="col-md-6">
                         <label for="Country" class="control-label"><b>Country</b></label>
-                        <select class="form-select" required aria-label="Default select example" @onchange="CountryChanges">
+                        <select class="form-select js-example-basic-single" id="country" required aria-label="Default select example" @onchange="CountryChanges">
 
                             <option value="">-Select Country</option>
 
@@ -87,6 +87,9 @@
                                 }
                             }
                         </select>
+
+                        @*@CountryValue*@
+
                     </div>
                 </div>
 
@@ -125,7 +128,7 @@
                 <div class="row mt-4">
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>Address</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="200 Maryland Avenue NE Washington, D.C. 20002" @bind="employee.Address">
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="employee.Address">
                     </div>
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>Gender</b></label>
@@ -143,29 +146,29 @@
 
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>Your Web Site</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="www.marshallericsonblog.com" @bind="employee.Website">
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="employee.Website">
                     </div>
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>LinkedIn Address</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="www.linkedin.com/marshalldev" @bind="employee.Linkedin">
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="employee.Linkedin">
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-12">
                         <label for="exampleInputEmail1"><b>Job Description</b></label>
-                        <input type="text" required class="form-control" id="most" aria-describedby="emailHelp" placeholder="Jr. Full Stack Web Developer" @bind="employee.JobDescription">
+                        <input type="text" required class="form-control" id="most" aria-describedby="emailHelp" @bind="employee.JobDescription">
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-12">
                         <label for="exampleInputEmail1"><b>Career Objective</b></label>
-                        <input type="text" required class="form-control" id="most" aria-describedby="emailHelp" placeholder="To become a good full stack web developer as soon as possible" @bind="employee.CareerObjective">
+                        <input type="text" required class="form-control" id="most" aria-describedby="emailHelp" @bind="employee.CareerObjective">
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-12">
                         <label for="exampleInputEmail1"><b>Short Biography</b></label>
-                        <textarea type="text" required class="form-control" id="biography" aria-describedby="emailHelp" placeholder="I worked in hepapi technology for 2 years.." @bind="employee.ShortInfo">
+                        <textarea type="text" required class="form-control" id="biography" aria-describedby="emailHelp" @bind="employee.ShortInfo">
 
                         </textarea>
                     </div>
@@ -194,7 +197,16 @@
 {
     <ShowHideComponent employee="@employee" />
 }
-
+@*@functions {
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await jsRuntime.InvokeVoidAsync("DropDownSearch");
+            firstRender = false;
+        }
+    }
+}*@
 @code {
 
     List<Employee> employees = new List<Employee>();
@@ -206,13 +218,13 @@
 
     bool employeeSaved;
 
-    //CountryValue adında bir prop tanımlıyorum.İçerisine onchange olduğunda e.value değerini atamak için.
+
     public int CountryValue { get; set; }
 
 
     async void CountryChanges(ChangeEventArgs e)
     {
-        //Country Onchange olduğunda gelen değeri CountryValue'ya attım.
+
         CountryValue = int.Parse(e.Value.ToString());
         employee.CountryId = CountryValue;
         cities = await _cityService.GetSelectedCities(int.Parse(e.Value.ToString()));

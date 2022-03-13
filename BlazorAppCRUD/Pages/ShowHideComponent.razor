@@ -25,8 +25,8 @@
 
 
 <div class="card shadow  mb-5 bg-white rounded">
-    <div class="card-header" style="background-color:white !important; font-size:20px">
-        <i class="oi oi-pencil"></i> Education Info
+    <div class="card-header" style="background-color:#843e4c !important; font-size:20px">
+        <b style="color:#FFF"> <i class="oi oi-pencil"></i> Education Info</b>
     </div>
     <div class="card-body">
 
@@ -35,15 +35,15 @@
                 <div class="row mt-2">
                     <div class="col-md-3">
                         <label for="exampleInputEmail1"><b>School Name</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Oxford University" @bind="educationDto.SchoolName">
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="educationDto.SchoolName">
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>Department</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Software Engineer" @bind="educationDto.Department">
+                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="educationDto.Department">
                     </div>
                     <div class="col-md-2">
                         <label for="Country" class="control-label"><b>Country</b></label>
-                        <select class="js-example-basic-single" name="state" @bind="educationDto.CountryId">
+                        <select class="js-example-basic-single form-select" name="state" @bind="educationDto.CountryId">
 
                             <option value="">-Select Country</option>
 
@@ -55,15 +55,15 @@
                                 }
                             }
                         </select>
-                     
+
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>Start Date</b></label>
-                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.StartDate" aria-describedby="emailHelp" placeholder="Enter Start Date">
+                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.StartDate" aria-describedby="emailHelp">
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>End Date</b></label>
-                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.EndDate" aria-describedby="emailHelp" placeholder="Enter End Date">
+                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.EndDate" aria-describedby="emailHelp">
                     </div>
                     <div class="col-md-1">
                         <label for="exampleInputEmail1"></label>
@@ -85,8 +85,8 @@
 
 
 <div class="card shadow  mb-5 bg-white rounded">
-    <div class="card-header" style="background-color:white !important; font-size:20px">
-        <i class="oi oi-badge" style="font-size:25px"></i> Experience Info
+    <div class="card-header" style="background-color:#843e4c !important; font-size:20px">
+        <b style="color:#FFF"> <i class="oi oi-badge" style="font-size:25px"></i> Experience Info</b>
     </div>
     <div class="card-body">
 
@@ -95,7 +95,7 @@
                 <div class="row mt-2">
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>Company Name</b></label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CompanyName" aria-describedby="emailHelp" placeholder="Hepapi Technology">
+                        <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CompanyName" aria-describedby="emailHelp">
                     </div>
 
                     <div class="col-md-2">
@@ -115,11 +115,11 @@
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>Start Date</b></label>
-                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.StartDate" aria-describedby="emailHelp" placeholder="Enter Start Date">
+                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.StartDate" aria-describedby="emailHelp">
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>End Date</b></label>
-                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.EndDate" aria-describedby="emailHelp" placeholder="Enter End Date">
+                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.EndDate" aria-describedby="emailHelp">
                     </div>
                     <div class="col-md-2">
                         <label for="City" class="control-label"><b>Position</b></label>
@@ -140,13 +140,13 @@
 
                     <div class="col-md-2">
                         <label hidden="@ShowMyDiv" for="exampleInputEmail1"><b>Other Position</b></label>
-                        <input type="text" hidden="@ShowMyDiv" class="form-control" id="exampleInputEmail1" @bind="@PositionValue" aria-describedby="emailHelp" placeholder="">
+                        <input type="text" hidden="@ShowMyDiv" class="form-control" id="exampleInputEmail1" @bind="@PositionValue" aria-describedby="emailHelp">
                     </div>
 
                     <div class="row mt-2">
                         <div class="col-md-12">
                             <label for="exampleInputEmail1"><b>Brief Information About The Experience</b></label>
-                            <textarea type="text" required class="form-control" id="biography" aria-describedby="emailHelp" placeholder="I developed projects with .NET for 3 years at Hepapi Teknoloji company..." @bind="@experienceDto.BriefInformation">
+                            <textarea type="text" required class="form-control" id="biography" aria-describedby="emailHelp" @bind="experienceDto.BriefInformation">
 
                         </textarea>
                         </div>
@@ -173,8 +173,8 @@
 
 
 <div class="card shadow  mb-5 bg-white rounded">
-    <div class="card-header" style="background-color:white !important; font-size:20px">
-        <i class="oi oi-graph" style="font-size:25px"></i> Skill Info
+    <div class="card-header" style="background-color:#843e4c !important; font-size:20px">
+         <b style="color:#FFF"><i class="oi oi-graph" style="font-size:25px"></i> Skill Info</b>
     </div>
     <div class="card-body">
         <form>
@@ -182,7 +182,7 @@
                 <div class="row mt-2">
                     <div class="col-md-4">
                         <label for="exampleInputEmail1"><b>Skill Name</b></label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.Name" placeholder=".NET">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.Name">
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
@@ -200,7 +200,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label for="Gender" class="control-label"><b>Skill Short Info</b></label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.ShortInfo" placeholder="I made a cv generator project with .NET">
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.ShortInfo">
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -219,8 +219,8 @@
 
 
 <div class="card shadow  mb-5 bg-white rounded">
-    <div class="card-header" style="background-color:white !important; font-size:20px">
-        <i class="oi oi-book" style="font-size:25px"></i> Language Info
+    <div class="card-header" style="background-color:#843e4c !important; font-size:20px">
+         <b style="color:#FFF"><i class="oi oi-book" style="font-size:25px"></i> Language Info</b>
     </div>
     <div class="card-body">
 
@@ -229,21 +229,22 @@
                 <div class="row mt-2">
                     <div class="col-md-4">
                         <label for="exampleInputEmail1"><b>Language Name</b></label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" @bind="languageDto.Name" aria-describedby="emailHelp" placeholder="English">
+                        <input type="text" class="form-control" id="exampleInputEmail1" @bind="languageDto.Name" aria-describedby="emailHelp">
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="Language" class="control-label"><b>Language Rating</b></label>
                             <select class="form-select" aria-label="Default select example" @bind="languageDto.Rating">
                                 <option value="">-Select Rating</option>
-                                <option value="A1">A1</option>
-                                <option value="A2">A2</option>
-                                <option value="B1">B1</option>
-                                <option value="B2">B2</option>
-                                <option value="C1">C1</option>
-                                <option value="C2">C2</option>
+                                <option value="A1 (Beginner/Elementary)">A1 (Beginner/Elementary)</option>
+                                <option value="A2 (Pre Intermediate)">A2 (Pre Intermediate)</option>
+                                <option value="B1 (Intermediate)">B1 (Intermediate)</option>
+                                <option value="B2 (Upper Intermediate)">B2 (Upper Intermediate)</option>
+                                <option value="C1 (Advanced)">C1 (Advanced)</option>
+                                <option value="C2 (Proficient)">C2 (Proficient)</option>
 
                             </select>
+
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -271,16 +272,16 @@
 
 
 
-@functions {
+@*@functions {
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-        {
-            await jsRuntime.InvokeVoidAsync("DropDownSearch");
-            firstRender = false;
-        }
+    if (firstRender)
+    {
+    await jsRuntime.InvokeVoidAsync("DropDownSearch");
+    firstRender = false;
     }
-}
+    }
+    }*@
 @code {
 
 
@@ -462,78 +463,114 @@
     private async void CreatePdf()
     {
         var currentEmployee = await _employeeService.GetEmployeeByEmail(employee.Email);
-        var employees = await _employeeService.GetLastEmployee(currentEmployee.Id);
+        var employees = await _employeeService.GetLastEmployee(2003);
         var Renderer = new ChromePdfRenderer();
 
         var sb = new StringBuilder();
         sb.Append("<html><head></head><body>");
-        sb.Append("<div style='width: 100%; height: 10%;  class='header'>");
-        sb.Append("<div style='width: 50%; height: 100%; float: left;class='left'>");
-        sb.Append("<div style='font-size: 28px;'>" + employees.Name + " " + employees.Surname + "</div>");
-        sb.Append("<h6 style='color: #208FBF; font-size:14px;'>" + employees.JobDescription + "</h6>");
+        sb.Append("<div class='container' style='width: 100%; height: 100%;'>");
+        sb.Append("<div class='left' style='background-color: #6DE0C5; width: 0.2%; height: 2400px; float: left;'>");
+        sb.Append(" <div class='wrapper' style='width: 90%;height: 100vh; margin: auto;'>");
+        sb.Append("<div class='logo' style='width: 100%; font-size: 50px; margin-top: 4rem; margin-left: 4rem;'>");
+        sb.Append("<br>");
+        sb.Append("<br>");
         sb.Append("</div>");
-        sb.Append("<div style='width: 50%; height: 100%; float: left;' class='right'>");
-        sb.Append("<div style='float:right;'><img width=90 height=70 src='./PdfDocument/hepapilogo.png' /> </div>");
-        sb.Append("</div>");
-        sb.Append("</div>");
-        sb.Append("<div style='width:100%; height:50px;'></div>");
-        sb.Append("<div style='width: 100%; height: 100%;' class='contaniner'>");
-        sb.Append("<div style='float:left; width: 50%; height: 100%;' class='left'>");
-        sb.Append("<div class='experience'>");
-        sb.Append("<u style='color: #218EBF;'>EXPERİENCE</u>");
-        foreach (var emp in employees.Experiences)
-        {
-            sb.Append("<div style='margin-top:3px; color: #262627; margin-top:15px;' class='companyname'>" + emp.CompanyName + "</div>");
-            sb.Append("<div style='margin-top:3px; color: #2E95C3'>" + emp.Country.Name + ", Turkey" + "</div>");
-            sb.Append("<div style='color: #6F6F6F;  width:95%'>" + emp.BriefInformation + "</div>");
-            sb.Append("<div style='margin-top:3px; font-size:12px; color: #6F6F6F;'>" + emp.StartDate.Date.ToShortDateString() + " - " + emp.EndDate.Date.ToShortDateString() + "</div>");
-        }
+        // sb.Append("<p style='margin-top: 10rem; color: #fbfcfd; font-size: 1rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>B I O G R A P H Y</p>");
+        // sb.Append("<hr style=' border: 1px solid #371a2d; margin-top: 1.7rem;'>");
+
+        // sb.Append("<p style='margin-top: 9.5rem; color: #fbfcfd; font-size: 1rem; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'> P E R S O N A L</p>");
+        //  sb.Append(" <hr style='border: 1px solid #371a2d; margin-top: 2rem;'>");
+
+        // sb.Append("<p style='margin-top: 15rem; color: #fbfcfd; font-size: 1rem; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'> K E Y &nbsp; S K I L L S </p>");
+        // sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1.5rem;'>");
+
+        // sb.Append("<p style='margin-top: 13rem; color: #fbfcfd; font-size: 1rem; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>C O N T A C T </p>");
+        //sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1.5rem;'>");
+
+        // sb.Append("<p style='margin-top: 25.5rem; color: #fbfcfd; font-size: 1rem; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>E X P E R I E N C E S</p>");
+        //  sb.Append("<hr style=' border: 1px solid #371a2d; margin-top: 1.5rem;'>");
+
+        //sb.Append("<p style='margin-top: 9.5rem; color: #fbfcfd; font-size: 1rem; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>E D U C A T I O N S</p>");
+        // sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1.5rem;'>");
+        // sb.Append("<p style='margin-top: 9.5rem; color: #fbfcfd; font-size: 1rem; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>L A N G U A G E S</p>");
+        // sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1.5rem;'>");
 
         sb.Append("</div>");
-        sb.Append("<div  style='margin-top:15px;' class='skills'>");
-        sb.Append("<u style='margin-top:15px; color: #218EBF;'>SKİLLS</u>");
+        sb.Append("</div>");
+        sb.Append("<div class='right' style='width: 98%; height: 100%; float: left;'>");
+        sb.Append("<div class='wrapper' style='width: 90%; margin: auto;'>");
+        sb.Append("<div class='personelInfo' style='margin-top: 10rem;'>");
+        sb.Append("<img style='float: right; margin-top: -8rem;' src='./hepapilogo.png' width='120'>");
+        sb.Append("<strong style='font-size: 3rem; color: #843e4c;'>" + employees.Name + " " + employees.Surname + "</strong>");
+        sb.Append("<p style='color: #3bd6b3; font-size: 1.4rem;'>" + employees.JobDescription + "</p>");
+        sb.Append("<p style='color:#a6b5c7'>" + employees.ShortInfo + "</p>");
+        sb.Append("</div>");
+        sb.Append("<p style=' margin-top:3rem; color: #000000; font-size: 0.8rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>B I O G R A P H Y</p>");
+        sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1rem !important;'>");
+        sb.Append("<p style='color:#a6b5c7; margin-top: 2rem;'>Birth Date : 24.03.1987</p>");
+        sb.Append("<p style='color:#a6b5c7'>Birth Place: " + employees.District.Name + "/" + employees.Country.Name + "</p>");
+        sb.Append("<p style='color:#a6b5c7'>Nationality : " + employees.Country.Name + "</p>");
+        sb.Append("<p style=' margin-top:3rem; color: #000000; font-size: 0.8rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>P E R S O N A L &nbsp; I N F O</p>");
+        sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1rem !important;'>");
+
+
+        string SkillMerge = "";
         foreach (var emp in employees.Skills)
         {
-            sb.Append("<div style='color: #6F6F6F; margin-top:15px;'><b>" + emp.Name + " : " + emp.Rating + "</b></div>");
-            sb.Append("<div style='color: #6F6F6F; margin-top:3px; font-size:16px; width:95%'>" + emp.ShortInfo + "</div>");
+            SkillMerge += sb.Append("<p style='color:#a6b5c7;'>" + emp.Name + " : " + emp.Rating + " &nbsp;&nbsp;&nbsp;&nbsp;</p>");
         }
 
-        sb.Append("</div>");
-        sb.Append("</div>");
-        sb.Append("<div style='float: left; width: 50%; height: 100%; ' class='right'>");
-        sb.Append("<div class='educations'>");
-        sb.Append("<u style='color: #218EBF;'>SHORT INFO</u>");
-        sb.Append("<div style='color: #6F6F6F; margin-top:15px'>" + employees.ShortInfo + "</div>");
-        sb.Append("</div>");
-        sb.Append("<div style='margin-top:15px' class='career'>");
-        sb.Append("<u style='color: #218EBF;'>CAREER OBJECTİVE</u>");
-        sb.Append("<div style='color: #6F6F6F; margin-top:15px'>" + employees.CareerObjective + "</div>");
-        sb.Append("</div>");
-        sb.Append("<div style='margin-top:15px' class='educations'>");
-        sb.Append("<u style='color: #218EBF;'>EDUCATİONS</u>");
+
+        foreach (var emp in employees.Skills)
+        {
+            sb.Append("<p style='color:#a6b5c7; margin-top: 0.5rem;'><b>" + emp.Name + " :</b> " + emp.ShortInfo + "<br></p>");
+
+        }
+
+
+        sb.Append("<p style=' margin-top:3rem; color: #000000; font-size: 0.8rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>K E Y &nbsp; S K I L L S </p>");
+        sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1rem !important'>");
+        sb.Append("<p style='color:#a6b5c7; margin-top: 2rem;'>Phone : " + employees.Phone + "</p>");
+        sb.Append("<p style='color:#a6b5c7'>Mail: " + employees.Email + "</p>");
+        sb.Append("<p style='color:#a6b5c7'>Web : " + employees.Website + "</p>");
+        sb.Append("<p style='color:#a6b5c7'>Linkedin : " + employees.Linkedin + "</p>");
+
+        sb.Append("<p style=' margin-top:3rem; color: #000000; font-size: 0.8rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>C O N T A C T </p>");
+        sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1rem !important;'>");
+        foreach (var emp in employees.Experiences)
+        {
+            sb.Append("<p style=' margin-top: 2rem; margin-bottom: -1.8rem; color: #6ebcda; font-size: 0.7rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" + emp.StartDate.Date.ToShortDateString() + " - " + emp.EndDate.Date.ToShortDateString() + "</p>");
+            sb.Append("<div style='width:100%'>");
+            sb.Append("<p style=' margin-top: 2rem; width: 70%; float: left; color: #6ebcda; font-size: 1.1rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'><b>" + emp.Position + "</b></p>");
+            sb.Append("<p style=' margin-top: 2rem; width: 30%; float: right; color: #6ebcda; font-size: 0.9rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" + emp.CompanyName + ", " + emp.Country.Name + "</p>");
+            sb.Append("<p style='color:#a6b5c7; width: 100%; text-align:left; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" + emp.BriefInformation + "</p>");
+            sb.Append("</div>");
+        }
+        sb.Append("<p style=' margin-top:3rem; color: #000000; font-size: 0.8rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>E X P E R I E N C E</p>");
+
+        sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1rem !important;'>");
         foreach (var emp in employees.Educations)
         {
-            if (!string.IsNullOrEmpty(emp.Department))
-            {
-                var department = _context.SchoolDepartments.FirstOrDefault(x => x.Id == int.Parse(emp.Department));
-                if (department != null)
-                {
-                    sb.Append("<div style='margin-top:3px; color: #262627; margin-top:15px;' class='companyname'>" + department.Name + "</div>");
-                }
-            }
-            //sb.Append("<div style='margin-top:3px; color: #208FBF; margin-top:15px;'>" + emp.SchoolName + ", Turkey" + "</div>");
-            sb.Append("<div style='margin-top:3px; font-size:12px; color: #6F6F6F;'>" + emp.StartDate.Date.ToShortDateString() + " - " + emp.EndDate.Date.ToShortDateString() + "</div>");
+
+            sb.Append("<p style=' margin-top: 2rem; margin-bottom: -1.8rem; color: #6ebcda; font-size: 0.7rem; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;'>" + emp.StartDate.Date.ToShortDateString() + " - " + emp.EndDate.Date.ToShortDateString() + "</p>");
+            sb.Append("<p style=' margin-top: 2rem; width: 70%; float: left; color: #6ebcda; font-size: 0.8rem; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;'><b>" + emp.SchoolName + "</b><span style='margin-left: 5rem;'>" + emp.Department + "</span></p>");
+            sb.Append("<p style=' margin-top: 2rem; width: 30%; float: right; color: #6ebcda; font-size: 0.9rem; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;'>" + emp.Country.Name + "</p>");
         }
-        sb.Append("</div>");
-        sb.Append("<div style='margin-top:15px' class='languages'>");
-        sb.Append("<u style='color: #218EBF;'>LANGUAGES </u>");
+        sb.Append("<p style=' margin-top:3rem; color: #000000; font-size: 0.8rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>E D U C A T I O N S</p>");
+        sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1rem !important;'>");
         foreach (var emp in employees.Languages)
         {
-            sb.Append("<div style='margin-top:15px; color: #6F6F6F;' class='language'>" + emp.Name + " : " + emp.Rating + "</div>");
+            sb.Append("<p style='color:#a6b5c7; margin-top: 1rem;'><strong>" + emp.Name + "</strong> : " + emp.Rating + "</p>");
         }
+        sb.Append("<p style=' margin-top:3rem; color: #000000; font-size: 0.8rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>L A N G U A G E S</p>");
+        sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1rem !important;'>");
+        sb.Append("</div>");
 
         sb.Append("</div>");
+        sb.Append("<div class='enson' style='background-color: #6DE0C5; width: 0.2%; height: 2400px; float: right;'>");
         sb.Append("</div>");
+
+
         sb.Append("</div>");
 
 
