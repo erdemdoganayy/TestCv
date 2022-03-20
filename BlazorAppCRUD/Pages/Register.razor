@@ -1,0 +1,58 @@
+﻿@layout LoginLayout
+@page "/Register"
+@*/Login yerine / yaparsan ana sayfaya atar*@
+@inject IUserService _userService
+@inject IJSRuntime jsRuntime
+@inject NavigationManager NavigationManager
+@using BlazorAppCRUD.Data
+
+<div class="wrapper">
+    <div class="logo"> <img width=50 height=50 src="./images/logo.png" alt=""> </div>
+    <div class="text-center mt-4 name"> Hepapi CV Maker </div>
+    <EditForm Model="@User" OnValidSubmit="@CreateRegister" class="p-3 mt-3">
+        <div class="form-field d-flex align-items-center">
+            <span class="far fa-user"></span>
+            <input type="email" required name="userName" id="userName" placeholder="E-mail" @bind="User.Email">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <span class="fas fa-key"></span> <input type="password" required name="password" id="pwd" placeholder="Password" @bind="User.PasswordOne">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <span class="fas fa-key"></span> <input type="password" required name="password" id="pwd" placeholder="Confirm Password" @bind="User.PasswordTwo">
+        </div>
+        <button type="submit" class="btn mt-3">Register</button>
+    </EditForm>
+    <div class="text-center fs-6">@* <a href="#">Forget password?</a> or*@ <a style="color:#4BD9B8" href="/Login">Login</a> </div>
+</div>
+@code {
+    private User User = new User();
+    bool RegisterSaved;
+
+    private async void CreateRegister()
+    {
+        var GetUserEmail = await _userService.GetUserEmail(User.Email);
+        if (GetUserEmail == null)
+        {
+                if (User.PasswordOne != User.PasswordTwo)
+                {
+                    await jsRuntime.InvokeVoidAsync("toastr.warning", "Passwords Are Not The Same", "Warning");
+                    
+                    //User.Id = 0;
+                    //User.Email = string.Empty;
+                    //User.PasswordOne = string.Empty;
+                    //User.PasswordTwo = string.Empty;
+                }
+                else if (User.PasswordOne == User.PasswordTwo)
+                {
+                    RegisterSaved = await _userService.Create(User);
+                    await jsRuntime.InvokeVoidAsync("toastr.success", "Registration Completed", "Successful");
+                    NavigationManager.NavigateTo("/Login");
+                }
+        }
+        else
+        {
+            await jsRuntime.InvokeVoidAsync("toastr.warning", "This User Is Already Registered", "Warning");
+        }
+
+    }
+}

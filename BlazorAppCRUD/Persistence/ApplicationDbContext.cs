@@ -21,6 +21,7 @@ namespace BlazorAppCRUD.Data
         public DbSet<District> Districts { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<School> Schools { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<SchoolDepartment> SchoolDepartments { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

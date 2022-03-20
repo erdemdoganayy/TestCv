@@ -12,21 +12,22 @@
 @inject IApplicationDbContext _context
 @inject IJSRuntime jsRuntime
 
+
 @*<h3>EmployeeAdd</h3>
     @if (employees == null)
-{
+    {
     <p>
-        <em>
-            Loading...
-        </em>
+    <em>
+    Loading...
+    </em>
     </p>
-}
-else
-{
+    }
+    else
+    {
     <ListEmployeeComponent employees="@employees" />
-}
-<br />
-<br />
+    }
+    <br />
+    <br />
 *@
 
 @if (employeeSaved)
@@ -37,18 +38,23 @@ else
 
 <div class="card shadow  mb-5 bg-white rounded">
     <div class="card-header" style="background-color:#843e4c !important; font-size:20px">
-       <b style="color:#FFF"><i class="oi oi-info"></i> Personal Info</b>
+        <b style="color:#FFF"><i class="oi oi-info"></i> Personal Info</b>
     </div>
     <div class="card-body">
 
 
-        <form>
+        <EditForm Model="@employee" OnValidSubmit="@CreateEmployee">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
             <div class="form-group">
                 <div class="row">
+
+
                     <div class="col-md-6">
-                        <label for="exampleInputEmail1"><b>Name</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="employee.Name">
-                        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+                        <label for="Name"><b>Name</b></label>
+                        <input type="text" class="form-control" id="Name" aria-describedby="emailHelp" @bind="employee.Name" />
+                        <ValidationMessage For=@(() => employee.Name) />
+
                     </div>
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>Surname</b></label>
@@ -68,10 +74,7 @@ else
                 </div>
 
                 <div class="row mt-4">
-                    <div class="col-md-6">
-                        <label for="Age" class="control-label"><b>Age</b></label>
-                        <input form="number" required maxlength="2" class="form-control" @bind="employee.Age" />
-                    </div>
+              
 
                     <div class="col-md-6">
                         <label for="Country" class="control-label"><b>Country</b></label>
@@ -91,10 +94,7 @@ else
                         @*@CountryValue*@
 
                     </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-md-6">
+                       <div class="col-md-6">
                         <label for="City" class="control-label"><b>City</b></label>
                         <select class="form-select" required aria-label="Default select example" @onchange="CitiesChanges">
 
@@ -110,6 +110,10 @@ else
                             }
                         </select>
                     </div>
+
+                </div>
+
+                <div class="row mt-4">
                     <div class="col-md-6">
                         <label for="District" class="control-label"><b>District</b></label>
                         <select class="form-select" required aria-label="Default select example" @bind="employee.DistrictId">
@@ -123,17 +127,21 @@ else
                             }
                         </select>
                     </div>
-                </div>
-
-                <div class="row mt-4">
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>Address</b></label>
                         <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="employee.Address">
                     </div>
+                </div>
+
+                <div class="row mt-4">
+                          <div class="col-md-6">
+                        <label for="Birth" class="control-label"><b>Birth Date</b></label>
+                        <input type="date" required class="form-control" @bind="employee.BirthDate" />
+                    </div>
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>Gender</b></label>
                         <select class="form-select" required @bind="employee.Gender">
-                            <option selected>Select a gender</option>
+                            <option value="">Select a gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
@@ -178,14 +186,14 @@ else
                 <div class="row mt-4">
                     <div class="col-md-12 d-flex justify-content-end">
                         <div class="form-group">
-                            <input type="button" class="btn btn-success" @onclick="@CreateEmployee" value="Save" />
+                            <input type="submit" class="btn btn-success" value="Save" />
                         </div>
                     </div>
                 </div>
 
             </div>
 
-        </form>
+        </EditForm>
 
 
 
@@ -200,13 +208,13 @@ else
 @*@functions {
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-        {
-            await jsRuntime.InvokeVoidAsync("DropDownSearch");
-            firstRender = false;
-        }
+    if (firstRender)
+    {
+    await jsRuntime.InvokeVoidAsync("DropDownSearch");
+    firstRender = false;
     }
-}*@
+    }
+    }*@
 @code {
 
     List<Employee> employees = new List<Employee>();
@@ -217,7 +225,6 @@ else
     List<PositionType> positionTypes = new List<PositionType>();
 
     bool employeeSaved;
-
 
     public int CountryValue { get; set; }
 

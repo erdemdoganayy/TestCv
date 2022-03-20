@@ -1,0 +1,48 @@
+﻿@using BlazorAppCRUD.Data
+@inject IUserService _userService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime jsRuntime
+@layout LoginLayout
+@page "/Login"
+@*/Login yerine / yaparsan ana sayfaya atar*@
+<div class="wrapper">
+    <div class="logo"> <img width=50 height=50 src="./images/logo.png" alt=""> </div>
+    <div class="text-center mt-4 name"> Hepapi CV Maker </div>
+    <EditForm Model="@User" OnValidSubmit="@LoginUser" class="p-3 mt-3">
+        <div class="form-field d-flex align-items-center"> <span class="far fa-user"></span> <input type="text" name="userName" id="userName" placeholder="E-mail" @bind="User.Email"> </div>
+        <div class="form-field d-flex align-items-center"> <span class="fas fa-key"></span> <input type="password" name="password" id="pwd" placeholder="Password" @bind="User.PasswordOne"> </div>
+        <button type="submit" class="btn mt-3">Login</button>
+    </EditForm>
+    <div class="text-center fs-6">@* <a href="#">Forget password?</a> or*@ <a style="color:#4BD9B8" href="/Register">Sign up</a> </div>
+</div>
+@code {
+    public User User = new User();
+
+
+    private async void LoginUser()
+    {
+        var GetUserEmail = await _userService.GetUserEmail(User.Email);
+        var UserGetPassword = User.PasswordOne;
+
+        if (GetUserEmail != null)
+        {
+            var UserInfo = await _userService.GetUser(GetUserEmail.Id);
+            if (UserInfo.PasswordOne == UserGetPassword)
+            {
+                await jsRuntime.InvokeVoidAsync("toastr.success", "Login Successful", "Congratulations");
+                NavigationManager.NavigateTo("/EmployeeAdd");
+            }
+            else
+            {
+                await jsRuntime.InvokeVoidAsync("toastr.error", "Wrong Password", "Error");
+            }
+
+        }
+        else
+        {
+            await jsRuntime.InvokeVoidAsync("toastr.error", "There Is No Such E-mail", "Error");
+        }
+
+
+    }
+}

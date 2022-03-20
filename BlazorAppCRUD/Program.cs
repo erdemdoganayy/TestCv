@@ -20,6 +20,7 @@ builder.Services.AddScoped<IDistrictService, DistrictService>();
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<ISchoolService, SchoolService>();
 builder.Services.AddScoped<ISchoolDepartmentService, SchoolDepartmentService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 var app = builder.Build();

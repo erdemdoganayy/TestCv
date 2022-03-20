@@ -1,4 +1,6 @@
-﻿namespace BlazorAppCRUD.Data
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BlazorAppCRUD.Data
 {
     public class Employee : AuditableEntity
     {
@@ -18,7 +20,7 @@
         public string Website { get; set; }
         public string Linkedin { get; set; }
         public string Email { get; set; }
-        public int Age { get; set; }
+        public DateTime BirthDate { get; set; } = DateTime.Now;
         public string Gender { get; set; }
         public string CareerObjective { get; set; }
         public string ShortInfo { get; set; }
@@ -30,6 +32,8 @@
         public int DistrictId { get; set; }
         public District District { get; set; }
 
+        //public int UserId { get; set; }
+        //public User User { get; set; }
 
         public IList<Education> Educations { get; set; }
         public IList<Experience> Experiences { get; set; }
