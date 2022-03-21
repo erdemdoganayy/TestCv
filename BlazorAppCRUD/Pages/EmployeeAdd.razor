@@ -30,12 +30,6 @@
     <br />
 *@
 
-@if (employeeSaved)
-{
-    <AlertComponent Content="Personal information saved !" Description="Please fill in the fields below" Title="Congratulations !" Type="success" />
-
-}
-
 <div class="card shadow  mb-5 bg-white rounded">
     <div class="card-header" style="background-color:#843e4c !important; font-size:20px">
         <b style="color:#FFF"><i class="oi oi-info"></i> Personal Info</b>
@@ -265,6 +259,7 @@
 
         positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
         employeeSaved = await _employeeService.Create(employee);
+         await jsRuntime.InvokeVoidAsync("toastr.success", "Personal Information Registered !" + "<br>"+ "Please Fill The Information Below ", "Congratulations !");
 
         if (employeeSaved)
             employees = await _employeeService.GetEmployees();

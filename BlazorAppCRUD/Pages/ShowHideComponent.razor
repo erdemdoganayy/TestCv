@@ -59,11 +59,11 @@
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>Start Date</b></label>
-                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.StartDate" aria-describedby="emailHelp">
+                        <input type="date" class="form-control" required id="exampleInputEmail1" @bind="educationDto.StartDate" aria-describedby="emailHelp">
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>End Date</b></label>
-                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.EndDate" aria-describedby="emailHelp">
+                        <input type="date" class="form-control" required id="exampleInputEmail1" @bind="educationDto.EndDate" aria-describedby="emailHelp">
                     </div>
                     <div class="col-md-1">
                         <label for="exampleInputEmail1"></label>
@@ -90,17 +90,17 @@
     </div>
     <div class="card-body">
 
-        <form>
+        <EditForm Model="@experienceDto" OnValidSubmit="@CreateExperience">
             <div class="form-group mt-3">
                 <div class="row mt-2">
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>Company Name</b></label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" @bind="experienceDto.CompanyName" aria-describedby="emailHelp">
+                        <input type="text" class="form-control" required id="exampleInputEmail1" @bind="experienceDto.CompanyName" aria-describedby="emailHelp">
                     </div>
 
                     <div class="col-md-2">
                         <label for="Country" class="control-label"><b>Country</b></label>
-                        <select class="form-select" aria-label="Default select example" @bind="experienceDto.CountryId">
+                        <select class="form-select" required aria-label="Default select example" @bind="experienceDto.CountryId">
 
                             <option value="">-Select Country</option>
 
@@ -115,15 +115,15 @@
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>Start Date</b></label>
-                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.StartDate" aria-describedby="emailHelp">
+                        <input type="date" class="form-control" required id="exampleInputEmail1" @bind="experienceDto.StartDate" aria-describedby="emailHelp">
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>End Date</b></label>
-                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="experienceDto.EndDate" aria-describedby="emailHelp">
+                        <input type="date" class="form-control" required id="exampleInputEmail1" @bind="experienceDto.EndDate" aria-describedby="emailHelp">
                     </div>
                     <div class="col-md-2">
                         <label for="City" class="control-label"><b>Position</b></label>
-                        <select class="form-select" aria-label="Default select example" @onchange="DoStuff" text="@experienceDto.Position">
+                        <select class="form-select" required aria-label="Default select example" @onchange="DoStuff" text="@experienceDto.Position">
 
                             <option value="">-Select Position</option>
 
@@ -140,7 +140,7 @@
 
                     <div class="col-md-2">
                         <label hidden="@ShowMyDiv" for="exampleInputEmail1"><b>Other Position</b></label>
-                        <input type="text" hidden="@ShowMyDiv" class="form-control" id="exampleInputEmail1" @bind="@PositionValue" aria-describedby="emailHelp">
+                        <input type="text" hidden="@ShowMyDiv" required class="form-control" id="exampleInputEmail1" @bind="@PositionValue" aria-describedby="emailHelp">
                     </div>
 
                     <div class="row mt-2">
@@ -155,18 +155,15 @@
                     <div class="col-md-1">
                         <label for="exampleInputEmail1">&nbsp</label>
                         <div class="form-group">
-                            <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateExperience" value="Add" />
+                            <input type="submit" class="btn btn-outline-success border-2" value="Add" />
                         </div>
                     </div>
-
-
-
 
                 </div>
             </div>
             <br />
             <FirstListExperience ExperiencesList="@ExperiencesList" employee="employee" />
-        </form>
+        </EditForm>
 
     </div>
 </div>
@@ -177,17 +174,17 @@
         <b style="color:#FFF"><i class="oi oi-graph" style="font-size:25px"></i> Skill Info</b>
     </div>
     <div class="card-body">
-        <form>
+        <EditForm Model="@skillDto" OnValidSubmit="@CreateSkill">
             <div class="form-group mt-3">
                 <div class="row mt-2">
                     <div class="col-md-4">
                         <label for="exampleInputEmail1"><b>Skill Name</b></label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.Name">
+                        <input type="text" class="form-control" required id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.Name">
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="Gender" class="control-label"><b>Skill Rating</b></label>
-                            <select class="form-select" aria-label="Default select example" @bind="skillDto.Rating">
+                            <select class="form-select" required aria-label="Default select example" @bind="skillDto.Rating">
                                 <option value=" ">-Select Rating</option>
                                 <option value="Expert">Expert</option>
                                 <option value="Experienced">Experienced</option>
@@ -200,20 +197,20 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label for="Gender" class="control-label"><b>Skill Short Info</b></label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.ShortInfo">
+                            <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="skillDto.ShortInfo">
                         </div>
                     </div>
                     <div class="col-md-1">
                         <label for="exampleInputEmail1">&nbsp</label>
                         <div class="form-group">
-                            <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateSkill" value="Add" />
+                            <input type="submit" class="btn btn-outline-success border-2" value="Add" />
                         </div>
                     </div>
                 </div>
             </div>
             <br />
             <FirstListSkill SkillsList="@SkillsList" employee="employee" />
-        </form>
+        </EditForm>
     </div>
 </div>
 
@@ -224,17 +221,17 @@
     </div>
     <div class="card-body">
 
-        <form>
+        <EditForm Model="@languageDto" OnValidSubmit="@CreateLanguage">
             <div class="form-group mt-3">
                 <div class="row mt-2">
                     <div class="col-md-4">
                         <label for="exampleInputEmail1"><b>Language Name</b></label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" @bind="languageDto.Name" aria-describedby="emailHelp">
+                        <input type="text" required class="form-control" id="exampleInputEmail1" @bind="languageDto.Name" aria-describedby="emailHelp">
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="Language" class="control-label"><b>Language Rating</b></label>
-                            <select class="form-select" aria-label="Default select example" @bind="languageDto.Rating">
+                            <select class="form-select" required aria-label="Default select example" @bind="languageDto.Rating">
                                 <option value="">-Select Rating</option>
                                 <option value="A1 (Beginner/Elementary)">A1 (Beginner/Elementary)</option>
                                 <option value="A2 (Pre Intermediate)">A2 (Pre Intermediate)</option>
@@ -250,21 +247,21 @@
                     <div class="col-md-1">
                         <label for="exampleInputEmail1">&nbsp</label>
                         <div class="form-group">
-                            <input type="button" class="btn btn-outline-success border-2" @onclick="@CreateLanguage" value="Add" />
+                            <input type="submit" class="btn btn-outline-success border-2" value="Add" />
                         </div>
                     </div>
                 </div>
             </div>
             <br />
             <FirstListLanguage LanguagesList="@LanguagesList" employee="employee" />
-        </form>
+        </EditForm>
 
     </div>
 
     @if (languageSaved)
     {
         <div class='col-md-12 text-center my-1'>
-            <button style="color:white; text-align:center" class="btn btn-info w-25" @onclick="CreatePdf">View & Download Cv</button>
+            <button style="color:white; text-align:center; background-color:#14735F" class="btn w-25" @onclick="CreatePdf">View & Download Cv</button>
         </div>
     }
 
