@@ -16,6 +16,10 @@
         "toastr.min.js",
         "toastr.min.css"
       ]
+    },
+    {
+      "library": "sweetalert@2.1.2",
+      "destination": "wwwroot/sweetalert/"
     }
   ]
 }

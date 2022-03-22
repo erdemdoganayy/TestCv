@@ -11,7 +11,7 @@
 @inject ICountryService _countryService
 @inject IApplicationDbContext _context
 @inject IJSRuntime jsRuntime
-
+@inject Blazored.LocalStorage.ILocalStorageService oLocalStore
 
 @*<h3>EmployeeAdd</h3>
     @if (employees == null)
@@ -30,8 +30,12 @@
     <br />
 *@
 
+
+@SessionValue
+@Message
+
 <div class="card shadow  mb-5 bg-white rounded">
-    <div class="card-header" style="background-color:#843e4c !important; font-size:20px">
+    <div class="card-header" style="background-color:#361B2D !important; font-size:20px">
         <b style="color:#FFF"><i class="oi oi-info"></i> Personal Info</b>
     </div>
     <div class="card-body">
@@ -46,7 +50,7 @@
 
                     <div class="col-md-6">
                         <label for="Name"><b>Name</b></label>
-                        <input type="text" class="form-control" id="Name" aria-describedby="emailHelp" @bind="employee.Name" />
+                        <input type="text" class="form-control" id="Name" aria-describedby="emailHelp"  @bind="employee.Name" />
                         <ValidationMessage For=@(() => employee.Name) />
 
                     </div>
@@ -68,7 +72,7 @@
                 </div>
 
                 <div class="row mt-4">
-              
+
 
                     <div class="col-md-6">
                         <label for="Country" class="control-label"><b>Country</b></label>
@@ -85,10 +89,8 @@
                             }
                         </select>
 
-                        @*@CountryValue*@
-
                     </div>
-                       <div class="col-md-6">
+                    <div class="col-md-6">
                         <label for="City" class="control-label"><b>City</b></label>
                         <select class="form-select" required aria-label="Default select example" @onchange="CitiesChanges">
 
@@ -128,7 +130,7 @@
                 </div>
 
                 <div class="row mt-4">
-                          <div class="col-md-6">
+                    <div class="col-md-6">
                         <label for="Birth" class="control-label"><b>Birth Date</b></label>
                         <input type="date" required class="form-control" @bind="employee.BirthDate" />
                     </div>
@@ -152,7 +154,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>LinkedIn Address</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="employee.Linkedin">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="employee.Linkedin">
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -217,7 +219,8 @@
     List<District> districts = new List<District>();
     List<Country> countries = new List<Country>();
     List<PositionType> positionTypes = new List<PositionType>();
-
+    string SessionValue = "";
+    string Message = "";
     bool employeeSaved;
 
     public int CountryValue { get; set; }
@@ -246,9 +249,20 @@
         });
     }
 
+
+
     protected override async Task OnInitializedAsync()
     {
-
+        SessionValue = await oLocalStore.GetItemAsync<string>("MySessionValue");
+       var employeeControl = await _employeeService.GetEmployeeByEmail(SessionValue);
+        if (employeeControl == null)
+        {
+            Message = "Böyle bir e mailli biri yok";
+        }
+        else
+        {
+            Message = "Böyle biri zaten var";
+        }
         employees = await _employeeService.GetEmployees();
         cities = await _cityService.GetCities();
         countries = await _countryService.GetCountries();
@@ -259,7 +273,7 @@
 
         positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
         employeeSaved = await _employeeService.Create(employee);
-         await jsRuntime.InvokeVoidAsync("toastr.success", "Personal Information Registered !" + "<br>"+ "Please Fill The Information Below ", "Congratulations !");
+        await jsRuntime.InvokeVoidAsync("toastr.success", "Personal Information Registered !" + "<br>" + "Please Fill The Information Below ", "Congratulations !");
 
         if (employeeSaved)
             employees = await _employeeService.GetEmployees();

@@ -26,7 +26,7 @@
 
 
 <div class="card shadow  mb-5 bg-white rounded">
-    <div class="card-header" style="background-color:#843e4c !important; font-size:20px">
+    <div class="card-header" style="background-color:#361B2D !important; font-size:20px">
         <b style="color:#FFF"> <i class="oi oi-pencil"></i> Education Info</b>
     </div>
     <div class="card-body">
@@ -36,15 +36,15 @@
                 <div class="row mt-2">
                     <div class="col-md-3">
                         <label for="exampleInputEmail1"><b>School Name</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="educationDto.SchoolName">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="educationDto.SchoolName">
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>Department</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="educationDto.Department">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="educationDto.Department">
                     </div>
                     <div class="col-md-2">
                         <label for="Country" class="control-label"><b>Country</b></label>
-                        <select class="js-example-basic-single form-select" required name="state" @bind="educationDto.CountryId">
+                        <select class="js-example-basic-single form-select" name="state" @bind="educationDto.CountryId">
 
                             <option value="">-Select Country</option>
 
@@ -60,16 +60,16 @@
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>Start Date</b></label>
-                        <input type="date" class="form-control" required id="exampleInputEmail1" @bind="educationDto.StartDate" aria-describedby="emailHelp">
+                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.StartDate" aria-describedby="emailHelp">
                     </div>
                     <div class="col-md-2">
                         <label for="exampleInputEmail1"><b>End Date</b></label>
-                        <input type="date" class="form-control" required id="exampleInputEmail1" @bind="educationDto.EndDate" aria-describedby="emailHelp">
+                        <input type="date" class="form-control" id="exampleInputEmail1" @bind="educationDto.EndDate" aria-describedby="emailHelp">
                     </div>
                     <div class="col-md-1">
                         <label for="exampleInputEmail1"></label>
                         <div class="form-group">
-                            <input type="submit" class="btn btn-outline-success border-2"value="Add" />
+                            <input type="submit" class="btn btn-outline-success border-2" value="Add" />
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
 
 
 <div class="card shadow  mb-5 bg-white rounded">
-    <div class="card-header" style="background-color:#843e4c !important; font-size:20px">
+    <div class="card-header" style="background-color:#361B2D !important; font-size:20px">
         <b style="color:#FFF"> <i class="oi oi-badge" style="font-size:25px"></i> Experience Info</b>
     </div>
     <div class="card-body">
@@ -171,7 +171,7 @@
 
 
 <div class="card shadow  mb-5 bg-white rounded">
-    <div class="card-header" style="background-color:#843e4c !important; font-size:20px">
+    <div class="card-header" style="background-color:#361B2D !important; font-size:20px">
         <b style="color:#FFF"><i class="oi oi-graph" style="font-size:25px"></i> Skill Info</b>
     </div>
     <div class="card-body">
@@ -216,8 +216,8 @@
 </div>
 
 
-<div class="card shadow mb-5 bg-white rounded" >
-    <div class="card-header" style="background-color:#843e4c !important; font-size:20px">
+<div class="card shadow mb-5 bg-white rounded">
+    <div class="card-header" style="background-color:#361B2D !important; font-size:20px">
         <b style="color:#FFF"><i class="oi oi-book" style="font-size:25px"></i> Language Info</b>
     </div>
     <div class="card-body">
@@ -308,8 +308,8 @@
 
     EducationDto educationDto = new EducationDto();
     ExperienceDto experienceDto = new ExperienceDto();
-    Skill skillDto = new Skill();
-    Language languageDto = new Language();
+    SkillDto skillDto = new SkillDto();
+    LanguagesDto languageDto = new LanguagesDto();
 
     async void DoStuff(ChangeEventArgs e)
     {
@@ -362,11 +362,17 @@
 
             if (educationSaved)
                 EducationsList = await _educationService.GetEducationSchool(Edu.EmployeeId);
-
             await InvokeAsync(() =>
-                {
-                    StateHasChanged();
-                });
+               {
+                   StateHasChanged();
+               });
+
+
+            educationDto = new EducationDto();
+            await InvokeAsync(() =>
+               {
+                   StateHasChanged();
+               });
 
         }
     }
@@ -395,12 +401,18 @@
 
             experienceSaved = await _experienceService.Create(Exp);
             if (experienceSaved)
-                ExperiencesList = await _experienceService.GetExperienceCompanyName(Exp.EmployeeId);
 
+                ExperiencesList = await _experienceService.GetExperienceCompanyName(Exp.EmployeeId);
             await InvokeAsync(() =>
                 {
                     StateHasChanged();
                 });
+
+            experienceDto = new ExperienceDto();
+            await InvokeAsync(() =>
+               {
+                   StateHasChanged();
+               });
         }
 
     }
@@ -430,6 +442,13 @@
                 {
                     StateHasChanged();
                 });
+
+
+            skillDto = new SkillDto();
+            await InvokeAsync(() =>
+               {
+                   StateHasChanged();
+               });
         }
 
     }
@@ -455,6 +474,12 @@
                 {
                     StateHasChanged();
                 });
+
+            languageDto = new LanguagesDto();
+            await InvokeAsync(() =>
+               {
+                   StateHasChanged();
+               });
         }
 
     }
@@ -499,15 +524,15 @@
         sb.Append("<div class='wrapper' style='width: 90%; margin: auto;'>");
         sb.Append("<div class='personelInfo' style='margin-top: 10rem;'>");
         sb.Append("<img style='float: right; margin-top: -8rem;' src='./hepapilogo.png' width='120'>");
-        sb.Append("<strong style='font-size: 3rem; margin-top:-6rem !important; position:absolute; color: #843e4c;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.Name)  + " " +  CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.Surname) + "</strong>");
-        sb.Append("<p style='color: #3bd6b3; font-size: 1.4rem;'>" +  CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.JobDescription) + "</p>");
+        sb.Append("<strong style='font-size: 3rem; margin-top:-6rem !important; position:absolute; color: #843e4c;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.Name) + " " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.Surname) + "</strong>");
+        sb.Append("<p style='color: #3bd6b3; font-size: 1.4rem;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.JobDescription) + "</p>");
         sb.Append("<p style=' margin-top:3rem; color: #000000; font-size: 0.8rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>B I O G R A P H Y</b></p>");
         sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1rem !important;'>");
         sb.Append("<p style='color:black'>" + employees.ShortInfo + "</p>");
         sb.Append("</div>");
         sb.Append("<p style=' margin-top:3rem; color: #000000; font-size: 0.8rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>P E R S O N A L &nbsp; I N F O</b></p>");
         sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1rem !important;'>");
-        sb.Append("<p style='color:black; margin-top: 2rem;'>Birth Date : "+employees.BirthDate.Date.ToShortDateString()+"</p>");
+        sb.Append("<p style='color:black; margin-top: 2rem;'>Birth Date : " + employees.BirthDate.Date.ToShortDateString() + "</p>");
         sb.Append("<p style='color:black'>Nationality : " + employees.Country.Name + "</p>");
         sb.Append("<p style='color:black'>Location : " + employees.Country.Name + "</p>");
         sb.Append("<p style=' margin-top:3rem; color: #000000; font-size: 0.8rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>K E Y &nbsp; S K I L L S</b></p>");
@@ -540,7 +565,7 @@
         foreach (var emp in employees.Experiences)
         {
             sb.Append("<p style=' margin-top: 2rem; margin-bottom: -1.8rem; color: #843e4c; font-size: 0.7rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" + emp.StartDate.Date.ToShortDateString() + " - " + emp.EndDate.Date.ToShortDateString() + "</p>");
-            sb.Append("<span style=' margin-top: 2rem; width: 100%; float: right; color: #3bd6b3; font-size: 0.9rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" +  CultureInfo.CurrentCulture.TextInfo.ToTitleCase(emp.CompanyName) + ", " + emp.Country.Name + "</span>");
+            sb.Append("<span style=' margin-top: 2rem; width: 100%; float: right; color: #3bd6b3; font-size: 0.9rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(emp.CompanyName) + ", " + emp.Country.Name + "</span>");
             sb.Append("<div style='width:100%'>");
             sb.Append("<span style=' margin-top: 0.5rem; width: 100%; float: left; color: #3bd6b3; font-size: 1.1rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'><b>" + emp.Position + "</b></span>");
             sb.Append("<p style='color:black; width: 100%; text-align:left; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" + emp.BriefInformation + "</p>");
@@ -553,9 +578,9 @@
         {
 
             sb.Append("<p style=' margin-top: 2rem; margin-bottom: -1.8rem; color: #843e4c; font-size: 0.7rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" + emp.StartDate.Date.ToShortDateString() + " - " + emp.EndDate.Date.ToShortDateString() + "</p>");
-            sb.Append("<span style=' margin-top: 2rem; width: 100%; float: right; color: #b1838a; font-size: 0.9rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" +  CultureInfo.CurrentCulture.TextInfo.ToTitleCase(emp.SchoolName) + ", " + emp.Country.Name + "</span>");
+            sb.Append("<span style=' margin-top: 2rem; width: 100%; float: right; color: #b1838a; font-size: 0.9rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(emp.SchoolName) + ", " + emp.Country.Name + "</span>");
             sb.Append("<div style='width:100%'>");
-            sb.Append("<span style=' margin-top: 0.2rem; width: 100%; float: left; color: #3bd6b3; font-size: 1rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'><b>" +  CultureInfo.CurrentCulture.TextInfo.ToTitleCase(emp.Department) + "</b></span>");
+            sb.Append("<span style=' margin-top: 0.2rem; width: 100%; float: left; color: #3bd6b3; font-size: 1rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'><b>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(emp.Department) + "</b></span>");
             sb.Append("<p style='color:#371a2d; width: 100%; text-align:left; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'> &nbsp;</p>");
             sb.Append("</div>");
 
@@ -565,7 +590,7 @@
         sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1rem !important;'>");
         foreach (var emp in employees.Languages)
         {
-            sb.Append("<p style='color:#black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; margin-top: 1rem;'><strong>" +  CultureInfo.CurrentCulture.TextInfo.ToTitleCase(emp.Name) + "</strong> : " + emp.Rating + "</p>");
+            sb.Append("<p style='color:#black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; margin-top: 1rem;'><strong>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(emp.Name) + "</strong> : " + emp.Rating + "</p>");
         }
 
         sb.Append("</div>");

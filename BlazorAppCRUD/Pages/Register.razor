@@ -33,20 +33,23 @@
         var GetUserEmail = await _userService.GetUserEmail(User.Email);
         if (GetUserEmail == null)
         {
-                if (User.PasswordOne != User.PasswordTwo)
-                {
-                    await jsRuntime.InvokeVoidAsync("toastr.warning", "Passwords Are Not The Same", "Warning");
-                    
-                    //User.Id = 0;
-                    //User.Email = string.Empty;
-                    //User.PasswordOne = string.Empty;
-                    //User.PasswordTwo = string.Empty;
-                }
-                else if (User.PasswordOne == User.PasswordTwo)
-                {
-                    RegisterSaved = await _userService.Create(User);
-                    await jsRuntime.InvokeVoidAsync("toastr.success", "Registration Completed", "Successful");
-                    NavigationManager.NavigateTo("/Login");
+            if (User.PasswordOne != User.PasswordTwo)
+            {
+                await jsRuntime.InvokeVoidAsync("toastr.warning", "Passwords Are Not The Same", "Warning");
+
+
+            }
+            else if (User.PasswordOne == User.PasswordTwo)
+            {
+                RegisterSaved = await _userService.Create(User);
+                await jsRuntime.InvokeVoidAsync("toastr.success", "Registration Completed", "Successful");
+                //User = new User();
+                //User.Email = "";
+                // await InvokeAsync(() =>
+                //{
+                //    StateHasChanged();
+                //});
+                NavigationManager.NavigateTo("/Login");
                 }
         }
         else

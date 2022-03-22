@@ -2,6 +2,7 @@
 @inject IUserService _userService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime jsRuntime
+@inject Blazored.LocalStorage.ILocalStorageService oLocalStore
 @layout LoginLayout
 @page "/Login"
 @*/Login yerine / yaparsan ana sayfaya atar*@
@@ -9,8 +10,14 @@
     <div class="logo"> <img width=50 height=50 src="./images/logo.png" alt=""> </div>
     <div class="text-center mt-4 name"> Hepapi CV Maker </div>
     <EditForm Model="@User" OnValidSubmit="@LoginUser" class="p-3 mt-3">
-        <div class="form-field d-flex align-items-center"> <span class="far fa-user"></span> <input type="text" name="userName" id="userName" placeholder="E-mail" @bind="User.Email"> </div>
-        <div class="form-field d-flex align-items-center"> <span class="fas fa-key"></span> <input type="password" name="password" id="pwd" placeholder="Password" @bind="User.PasswordOne"> </div>
+        <div class="form-field d-flex align-items-center">
+            <span class="far fa-user"></span>
+            <input type="text" name="userName" id="userName" placeholder="E-mail" @bind="SessionValue">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <span class="fas fa-key"></span>
+            <input type="password" name="password" id="pwd" placeholder="Password" @bind="User.PasswordOne">
+        </div>
         <button type="submit" class="btn mt-3">Login</button>
     </EditForm>
     <div class="text-center fs-6">@* <a href="#">Forget password?</a> or*@ <a style="color:#4BD9B8" href="/Register">Sign up</a> </div>
@@ -18,10 +25,17 @@
 @code {
 
     public User User = new User();
+    string SessionValue = "";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        SessionValue = await oLocalStore.GetItemAsync<string>("MySessionValue");
+    }
 
     private async void LoginUser()
     {
-        var GetUserEmail = await _userService.GetUserEmail(User.Email);
+        var GetUserEmail = await _userService.GetUserEmail(SessionValue);
         var UserGetPassword = User.PasswordOne;
 
         if (GetUserEmail != null)
@@ -30,6 +44,8 @@
             if (UserInfo.PasswordOne == UserGetPassword)
             {
                 await jsRuntime.InvokeVoidAsync("toastr.success", "Login Successful", "Congratulations");
+
+                await oLocalStore.SetItemAsync("MySessionValue", SessionValue);
                 NavigationManager.NavigateTo("/EmployeeAdd");
             }
             else

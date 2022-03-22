@@ -1,5 +1,6 @@
 using BlazorAppCRUD.Data;
 using BlazorAppCRUD.Persistence;
+using Blazored.LocalStorage;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,7 @@ builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<ISchoolService, SchoolService>();
 builder.Services.AddScoped<ISchoolDepartmentService, SchoolDepartmentService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddBlazoredLocalStorage();
 
 
 var app = builder.Build();

@@ -17,8 +17,8 @@ namespace BlazorAppCRUD.Data
         public string Surname { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
-        public string Website { get; set; }
-        public string Linkedin { get; set; }
+        public string Website { get; set; } = "";
+        public string Linkedin { get; set; } = "";
         public string Email { get; set; }
         public DateTime BirthDate { get; set; } = DateTime.Now;
         public string Gender { get; set; }
