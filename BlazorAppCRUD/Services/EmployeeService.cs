@@ -35,32 +35,10 @@ namespace BlazorAppCRUD.Data
 
         public async Task<bool> Create(Employee objEmployee)
         {
-            var employee = _db.Employees.FirstOrDefault(x => x.Email == objEmployee.Email);
-
-            // if (employee == null)
-            // {
             _db.Employees.Add(objEmployee);
             await _db.SaveChangesAsync(CancellationToken.None);
             return true;
-            // }
-            //else
-            //{
-            //    employee.Gender = objEmployee.Gender;
-            //    employee.Email = objEmployee.Email;
-            //    employee.BirthDate = objEmployee.BirthDate;
-            //    employee.DistrictId = Convert.ToInt32(objEmployee.DistrictId);
-            //    employee.CountryId = objEmployee.CountryId;
-            //    employee.Phone = objEmployee.Phone;
-            //    employee.Website = objEmployee.Website;
-            //    employee.Linkedin = objEmployee.Linkedin;
-
-            //    _db.Employees.Update(employee);
-            //    await _db.SaveChangesAsync(CancellationToken.None);
-
-            //    return true;
-            //}
-
-            //return false;
+     
         }
         public async Task<bool> Update(Employee objEmployee)
         {
