@@ -50,7 +50,7 @@
 
                     <div class="col-md-6">
                         <label for="Name"><b>Name</b></label>
-                        <input type="text" class="form-control" id="Name" aria-describedby="emailHelp"  @bind="employee.Name" />
+                        <input type="text" class="form-control" id="Name" aria-describedby="emailHelp" @bind="employee.Name" />
                         <ValidationMessage For=@(() => employee.Name) />
 
                     </div>
@@ -76,7 +76,7 @@
 
                     <div class="col-md-6">
                         <label for="Country" class="control-label"><b>Country</b></label>
-                        <select class="form-select js-example-basic-single" id="country" required aria-label="Default select example" @onchange="CountryChanges">
+                        <select class="form-select js-example-basic-single" id="country" required aria-label="Default select example" value="@SelectedCountry" @onchange="CountryChanges">
 
                             <option value="">-Select Country</option>
 
@@ -197,7 +197,7 @@
 </div>
 
 
-@if (employeeSaved)
+@if (EmployeeCreated || EmployeeUpdated)
 {
     <ShowHideComponent employee="@employee" />
 }
@@ -219,9 +219,12 @@
     List<District> districts = new List<District>();
     List<Country> countries = new List<Country>();
     List<PositionType> positionTypes = new List<PositionType>();
+    public string SelectedCountry { get; set; } = "";
+    public string SelectedDistrictId { get; set; } = "";
     string SessionValue = "";
     string Message = "";
-    bool employeeSaved;
+    bool EmployeeCreated;
+    bool EmployeeUpdated;
 
     public int CountryValue { get; set; }
 
@@ -254,7 +257,7 @@
     protected override async Task OnInitializedAsync()
     {
         SessionValue = await oLocalStore.GetItemAsync<string>("MySessionValue");
-       var employeeControl = await _employeeService.GetEmployeeByEmail(SessionValue);
+        var employeeControl = await _employeeService.GetEmployeeByEmail(SessionValue);
         if (employeeControl == null)
         {
             Message = "Böyle bir e mailli biri yok";
@@ -262,26 +265,66 @@
         else
         {
             Message = "Böyle biri zaten var";
+            employee = new Employee
+                {
+                    Name = employeeControl.Name,
+                    Surname = employeeControl.Surname,
+                    Email = employeeControl.Email,
+                    Phone = employeeControl.Phone,
+                    CountryId = employeeControl.CountryId,
+                    DistrictId = employeeControl.DistrictId,
+                    Address = employeeControl.Address,
+                    BirthDate = employeeControl.BirthDate,
+                    Gender = employeeControl.Gender,
+                    Website = employeeControl.Website,
+                    Linkedin = employeeControl.Linkedin,
+                    JobDescription = employeeControl.JobDescription,
+                    CareerObjective = employeeControl.CareerObjective,
+                    ShortInfo = employeeControl.ShortInfo,
+
+                };
+
+
+
         }
         employees = await _employeeService.GetEmployees();
         cities = await _cityService.GetCities();
         countries = await _countryService.GetCountries();
+        SelectedCountry = employeeControl.CountryId.ToString();
+        SelectedDistrictId = employeeControl.DistrictId.ToString();
+        await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
     }
 
     private async void CreateEmployee()
     {
-
-        positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
-        employeeSaved = await _employeeService.Create(employee);
-        await jsRuntime.InvokeVoidAsync("toastr.success", "Personal Information Registered !" + "<br>" + "Please Fill The Information Below ", "Congratulations !");
-
-        if (employeeSaved)
-            employees = await _employeeService.GetEmployees();
-
-        await InvokeAsync(() =>
+        SessionValue = await oLocalStore.GetItemAsync<string>("MySessionValue");
+        var employeeControl = await _employeeService.GetEmployeeByEmail(SessionValue);
+        if (employeeControl.Email == null)
         {
-            StateHasChanged();
-        });
+            positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
+            EmployeeCreated = await _employeeService.Create(employee);
+            await jsRuntime.InvokeVoidAsync("toastr.success", "Personal Information Registered !" + "<br>" + "Please Fill The Information Below ", "Congratulations !");
+
+            if (EmployeeCreated)
+                employees = await _employeeService.GetEmployees();
+
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+        }
+        else
+        {
+        
+           // employee.Id = employeeControl.Id;
+            EmployeeUpdated = await _employeeService.Update(employee);
+            await jsRuntime.InvokeVoidAsync("toastr.success", "Personal Information Updated !" + "<br>" + "Please Fill The Information Below ", "Updated !");
+        }
+
+
     }
 
     }

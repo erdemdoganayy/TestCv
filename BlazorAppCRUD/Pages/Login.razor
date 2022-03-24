@@ -37,8 +37,16 @@
     {
         var GetUserEmail = await _userService.GetUserEmail(SessionValue);
         var UserGetPassword = User.PasswordOne;
+        if (SessionValue == "Admin" && User.PasswordOne == "123")
+        {
 
-        if (GetUserEmail != null)
+
+            await jsRuntime.InvokeVoidAsync("toastr.success", "Welcome Admin", "Congratulations");
+            NavigationManager.NavigateTo("/Users");
+        }
+        else
+        {
+             if (GetUserEmail != null)
         {
             var UserInfo = await _userService.GetUser(GetUserEmail.Id);
             if (UserInfo.PasswordOne == UserGetPassword)
@@ -57,6 +65,7 @@
         else
         {
             await jsRuntime.InvokeVoidAsync("toastr.error", "There Is No Such E-mail", "Error");
+        }
         }
 
 

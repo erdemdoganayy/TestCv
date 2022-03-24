@@ -10,8 +10,6 @@
 @using System.Text
 @using System.Globalization
 @inject IJSRuntime jsRuntime
-
-
 @inject IEmployeeService _employeeService
 @inject IEducationService _educationService
 @inject IExperienceServices _experienceService
@@ -22,6 +20,7 @@
 @inject ICityService _cityService
 @inject ICountryService _countryService
 @inject IApplicationDbContext _context
+@inject Blazored.LocalStorage.ILocalStorageService oLocalStore
 
 
 
@@ -280,6 +279,7 @@
     }
     }
     }*@
+
 @code {
 
 
@@ -287,6 +287,7 @@
     private bool ShowMyDiv { get; set; } = true;
     public string PositionValue { get; set; }
     bool languageSaved;
+    string SessionValue = "";
 
     [Parameter] public Employee employee { get; set; }
     [Parameter] public int EducationSchoolId { get; set; }
@@ -327,7 +328,33 @@
     }
 
     protected override async Task OnInitializedAsync()
+
     {
+        SessionValue = await oLocalStore.GetItemAsync<string>("MySessionValue");
+        var employeeControl = await _employeeService.GetEmployeeByEmail(SessionValue);
+        if (employeeControl == null)
+        {
+
+        }
+        else
+        {
+            //education = new Education
+            //    {
+            //        SchoolName = employeeControl.SchoolName,
+            //        Department = employeeControl.Department,
+            //        StartDate = employeeControl.StartDate,
+            //        EndDate = employeeControl.EndDate,
+            //        CountryId = employeeControl.CountryId,
+
+            //    };
+        }
+
+
+            await InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
+
         positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
         Schools = await _schoolService.GetSchools();
         SchoolDepartments = await _schoolDepartmentService.GetDepartments();

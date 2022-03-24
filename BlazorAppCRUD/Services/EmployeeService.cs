@@ -24,26 +24,25 @@ namespace BlazorAppCRUD.Data
                 .ThenInclude(x => x.City)
                 .ToListAsync();
         }
-
         public async Task<Employee> GetLastEmployee(int Id)
         {
             return await _db.Employees.FirstOrDefaultAsync(x => x.Id == Id);
         }
         public async Task<Employee> GetEmployeeByEmail(string email)
         {
-            return await _db.Employees.FirstOrDefaultAsync(x => x.Email == email);
+            return await _db.Employees.FirstOrDefaultAsync(x => x.Email == email.Trim());
         }
 
         public async Task<bool> Create(Employee objEmployee)
         {
             var employee = _db.Employees.FirstOrDefault(x => x.Email == objEmployee.Email);
 
-           // if (employee == null)
-           // {
-                _db.Employees.Add(objEmployee);
-                await _db.SaveChangesAsync(CancellationToken.None);
-                return true;
-           // }
+            // if (employee == null)
+            // {
+            _db.Employees.Add(objEmployee);
+            await _db.SaveChangesAsync(CancellationToken.None);
+            return true;
+            // }
             //else
             //{
             //    employee.Gender = objEmployee.Gender;
@@ -62,6 +61,23 @@ namespace BlazorAppCRUD.Data
             //}
 
             //return false;
+        }
+        public async Task<bool> Update(Employee objEmployee)
+        {
+            var employee = _db.Employees.FirstOrDefault(x => x.Id == objEmployee.Id);
+            if (employee != null)
+            {
+                _db.Employees.Update(objEmployee);
+
+;                await _db.SaveChangesAsync(CancellationToken.None);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
         }
     }
 }
