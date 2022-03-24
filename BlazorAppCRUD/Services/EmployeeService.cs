@@ -68,8 +68,7 @@ namespace BlazorAppCRUD.Data
             if (employee != null)
             {
                 _db.Employees.Update(objEmployee);
-
-;                await _db.SaveChangesAsync(CancellationToken.None);
+                await _db.SaveChangesAsync(CancellationToken.None);
                 return true;
             }
             else

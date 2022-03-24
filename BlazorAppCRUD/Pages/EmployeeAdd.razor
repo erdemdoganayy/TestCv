@@ -92,7 +92,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="City" class="control-label"><b>City</b></label>
-                        <select class="form-select" required aria-label="Default select example" @onchange="CitiesChanges">
+                        <select class="form-select" required aria-label="Default select example" value="@SelectedCityId" @onchange="CitiesChanges">
 
                             <option value="">-Select City</option>
 
@@ -220,7 +220,7 @@
     List<Country> countries = new List<Country>();
     List<PositionType> positionTypes = new List<PositionType>();
     public string SelectedCountry { get; set; } = "";
-    public string SelectedDistrictId { get; set; } = "";
+    public string SelectedCityId { get; set; } = "";
     string SessionValue = "";
     string Message = "";
     bool EmployeeCreated;
@@ -288,10 +288,15 @@
 
         }
         employees = await _employeeService.GetEmployees();
-        cities = await _cityService.GetCities();
+        //cities = await _cityService.GetCities();
         countries = await _countryService.GetCountries();
         SelectedCountry = employeeControl.CountryId.ToString();
-        SelectedDistrictId = employeeControl.DistrictId.ToString();
+
+        cities = await _cityService.GetSelectedCities(int.Parse(employeeControl.CountryId.ToString()));
+        SelectedCityId = employeeControl.District.CityId.ToString();
+
+        employee.DistrictId = employeeControl.DistrictId;
+
         await InvokeAsync(() =>
             {
                 StateHasChanged();
@@ -302,7 +307,7 @@
     {
         SessionValue = await oLocalStore.GetItemAsync<string>("MySessionValue");
         var employeeControl = await _employeeService.GetEmployeeByEmail(SessionValue);
-        if (employeeControl.Email == null)
+        if (employeeControl == null)
         {
             positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
             EmployeeCreated = await _employeeService.Create(employee);
@@ -318,9 +323,22 @@
         }
         else
         {
-        
-           // employee.Id = employeeControl.Id;
-            EmployeeUpdated = await _employeeService.Update(employee);
+            employeeControl.Name = employeeControl.Name;
+            employeeControl.Surname = employeeControl.Surname;
+            employeeControl.Email = employeeControl.Email;
+            employeeControl.Phone = employeeControl.Phone;
+            employeeControl.CountryId = employeeControl.CountryId;
+            employeeControl.DistrictId = employeeControl.DistrictId;
+            employeeControl.Address = employeeControl.Address;
+            employeeControl.BirthDate = employeeControl.BirthDate;
+            employeeControl.Gender = employeeControl.Gender;
+            employeeControl.Website = employeeControl.Website;
+            employeeControl.Linkedin = employeeControl.Linkedin;
+            employeeControl.JobDescription = employeeControl.JobDescription;
+            employeeControl.CareerObjective = employeeControl.CareerObjective;
+            employeeControl.ShortInfo = employeeControl.ShortInfo;
+
+            EmployeeUpdated = await _employeeService.Update(employeeControl);
             await jsRuntime.InvokeVoidAsync("toastr.success", "Personal Information Updated !" + "<br>" + "Please Fill The Information Below ", "Updated !");
         }
 
