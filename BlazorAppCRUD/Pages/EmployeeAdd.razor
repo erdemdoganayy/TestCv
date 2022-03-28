@@ -11,24 +11,9 @@
 @inject ICountryService _countryService
 @inject IApplicationDbContext _context
 @inject IJSRuntime jsRuntime
+@inject NavigationManager NavigationManager
 @inject Blazored.LocalStorage.ILocalStorageService oLocalStore
 
-@*<h3>EmployeeAdd</h3>
-    @if (employees == null)
-    {
-    <p>
-    <em>
-    Loading...
-    </em>
-    </p>
-    }
-    else
-    {
-    <ListEmployeeComponent employees="@employees" />
-    }
-    <br />
-    <br />
-*@
 
 <div class="card shadow  mb-5 bg-white rounded">
     <div class="card-header" style="background-color:#361B2D !important; font-size:20px">
@@ -257,6 +242,7 @@
     protected override async Task OnInitializedAsync()
     {
         SessionValue = await oLocalStore.GetItemAsync<string>("MySessionValue");
+
         var employeeControl = await _employeeService.GetEmployeeByEmail(SessionValue);
         if (employeeControl == null)
         {
@@ -292,11 +278,11 @@
         countries = await _countryService.GetCountries();
         if (employeeControl != null)
         {
-        SelectedCountry = employeeControl.CountryId.ToString();
-        cities = await _cityService.GetSelectedCities(int.Parse(employeeControl.CountryId.ToString()));
-        SelectedCityId = employeeControl.District.CityId.ToString();
-        districts = await _districtService.GetDistricts(int.Parse(SelectedCityId));
-        employee.DistrictId = employeeControl.DistrictId;
+            SelectedCountry = employeeControl.CountryId.ToString();
+            cities = await _cityService.GetSelectedCities(int.Parse(employeeControl.CountryId.ToString()));
+            SelectedCityId = employeeControl.District.CityId.ToString();
+            districts = await _districtService.GetDistricts(int.Parse(SelectedCityId));
+            employee.DistrictId = employeeControl.DistrictId;
         }
 
 
@@ -315,6 +301,7 @@
         if (employeeControl == null)
         {
             positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
+            //employee.Email = employeeControl.Email;
             EmployeeCreated = await _employeeService.Create(employee);
             await jsRuntime.InvokeVoidAsync("toastr.success", "Personal Information Registered !" + "<br>" + "Please Fill The Information Below ", "Congratulations !");
 
@@ -342,10 +329,10 @@
 
             EmployeeUpdated = await _employeeService.Update(employeeControl);
             await jsRuntime.InvokeVoidAsync("toastr.success", "Personal Information Updated !" + "<br>" + "Please Fill The Information Below ", "Updated !");
-             await InvokeAsync(() =>
-            {
-                StateHasChanged();
-            });
+            await InvokeAsync(() =>
+           {
+               StateHasChanged();
+           });
         }
 
 

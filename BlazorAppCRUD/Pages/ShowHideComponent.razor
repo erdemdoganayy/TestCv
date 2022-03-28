@@ -539,7 +539,7 @@
     private async void CreatePdf()
     {
         var currentEmployee = await _employeeService.GetEmployeeByEmail(employee.Email);
-        var employees = await _employeeService.GetLastEmployee(2003);
+        var employees = await _employeeService.GetLastEmployee(currentEmployee.Id);
         var Renderer = new ChromePdfRenderer();
 
         var sb = new StringBuilder();
@@ -572,7 +572,7 @@
         sb.Append("<p style='color:black'>Nationality : " + employees.Country.Name + "</p>");
         sb.Append("<p style='color:black'>Location : " + employees.Country.Name + "</p>");
 
-        if (employees.Skills != null)
+        if (employees.Skills.Count > 0)
         {
             sb.Append("<p style=' margin-top:3rem; color: #412839; font-size: 0.9rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>A R E A S &nbsp; O F &nbsp; E X P E R T I S E </b></p>");
             sb.Append("<hr style='border: 1px solid #412839; margin-top: 1rem !important; margin-bottom:2rem'>");
@@ -583,7 +583,7 @@
         }
 
         // sb.Append("<div>&nbsp;</div>");
-        if (employees.Skills != null)
+        if (employees.Skills.Count > 0)
         {
             sb.Append("<div><h6 style='width:21% !important; color:#412839; font-size:0.8rem; border-bottom:1px solid #412839; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>K E Y &nbsp; S K I L L S</h6></div>");
             foreach (var emp in employees.Skills)
@@ -601,7 +601,7 @@
         //sb.Append("<p style='color:black'>Web : " + employees.Website + "</p>");
         //sb.Append("<p style='color:black'>Linkedin : " + employees.Linkedin + "</p>");
 
-        if (employees.Experiences != null)
+        if (employees.Experiences.Count > 0)
         {
             sb.Append("<p style=' margin-top:3rem; color: #412839; font-size: 0.9rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>P R O F E S S I O N A L &nbsp; W O R K &nbsp; E X P E R I E N C E</b> </p>");
             sb.Append("<hr style='border: 1px solid #412839; margin-top: 1rem !important;'>");
@@ -616,7 +616,7 @@
             }
         }
 
-        if (employees.Educations != null)
+        if (employees.Educations.Count > 0)
         {
             sb.Append("<p style=' margin-top:3rem; color: #412839; font-size: 0.9rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>E D U C A T I O N S</b></p>");
             sb.Append("<hr style='border: 1px solid #412839; margin-top: 1rem !important; margin-bottom:1.5rem !important'>");
@@ -631,7 +631,7 @@
             }
         }
 
-        if (employees.Languages != null)
+        if (employees.Languages.Count > 0)
         {
             sb.Append("<p style=' margin-top:2rem; color: #412839; font-size: 0.9rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>L A N G U A G E S</b></p>");
             sb.Append("<hr style='border: 1px solid #412839; margin-top: 1rem !important;'>");

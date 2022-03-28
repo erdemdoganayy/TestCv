@@ -5,6 +5,9 @@
 @inject IJSRuntime jsRuntime
 @using BlazorAppCRUD.Persistence
 @inject IApplicationDbContext _context
+@using IronPdf;
+@using System.Text
+@using System.Globalization
 <div class="container">
     <h3 class="text-center">Hepapi Cv Users</h3>
     <div class="wrapper m-5">
@@ -12,21 +15,27 @@
         <table id="myTable" class="display">
             <thead>
                 <tr>
-                    <th>Column 1</th>
-                    <th>Column 2</th>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Email</th>
+                    <th>Country</th>
+                    <th>Settings</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var employee in employees)
                 {
-                    
-                <tr>
-                        <td>@employee.Name</td>
-                        <td>@employee.Name</td>
+
+                    <tr>
+                        <td>@employee.Name  @employee.Surname</td>
+                        <td>@employee.JobDescription</td>
+                        <td>@employee.Email</td>
+                        <td>@employee.Country.Name</td>
+                        <td><button @onclick="(() => CreatePdf(employee.Id))" class="btn btn-info">Download Cv</button></td>
 
                     </tr>
                 }
-                
+
             </tbody>
         </table>
 
@@ -78,17 +87,43 @@
             </tr>
             </tfoot>
             </table>*@
+
     </div>
 </div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Launch demo modal
+</button>
+@if (popup)
+{
+    <!-- Modal -->
+    <div class="modal" style="display:block;" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">@Employee.Name @Employee.Surname</h5>
+                </div>
+                <div class="modal-body">
+                    @Employee.Email;
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CloseModal" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 
 
 @functions {
-     public string id { get; set; } = "DataTable-" + Guid.NewGuid().ToString();
+    public string id { get; set; } = "DataTable-" + Guid.NewGuid().ToString();
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await jsRuntime.InvokeAsync<string>("DataTableSearch", new object[] { $"#{id}"});
+            await jsRuntime.InvokeAsync<string>("DataTableSearch", new object[] { $"#{id}" });
             firstRender = false;
         }
     }
@@ -96,6 +131,8 @@
 
 @code {
     List<Employee> employees = new List<Employee>();
+    Employee Employee = new Employee();
+    bool popup;
     protected override async Task OnInitializedAsync()
     {
 
@@ -106,6 +143,138 @@
         });
     }
 
+    async void GetDetails(int Id)
+    {
+        popup = true;
+        Employee = await _employeeService.GetLastEmployee(Id);
+    }
+    async void CloseModal()
+    {
+        popup = false;
+    }
+
+
+    private async void CreatePdf(int Id)
+    {
+        var gelenId = Id;
+        var employees = await _employeeService.GetLastEmployee(Id);
+        var Renderer = new ChromePdfRenderer();
+
+        var sb = new StringBuilder();
+        sb.Append("<html><head></head><body>");
+        sb.Append("<div class='container' style='width: 100%; height: 100%;'>");
+        sb.Append("<div class='left' style=' width: 0.2%; height: 100%; float: left;'>");
+        sb.Append(" <div class='wrapper' style='width: 90%;height: 100vh; margin: auto;'>");
+        sb.Append("<div class='logo' style='width: 100%; font-size: 50px; margin-top: 4rem; margin-left: 4rem;'>");
+        sb.Append("<br>");
+        sb.Append("<br>");
+        sb.Append("</div>");
+
+
+        sb.Append("</div>");
+        sb.Append("</div>");
+        sb.Append("<div class='right' style='width: 98%; height: 100%; float: left;'>");
+        sb.Append("<div class='wrapper' style='width: 90%; margin: auto;'>");
+        sb.Append("<div class='personelInfo' style='margin-top: 10rem;'>");
+        sb.Append("<img style='float: right; margin-top: -8rem;' src='./hepapilogo.png' width='120'>");
+        //sb.Append("<strong style='font-size: 3rem; margin-top:-6rem !important; position:absolute; color: #843e4c;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.Name) + " " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.Surname) + "</strong>");
+        sb.Append("<strong style='font-size: 2.7rem; margin-top:-6rem !important; position:absolute; color: #843e4c;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.JobDescription) + "</strong>");
+        sb.Append("<p style='color: #3bd6b3; font-size: 1.4rem;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.JobDescription) + "</p>");
+        sb.Append("<p style=' margin-top:3rem; color: #412839; font-size: 0.9rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>E X E C U T I V E &nbsp;  S U M M A R Y</b></p>");
+        sb.Append("<hr style='border: 1px solid #412839; margin-top: 1rem !important;'>");
+        sb.Append("<p style='color:black'>" + employees.ShortInfo + "</p>");
+        sb.Append("</div>");
+        sb.Append("<p style=' margin-top:3rem; color: #412839; font-size: 0.9rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>P E R S O N A L &nbsp; I N F O</b></p>");
+        sb.Append("<hr style='border: 1px solid #412839; margin-top: 1rem !important;'>");
+        sb.Append("<p style='color:black; margin-top: 2rem;'>Birth Date : " + employees.BirthDate.Date.ToShortDateString() + "</p>");
+        sb.Append("<p style='color:black'>Nationality : " + employees.Country.Name + "</p>");
+        sb.Append("<p style='color:black'>Location : " + employees.Country.Name + "</p>");
+
+        if (employees.Skills.Count > 0)
+        {
+            sb.Append("<p style=' margin-top:3rem; color: #412839; font-size: 0.9rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>A R E A S &nbsp; O F &nbsp; E X P E R T I S E </b></p>");
+            sb.Append("<hr style='border: 1px solid #412839; margin-top: 1rem !important; margin-bottom:2rem'>");
+            foreach (var emp in employees.Skills)
+            {
+                sb.Append("<span style='margin-top:3rem !important; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; color:#371a2d;'><b style:'color:#412839 !important;'>" + emp.Name.ToUpper() + "</b> : " + emp.Rating + " &nbsp;&nbsp;&nbsp;&nbsp;</span>");
+            }
+        }
+
+        // sb.Append("<div>&nbsp;</div>");
+        if (employees.Skills.Count > 0)
+        {
+            sb.Append("<div><h6 style='width:21% !important; color:#412839; font-size:0.8rem; border-bottom:1px solid #412839; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'>K E Y &nbsp; S K I L L S</h6></div>");
+            foreach (var emp in employees.Skills)
+            {
+                sb.Append("<p style='color:black; margin-top: 1rem;'><b style:'color:#412839; !important'>" + emp.Name.ToUpper() + " :</b> " + emp.ShortInfo + "<br></p>");
+
+            }
+        }
+
+
+        //sb.Append("<p style=' margin-top:3rem; color: #000000; font-size: 0.8rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>C O N T A C T </b></p>");
+        //sb.Append("<hr style='border: 1px solid #371a2d; margin-top: 1rem !important'>");
+        //sb.Append("<p style='color:black; margin-top: 2rem;'>Phone : " + employees.Phone + "</p>");
+        //sb.Append("<p style='color:black'>Mail: " + employees.Email + "</p>");
+        //sb.Append("<p style='color:black'>Web : " + employees.Website + "</p>");
+        //sb.Append("<p style='color:black'>Linkedin : " + employees.Linkedin + "</p>");
+
+        if (employees.Experiences.Count > 0)
+        {
+            sb.Append("<p style=' margin-top:3rem; color: #412839; font-size: 0.9rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>P R O F E S S I O N A L &nbsp; W O R K &nbsp; E X P E R I E N C E</b> </p>");
+            sb.Append("<hr style='border: 1px solid #412839; margin-top: 1rem !important;'>");
+            foreach (var emp in employees.Experiences)
+            {
+                sb.Append("<p style=' margin-top: 2rem; margin-bottom: -1.8rem; color: #843E4C; font-size: 0.7rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" + emp.StartDate.Date.ToShortDateString() + " - " + emp.EndDate.Date.ToShortDateString() + "</p>");
+                sb.Append("<span style=' margin-top: 2rem; width: 100%; float: right; color: #843E4C; font-size: 0.9rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(emp.CompanyName) + ", " + emp.Country.Name + "</span>");
+                sb.Append("<div style='width:100%'>");
+                sb.Append("<span style=' margin-top: 0.5rem; width: 100%; float: left; color: #412839; font-size: 1.1rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'><b>" + emp.Position + "</b></span>");
+                sb.Append("<p style='color:black; width: 100%; text-align:left; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" + emp.BriefInformation + "</p>");
+                sb.Append("</div>");
+            }
+        }
+
+        if (employees.Educations.Count > 0)
+        {
+            sb.Append("<p style=' margin-top:3rem; color: #412839; font-size: 0.9rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>E D U C A T I O N S</b></p>");
+            sb.Append("<hr style='border: 1px solid #412839; margin-top: 1rem !important; margin-bottom:1.5rem !important'>");
+            foreach (var emp in employees.Educations)
+            {
+                sb.Append("<p style=' margin-top: 0.5rem; margin-bottom: -1.8rem; color: #843E4C; font-size: 0.7rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" + emp.StartDate.Date.ToShortDateString() + " - " + emp.EndDate.Date.ToShortDateString() + "</p>");
+                sb.Append("<span style=' margin-top: 2rem; width: 100%; float: right; color: #843E4C; font-size: 0.9rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(emp.SchoolName) + ", " + emp.Country.Name + "</span>");
+                sb.Append("<div style='width:100%'>");
+                sb.Append("<span style=' margin-top: 0.2rem; width: 100%; float: left; color: #412839; font-size: 1rem; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'><b>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(emp.Department) + "</b></span>");
+                sb.Append("<p style='color:#371a2d; width: 100%; text-align:left; font-family:'-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'> &nbsp;</p>");
+                sb.Append("</div>");
+            }
+        }
+
+        if (employees.Languages.Count > 0)
+        {
+            sb.Append("<p style=' margin-top:2rem; color: #412839; font-size: 0.9rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>L A N G U A G E S</b></p>");
+            sb.Append("<hr style='border: 1px solid #412839; margin-top: 1rem !important;'>");
+            foreach (var emp in employees.Languages)
+            {
+                sb.Append("<p style='color:#black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; margin-top: 1rem;'><strong style:'color:#412839 !important;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(emp.Name) + "</strong> : " + emp.Rating + "</p>");
+            }
+        }
+
+        sb.Append("</div>");
+
+        sb.Append("</div>");
+        sb.Append("<div class='enson' style='width: 0.2%; height: 100%; float: right;'>");
+        sb.Append("</div>");
+
+
+        sb.Append("</div>");
+
+
+
+        sb.Append("</body></html>");
+        string url = "/" + employees.Name + employees.Surname + ".pdf";
+        Renderer.RenderHtmlAsPdf(sb.ToString()).SaveAs("./wwwroot" + url);
+        await jsRuntime.InvokeAsync<object>("open", url, "_blank");
+    }
 
 
 }
