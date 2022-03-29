@@ -2,6 +2,7 @@ using BlazorAppCRUD.Data;
 using BlazorAppCRUD.Persistence;
 using Blazored.LocalStorage;
 using Microsoft.EntityFrameworkCore;
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +23,9 @@ builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<ISchoolService, SchoolService>();
 builder.Services.AddScoped<ISchoolDepartmentService, SchoolDepartmentService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IFeedBackService, FeedBackService>();
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddSyncfusionBlazor();
 
 
 var app = builder.Build();

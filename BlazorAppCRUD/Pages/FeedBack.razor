@@ -1,0 +1,70 @@
+﻿@page "/FeedBack"
+@inject IJSRuntime jsRuntime
+@inject IFeedBackService _feedBackService
+@inject Blazored.LocalStorage.ILocalStorageService oLocalStore
+@inject NavigationManager NavigationManager
+@using BlazorAppCRUD.Data
+
+
+<div class="card shadow  mb-5 bg-white rounded">
+    <div class="card-header" style="background-color:#361B2D !important; font-size:20px">
+        <b style="color:#FFF"><i class="oi oi-info"></i> FeedBack</b>
+    </div>
+    <div class="card-body">
+        <EditForm Model="@feedback" OnValidSubmit="@CreateFeedBack">
+            <div class="form-group">
+                <div class="row">
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <label for="exampleInputEmail1"><b>Subject</b></label>
+                            <input type="text" required class="form-control" id="most" aria-describedby="emailHelp" >
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <label for="exampleInputEmail1"><b>Message</b></label>
+                            <textarea type="text" required class="form-control" id="biography" aria-describedby="emailHelp">
+
+                        </textarea>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-12 d-flex justify-content-end">
+                            <div class="form-group">
+                                <input type="submit"  class="btn btn-success" value="Save" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+
+@code {
+    string SessionValue = "";
+    protected override async Task OnInitializedAsync()
+    {
+        SessionValue = await oLocalStore.GetItemAsync<string>("MySessionValue");
+
+        if (string.IsNullOrEmpty(SessionValue))
+
+        {
+            NavigationManager.NavigateTo("/");
+            return;
+        }
+
+    }
+    protected FeedBack feedback = new FeedBack();
+    bool FeedBackCreated;
+
+    private async void CreateFeedBack()
+    {
+
+        // FeedBackCreated = await _feedBackService.Create(FeedBacks);
+        await jsRuntime.InvokeVoidAsync("toastr.success", "Your Message Is Send !" , "Thank You For FeedBack !");
+
+
+    }
+}

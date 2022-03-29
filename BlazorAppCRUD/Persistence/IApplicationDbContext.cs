@@ -16,6 +16,7 @@ namespace BlazorAppCRUD.Persistence
         DbSet<School> Schools { get; set; }
         DbSet<User> Users{ get; set; }
         DbSet<SchoolDepartment> SchoolDepartments { get; set; }
+        DbSet<FeedBack> FeedBacks { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

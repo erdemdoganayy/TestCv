@@ -44,7 +44,7 @@
                 <div class="row mt-4">
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>E-Mail Address</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="employee.Email">
+                        <input type="text" required class="form-control" id="exampleInputEmail1" disabled aria-describedby="emailHelp" @bind="employee.Email">
                     </div>
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>Phone</b></label>
@@ -106,7 +106,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="exampleInputEmail1"><b>Address</b></label>
-                        <input type="text" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" @bind="employee.Address">
+                        <input type="text" required class="form-control" id="exampleInputEmail1"  aria-describedby="emailHelp" @bind="employee.Address">
                     </div>
                 </div>
 
@@ -243,6 +243,13 @@
     {
         SessionValue = await oLocalStore.GetItemAsync<string>("MySessionValue");
 
+        if (string.IsNullOrEmpty(SessionValue))
+
+        {
+            NavigationManager.NavigateTo("/");
+            return;
+        }
+        employee.Email = SessionValue;
         var employeeControl = await _employeeService.GetEmployeeByEmail(SessionValue);
         if (employeeControl == null)
         {
@@ -270,8 +277,6 @@
 
                 };
 
-
-
         }
         employees = await _employeeService.GetEmployees();
         cities = await _cityService.GetCities();
@@ -285,13 +290,11 @@
             employee.DistrictId = employeeControl.DistrictId;
         }
 
-
-
-
         await InvokeAsync(() =>
             {
                 StateHasChanged();
             });
+
     }
 
     private async void CreateEmployee()
@@ -301,7 +304,7 @@
         if (employeeControl == null)
         {
             positionTypes = Enum.GetValues(typeof(PositionType)).Cast<PositionType>().ToList();
-            //employee.Email = employeeControl.Email;
+            
             EmployeeCreated = await _employeeService.Create(employee);
             await jsRuntime.InvokeVoidAsync("toastr.success", "Personal Information Registered !" + "<br>" + "Please Fill The Information Below ", "Congratulations !");
 
@@ -314,7 +317,7 @@
         {
             employeeControl.Name = employee.Name;
             employeeControl.Surname = employee.Surname;
-            employeeControl.Email = employee.Email;
+            employeeControl.Email = SessionValue;
             employeeControl.Phone = employee.Phone;
             employeeControl.CountryId = employee.CountryId;
             employeeControl.DistrictId = employee.DistrictId;

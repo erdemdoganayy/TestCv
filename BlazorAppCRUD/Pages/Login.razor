@@ -20,7 +20,7 @@
         </div>
         <button type="submit" class="btn mt-3">Login</button>
     </EditForm>
-    <div class="text-center fs-6">@* <a href="#">Forget password?</a> or*@ <a style="color:#4BD9B8" href="/Register">Sign up</a> </div>
+    <div class="text-center fs-6"> <a style="color:#4BD9B8" href="#">Forget password?</a> or <a style="color:#4BD9B8" href="/Register">Sign up</a> </div>
 </div>
 @code {
 
@@ -37,7 +37,7 @@
     {
         var GetUserEmail = await _userService.GetUserEmail(SessionValue);
         var UserGetPassword = User.PasswordOne;
-        if (SessionValue == "Admin" && User.PasswordOne == "123")
+        if (SessionValue == "Admin" && User.PasswordOne == "123456")
         {
 
 

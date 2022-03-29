@@ -560,17 +560,18 @@
         sb.Append("<div class='personelInfo' style='margin-top: 10rem;'>");
         sb.Append("<img style='float: right; margin-top: -8rem;' src='./hepapilogo.png' width='120'>");
         //sb.Append("<strong style='font-size: 3rem; margin-top:-6rem !important; position:absolute; color: #843e4c;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.Name) + " " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.Surname) + "</strong>");
-        sb.Append("<strong style='font-size: 2.7rem; margin-top:-6rem !important; position:absolute; color: #843e4c;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.JobDescription) + "</strong>");
-        sb.Append("<p style='color: #3bd6b3; font-size: 1.4rem;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.JobDescription) + "</p>");
+        sb.Append("<strong style='font-size: 2.3rem; margin-top:-6rem !important; position:absolute; color: #843e4c;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.JobDescription) + "</strong>");
+        sb.Append("<p style='color: #3bd6b3; font-size: 1.2rem;'>" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(employees.JobDescription) + "</p>");
         sb.Append("<p style=' margin-top:3rem; color: #412839; font-size: 0.9rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>E X E C U T I V E &nbsp;  S U M M A R Y</b></p>");
         sb.Append("<hr style='border: 1px solid #412839; margin-top: 1rem !important;'>");
         sb.Append("<p style='color:black'>" + employees.ShortInfo + "</p>");
         sb.Append("</div>");
-        sb.Append("<p style=' margin-top:3rem; color: #412839; font-size: 0.9rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>P E R S O N A L &nbsp; I N F O</b></p>");
-        sb.Append("<hr style='border: 1px solid #412839; margin-top: 1rem !important;'>");
-        sb.Append("<p style='color:black; margin-top: 2rem;'>Birth Date : " + employees.BirthDate.Date.ToShortDateString() + "</p>");
-        sb.Append("<p style='color:black'>Nationality : " + employees.Country.Name + "</p>");
-        sb.Append("<p style='color:black'>Location : " + employees.Country.Name + "</p>");
+
+        //sb.Append("<p style=' margin-top:3rem; color: #412839; font-size: 0.9rem;  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;'><b>P E R S O N A L &nbsp; I N F O</b></p>");
+        //sb.Append("<hr style='border: 1px solid #412839; margin-top: 1rem !important;'>");
+        //sb.Append("<p style='color:black; margin-top: 2rem;'>Birth Date : " + employees.BirthDate.Date.ToShortDateString() + "</p>");
+        //sb.Append("<p style='color:black'>Nationality : " + employees.Country.Name + "</p>");
+        //sb.Append("<p style='color:black'>Location : " + employees.Country.Name + "</p>");
 
         if (employees.Skills.Count > 0)
         {
