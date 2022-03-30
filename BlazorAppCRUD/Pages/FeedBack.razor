@@ -11,27 +11,31 @@
         <b style="color:#FFF"><i class="oi oi-info"></i> FeedBack</b>
     </div>
     <div class="card-body">
-        <EditForm Model="@feedback" OnValidSubmit="@CreateFeedBack">
+        <EditForm Model="@feedBack" OnValidSubmit="@CreateFeedBack">
             <div class="form-group">
                 <div class="row">
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <label for="exampleInputEmail1"><b>Subject</b></label>
-                            <input type="text" required class="form-control" id="most" aria-describedby="emailHelp" >
+                            <input type="text" required class="form-control" id="most" disabled aria-describedby="emailHelp" @bind="feedBack.Email">
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <label for="exampleInputEmail1"><b>Subject</b></label>
+                            <input type="text" required class="form-control" id="most" aria-describedby="emailHelp" @bind="feedBack.Subject">
                         </div>
                     </div>
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <label for="exampleInputEmail1"><b>Message</b></label>
-                            <textarea type="text" required class="form-control" id="biography" aria-describedby="emailHelp">
-
-                        </textarea>
+                            <textarea type="text" required class="form-control" id="biography" aria-describedby="emailHelp" @bind="feedBack.Message"></textarea>
                         </div>
                     </div>
                     <div class="row mt-4">
                         <div class="col-md-12 d-flex justify-content-end">
                             <div class="form-group">
-                                <input type="submit"  class="btn btn-success" value="Save" />
+                                <input type="submit" class="btn btn-success" value="Save" />
                             </div>
                         </div>
                     </div>
@@ -41,13 +45,13 @@
     </div>
 </div>
 
-
 @code {
     string SessionValue = "";
+    private BlazorAppCRUD.Data.FeedBack feedBack = new  BlazorAppCRUD.Data.FeedBack();
     protected override async Task OnInitializedAsync()
     {
         SessionValue = await oLocalStore.GetItemAsync<string>("MySessionValue");
-
+        feedBack.Email = SessionValue;
         if (string.IsNullOrEmpty(SessionValue))
 
         {
@@ -56,14 +60,19 @@
         }
 
     }
-    protected FeedBack feedback = new FeedBack();
     bool FeedBackCreated;
 
     private async void CreateFeedBack()
     {
 
-        // FeedBackCreated = await _feedBackService.Create(FeedBacks);
+        FeedBackCreated = await _feedBackService.Create(feedBack);
         await jsRuntime.InvokeVoidAsync("toastr.success", "Your Message Is Send !" , "Thank You For FeedBack !");
+        feedBack = new BlazorAppCRUD.Data.FeedBack();
+        feedBack.Email = SessionValue;
+          await InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
 
 
     }
