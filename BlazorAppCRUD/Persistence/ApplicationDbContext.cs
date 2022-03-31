@@ -24,6 +24,7 @@ namespace BlazorAppCRUD.Data
         public DbSet<User> Users { get; set; }
         public DbSet<SchoolDepartment> SchoolDepartments { get; set; }
         public DbSet<FeedBack> FeedBacks { get; set; }
+        public DbSet<ForgotPassword> ForgotPasswords { get; set; }
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())

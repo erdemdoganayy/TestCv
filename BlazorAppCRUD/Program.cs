@@ -24,6 +24,7 @@ builder.Services.AddScoped<ISchoolService, SchoolService>();
 builder.Services.AddScoped<ISchoolDepartmentService, SchoolDepartmentService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IFeedBackService, FeedBackService>();
+builder.Services.AddScoped<IForgotPasswordService, ForgotPasswordService>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddSyncfusionBlazor();
 

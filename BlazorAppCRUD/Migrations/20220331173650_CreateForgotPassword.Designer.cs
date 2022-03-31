@@ -4,6 +4,7 @@ using BlazorAppCRUD.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorAppCRUD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220331173650_CreateForgotPassword")]
+    partial class CreateForgotPassword
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -299,33 +301,6 @@ namespace BlazorAppCRUD.Migrations
                     b.ToTable("FeedBacks");
                 });
 
-            modelBuilder.Entity("BlazorAppCRUD.Data.ForgotPassword", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("Token")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ForgotPasswords");
-                });
-
             modelBuilder.Entity("BlazorAppCRUD.Data.Language", b =>
                 {
                     b.Property<int>("Id")
@@ -541,17 +516,6 @@ namespace BlazorAppCRUD.Migrations
                     b.Navigation("Country");
 
                     b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("BlazorAppCRUD.Data.ForgotPassword", b =>
-                {
-                    b.HasOne("BlazorAppCRUD.Data.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BlazorAppCRUD.Data.Language", b =>

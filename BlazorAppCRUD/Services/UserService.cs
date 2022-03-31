@@ -21,7 +21,7 @@ namespace BlazorAppCRUD.Data
 
         public async Task<User> GetUser(int Id)
         {
-            return await _db.Users.FirstOrDefaultAsync(x => x.Id == Id);
+            return await _db.Users.FirstOrDefaultAsync(x=>x.Id == Id);
         }
 
         public async Task<User> GetUserEmail(string Email)
@@ -33,6 +33,21 @@ namespace BlazorAppCRUD.Data
             return await _db.Users.FirstOrDefaultAsync(x => x.PasswordOne == Password);
         }
 
+        public async Task<bool> Update(User objUser)
+        {
+            var user = _db.Users.FirstOrDefault(x => x.Id == objUser.Id);
+            if (user != null)
+            {
+                _db.Users.Update(objUser);
+                await _db.SaveChangesAsync(CancellationToken.None);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
+
+        }
     }
 }
