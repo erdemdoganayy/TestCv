@@ -35,7 +35,6 @@
 </div>
 
 
-
 @functions {
     public string id { get; set; } = "DataTable-" + Guid.NewGuid().ToString();
     protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -51,9 +50,18 @@
 @code {
     List<Employee> employees = new List<Employee>();
     Employee Employee = new Employee();
+    string AdminSessionValue = "";
     bool popup;
     protected override async Task OnInitializedAsync()
     {
+         AdminSessionValue = await oLocalStore.GetItemAsync<string>("MyAdminSession");
+
+        if (string.IsNullOrEmpty(AdminSessionValue))
+
+        {
+            NavigationManager.NavigateTo("/");
+            return;
+        }
 
         employees = await _employeeService.GetEmployees();
         await InvokeAsync(() =>
