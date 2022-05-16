@@ -9,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CVTest;Trusted_Connection=True;MultipleActiveResultSets=true;"));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("Server=erdem-cv.cuxejpmehjle.eu-west-1.rds.amazonaws.com;Database=CVTest;User Id=admin;Password=erdem1850;"));
+    //"Server=(localdb)\\mssqllocaldb;Database=CVTest;Trusted_Connection=True;MultipleActiveResultSets=true;"));
 builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
